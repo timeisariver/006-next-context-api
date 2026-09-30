@@ -1,0 +1,473 @@
+openapi: 3.0.0
+servers:
+  - description: RealTodo API - Local
+    url: http://localhost:3000/api/v1
+  - description: RealTodo API - Production
+    url: https://next-context-api.netlify.app/api/v1
+info:
+  description: Real Todo API for programming course
+  version: "1.0.0"
+  title: Real Todo API
+tags:
+  - name: Project
+    description: 各タスクをまとめる単位。プロジェクト。
+  - name: Task
+    description: タスク
+  - name: Stats
+    description: 各タスクの進捗の統計情報
+paths:
+  /users/projects:
+    get:
+      tags:
+        - Project
+      summary: get project list
+      operationId: getProjects
+      parameters:
+        - in: query
+          name: limit
+          description: 返却するプロジェクトの最大数
+          required: false
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 20
+        - in: query
+          name: page
+          description: ページ番号
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 1
+      responses:
+        '200':
+          description: projects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Project'
+                  pageInfo:
+                    $ref: '#/components/schemas/PageInfo'
+        '500':
+          description: Internal server error
+  /users/projects/{slug}:
+    get:
+      tags:
+        - Project
+      summary: get a project by slug
+      operationId: getProject
+      parameters:
+        - in: path
+          name: slug
+          required: true
+          schema:
+            type: string
+            sample: programming
+      responses:
+        '200':
+          description: Project
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Project'
+        '404':
+          description: Project not found
+        '500':
+          description: Internal server error
+  /users/tasks:
+    get:
+      tags:
+        - Task
+      summary: get tasks
+      operationId: fetchTasks
+      parameters:
+        - in: query
+          name: limit
+          description: 返却するプロジェクトの最大数
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 20
+        - in: query
+          name: page
+          description: ページ番号
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 1
+        - in: query
+          name: status
+          description: ステータス
+          schema:
+            type: array
+            items:
+              type: enum
+              enum:
+                - scheduled
+                - completed
+                - archived
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Task'
+                  pageInfo:
+                    $ref: '#/components/schemas/PageInfo'
+        '400':
+          description: bad input parameter
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Task
+      summary: Create a new task
+      operationId: createTasks
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTask'
+      responses:
+        '201':
+          description: item created
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: Internal server error
+  /users/tasks/{id}:
+    get:
+      tags:
+        - Task
+      summary: get tasks
+      operationId: fetchTasks
+      parameters:
+        - in: path
+          name: id
+          description: タスクID
+          required: true
+          schema:
+            type: integer
+            format: int64
+            minimum: 0
+            sample: 20
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '400':
+          description: bad input parameter
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+    patch:
+      tags:
+        - Task
+      summary: Update a task
+      operationId: updateTask
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateTask'
+      responses:
+        '200':
+          description: Updated Task
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '400':
+          description: 'invalid input, object invalid'
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Task
+      summary: Delete a task
+      operationId: deleteTask
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Task'
+        '404':
+          description: Task not found
+        '500':
+          description: Internal server error
+  /users/stats:
+    get:
+      tags:
+        - Stats
+      summary: get stats
+      operationId: fetchStats
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Stats'
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: internal server error
+    PageInfo:
+      type: object
+      properties:
+        totalCount:
+          type: integer
+          format: int64
+          example: 100
+        limit:
+          type: integer
+          format: int64
+          example: 20
+        page:
+          type: integer
+          format: int64
+          example: 1
+        hasNext:
+          type: boolean
+          example: true
+        hasPrevious:
+          type: boolean
+          example: false
+    ProjectStats:
+      type: object
+      properties:
+        total:
+          type: integer
+          example: 100
+        kinds:
+          type: object
+          properties:
+            milestone:
+              type: integer
+              example: 20
+            task:
+              type: integer
+              example: 30
+            total:
+              type: integer
+              example: 50
+        states:
+          type: object
+          properties:
+            scheduled:
+              type: integer
+              example: 20
+            completed:
+              type: integer
+              example: 30
+            archived:
+              type: integer
+              example: 50
+    Project:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        name:
+          type: string
+          example: Widget Adapter
+        slug:
+          type: string
+          example: widget-adapter
+        goal:
+          type: string
+          example: Create a new widget adapter
+        shouldbe:
+          type: string
+          example: It should be able to adapt widgets
+        color:
+          type: string
+          example: '#FF0000'
+        stats:
+          $ref: '#/components/schemas/ProjectStats'
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        deadline:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        startingAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        startedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        finishedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+    Task:
+      type: object
+      required:
+        - name
+      properties:
+        id:
+          type: string
+          format: uuid
+          required: true
+          example: 43a4f5fd-3a4e-6818-2cf4-c9d2cc79aebd
+        title:
+          type: string
+          required: true
+          example: Task 1
+        description:
+          type: string
+          required: true
+        status:
+          type: string
+          required: true
+          enum:
+            - scheduled
+            - completed
+            - archived
+        createdAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        updatedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        finishedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        startedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        archivedAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        startingAt:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        deadline:
+          type: string
+          format: date-time
+          example: '2016-08-29T09:12:33.001Z'
+        project:
+          $ref: '#/components/schemas/Project'
+        parent:
+          $ref: '#/components/schemas/Task'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Task'
+    Stats:
+      type: object
+      properties:
+        label:
+          type: string
+          example: 完了タスク
+        type:
+          type: string
+          example: completed
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/StatsData'
+    StatsData:
+      type: object
+      properties:
+        date:
+          type: interger
+          example: 1734953190639
+        value:
+          type: integer
+          example: 50
+        type:
+          type: string
+          example: scheduled
+    CreateTask:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: 'https://www.acme-corp.com'
+        phone:
+          type: string
+          example: 408-867-5309
+    UpdateTask:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: 'https://www.acme-corp.com'
+        phone:
+          type: string
+          example: 408-867-5309

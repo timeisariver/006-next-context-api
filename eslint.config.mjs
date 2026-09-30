@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // 教材として配布された API（改変しない）
+    "app/api/**",
   ]),
 ]);
 
