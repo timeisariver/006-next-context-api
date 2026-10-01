@@ -1,0 +1,12 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--weak-border-color);
+}
+
+.logo {
+  font-weight: 700;
+  color: var(--primary-color);
+}

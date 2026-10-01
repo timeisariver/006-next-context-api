@@ -1,0 +1,20 @@
+@use "breakpoints" as bp;
+
+.button {
+  padding: 8px 16px;
+  font: inherit;
+  color: var(--font-color-light);
+  cursor: pointer;
+  background: var(--primary-color);
+  border: none;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px var(--button-shadow);
+
+  &:hover {
+    background: var(--primary-color-darker);
+  }
+
+  @include bp.md {
+    padding: 10px 20px;
+  }
+}
