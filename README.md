@@ -27,14 +27,17 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ```
 app/                # Next.js のルーティング専用（src/_pages を再エクスポートするだけ）
 src/
-  _app/             # app レイヤー
-    styles/
+  _app/             # app レイヤー（スライスなし）
+    layouts/        #   セグメント（ルートレイアウト、ヘッダー）
+      index.ts      #     Public API
+    styles/         #   セグメント（グローバルスタイル）
   _pages/           # pages レイヤー
     home/           #   スライス
       ui/           #     セグメント
       index.ts      #     Public API
-  shared/           # shared レイヤー
-    ui/
+  shared/           # shared レイヤー（スライスなし）
+    ui/             #   セグメント（Button、SCSS パーシャル）
+      index.ts      #     Public API
 ```
 
 Next.js の `app/`・`pages/` と名前が衝突するため、FSD の `app`・`pages` レイヤーは `src/_app/`・`src/_pages/` としている。import は `@/*`（`src/*`）経由で行う（例: `@/_pages/home`、`@/shared/ui`）。
@@ -84,6 +87,8 @@ src/_app/styles/      # ○ レイヤー直下のセグメント
 src/shared/ui/        # ○ レイヤー直下のセグメント
 src/shared/task/ui/   # × shared にスライスは作らない
 ```
+
+スライスがないため、Public API はセグメントごとに `index.ts` を置く（例: `@/_app/layouts`、`@/shared/ui`）。ただし SCSS パーシャル（`_breakpoints.scss` など）は TypeScript の `index.ts` から export できないため、`@use "breakpoints" as bp;` のように直接読み込む。
 
 ### 依存ルール
 
