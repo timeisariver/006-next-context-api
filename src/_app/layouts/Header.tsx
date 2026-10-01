@@ -1,9 +1,14 @@
+import clsx from "clsx";
 import styles from "./Header.module.scss";
 
-export function Header() {
+type Props = {
+  className?: string;
+};
+
+export function Header({ className }: Props) {
   return (
-    <header className={styles.header}>
-      <span className={styles.logo}>006-next-context-api</span>
+    <header className={clsx(styles.Header, className)}>
+      <span className={styles.Header__logo}>006-next-context-api</span>
     </header>
   );
 }
