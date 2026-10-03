@@ -5,6 +5,8 @@
   padding: 11px 32px;
   border-top: 3px solid #16a34a;
   border-bottom: 1px solid #edf1ef;
+  background-color: #fff;
+  flex-shrink: 0;
 
   &__left {
     display: flex;

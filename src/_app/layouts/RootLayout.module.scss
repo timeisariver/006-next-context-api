@@ -1,0 +1,25 @@
+.RootLayout {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+
+  &__content {
+    display: flex;
+    flex: 1;
+    min-height: 0;
+  }
+
+  &__sidebar {
+    flex-shrink: 0;
+    width: 240px;
+    overflow-y: auto;
+    background-color: blue;
+  }
+
+  &__main {
+    flex: 1;
+    min-width: 0;
+    overflow-y: auto;
+  }
+}

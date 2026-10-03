@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "../styles/globals.scss";
 import { Header } from "./Header";
+import { Sidebar } from "./Sidebar";
+import s from "./RootLayout.module.scss";
+import clsx from "clsx";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -14,9 +17,14 @@ export const metadata: Metadata = {
 export function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
+      <body className={clsx(s.RootLayout, inter.className)}>
         <Header />
-        {children}
+        <div className={s.RootLayout__content}>
+          <div className={s.RootLayout__sidebar}>
+            <Sidebar />
+          </div>
+          <main className={s.RootLayout__main}>{children}</main>
+        </div>
       </body>
     </html>
   );
