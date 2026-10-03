@@ -20,6 +20,8 @@ src/
 
 Next.js の `app/`・`pages/` と名前が衝突するため、FSD の `app`・`pages` レイヤーは `src/_app/`・`src/_pages/` としている。import は `@/*`（`src/*`）経由で行う（例: `@/_pages/home`、`@/shared/ui`）。
 
+<img width="2720" height="1840" alt="fsd_app_pages_shared_imports" src="https://github.com/user-attachments/assets/3311e032-7f4d-4993-9cac-718ff1f64b21" />
+
 ## レイヤー
 
 | レイヤー | 役割                                                                       |
