@@ -12,14 +12,14 @@
 
   &__sidebar {
     flex-shrink: 0;
-    width: 240px;
     overflow-y: auto;
-    background-color: blue;
+    border-right: 1px solid #edf1ef;
   }
 
   &__main {
     flex: 1;
     min-width: 0;
     overflow-y: auto;
+    padding: 32px;
   }
 }

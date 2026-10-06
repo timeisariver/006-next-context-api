@@ -3,7 +3,7 @@
   align-items: center;
   justify-content: space-between;
   padding: 11px 32px;
-  border-top: 3px solid #16a34a;
+  border-top: 6px solid #16a34a;
   border-bottom: 1px solid #edf1ef;
   background-color: #fff;
   flex-shrink: 0;
@@ -24,6 +24,7 @@
       transform: translateY(-50%);
       width: 18px;
       height: 18px;
+      color: #94ae9f;
     }
   }
 
@@ -51,6 +52,10 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+
+    svg {
+      color: rgb(49, 68, 59);
+    }
 
     &:last-of-type {
       margin-left: 16px;

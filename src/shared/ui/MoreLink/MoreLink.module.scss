@@ -1,0 +1,15 @@
+.MoreLink {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  &__text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #42b883;
+  }
+
+  svg {
+    color: #42b883;
+  }
+}

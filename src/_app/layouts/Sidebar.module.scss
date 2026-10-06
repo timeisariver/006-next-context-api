@@ -1,1 +1,82 @@
-.Sidebar {}
+.Sidebar {
+  width: 238px;
+  overflow: hidden;
+  transition: width 0.3s ease;
+
+  &__toggle {
+    padding: 12px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+
+    svg {
+      color: rgb(85, 101, 92);
+    }
+  }
+
+  &__menuItem {
+    &Link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 26px;
+
+      &:hover {
+        background-color: #eef9f3;
+      }
+
+      svg {
+        color: #8a9690;
+      }
+
+      &._active {
+        background-color: #ecfdf3;
+        color: #1f8a5b;
+        font-weight: 700;
+
+        svg {
+          color: #1f8a5b;
+        }
+      }
+    }
+
+    &Text {
+      font-size: 14px;
+    }
+  }
+
+  &__category {
+    margin-top: 10px;
+  }
+
+  &__categoryItem {
+    &Link {
+      padding: 12px 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      font-size: 13px;
+      position: relative;
+    }
+
+    &Text {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      &::before {
+        content: '';
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background-color: red;
+        align-self: center;
+      }
+
+    }
+
+    &Time {
+      font-size: 10px;
+    }
+  }
+}

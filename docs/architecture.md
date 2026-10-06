@@ -36,10 +36,10 @@ Next.js の `app/`・`pages/` と名前が衝突するため、FSD の `app`・`
 
 ```ts
 // OK
-import { HomePage } from "@/_pages/home";
+import { Home } from "@/_pages/home";
 
 // NG（スライスの内部を直接参照している）
-import { HomePage } from "@/_pages/home/ui/HomePage";
+import { Home } from "@/_pages/home/ui/HomePage";
 ```
 
 ## セグメント

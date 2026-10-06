@@ -1,3 +1,4 @@
+import Link from "next/link";
 import s from "./Header.module.scss";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
 
@@ -5,7 +6,9 @@ export function Header() {
   return (
     <header className={s.Header}>
       <div className={s.Header__left}>
-        <h1 className={s.Header__logo}>Turvo</h1>
+        <h1 className={s.Header__logo}>
+          <Link href="/">Turvo</Link>
+        </h1>
         <div className={s.Header__search}>
           <Search />
           <input
