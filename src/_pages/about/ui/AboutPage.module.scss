@@ -1,6 +1,6 @@
 @use "breakpoints" as bp;
 
-.AboutPage {
+.root {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -10,12 +10,12 @@
   @include bp.md {
     padding: 32px;
   }
+}
 
-  &__title {
-    font-size: 24px;
-  }
+.title {
+  font-size: 24px;
+}
 
-  &__link {
-    text-decoration: underline;
-  }
+.link {
+  text-decoration: underline;
 }

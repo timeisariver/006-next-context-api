@@ -12,54 +12,54 @@ export function RecentProjects() {
   const { projects, isLoading, error } = useContext(ProjectsContext);
 
   return (
-    <section className={s.RecentProjects}>
-      <div className={s.RecentProjects__head}>
+    <section className={s.root}>
+      <div className={s.head}>
         <DashboardHead text="最近のプロジェクト" />
-        <div className={s.RecentProjects__headPlus}>
+        <div className={s.plus}>
           <Plus size={18} />
         </div>
       </div>
-      <div className={s.RecentProjects__content}>
+      <div className={s.content}>
         {isLoading ? (
           <p>読み込み中…</p>
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <ul className={s.RecentProjects__list}>
+          <ul className={s.list}>
             {projects.slice(0, 3).map((project) => (
-              <li key={project.id} className={s.RecentProjects__item}>
+              <li key={project.id} className={s.item}>
                 <Link
                   href={`/projects/${project.slug}`}
-                  className={s.RecentProjects__itemLink}
+                  className={s.link}
                   style={
                     { "--project-color": project.color } as React.CSSProperties
                   }
                 >
-                  <div className={s.RecentProjects__itemInfo}>
-                    <p className={s.RecentProjects__itemCategory}>
+                  <div className={s.info}>
+                    <p className={s.category}>
                       {project.name}
                     </p>
-                    <p className={s.RecentProjects__itemDate}>
+                    <p className={s.date}>
                       <Calendar size={10} />
                       <time dateTime={project.deadline}>
                         {dayjs(project.deadline).format("YYYY/MM/DD")}
                       </time>
                     </p>
                   </div>
-                  <p className={s.RecentProjects__itemTitle}>{project.goal}</p>
-                  <p className={s.RecentProjects__itemText}>
+                  <p className={s.title}>{project.goal}</p>
+                  <p className={s.text}>
                     {project.shouldbe}
                   </p>
-                  <div className={s.RecentProjects__itemStats}>
-                    <div className={s.RecentProjects__itemStat}>
+                  <div className={s.stats}>
+                    <div className={s.stat}>
                       <GitCommitHorizontal size={12} />
-                      <span className={s.RecentProjects__itemStatCount}>
+                      <span className={s.statCount}>
                         {project.stats.kinds.milestone}
                       </span>
                     </div>
-                    <div className={s.RecentProjects__itemStat}>
+                    <div className={s.stat}>
                       <FileText size={12} />
-                      <span className={s.RecentProjects__itemStatCount}>
+                      <span className={s.statCount}>
                         {project.stats.kinds.task}
                       </span>
                     </div>
@@ -70,7 +70,7 @@ export function RecentProjects() {
           </ul>
         )}
       </div>
-      <div className={s.RecentProjects__links}>
+      <div className={s.links}>
         <MoreLink text="すべてのプロジェクトをみる" href="#" />
       </div>
     </section>
