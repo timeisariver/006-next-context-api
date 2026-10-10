@@ -14,7 +14,7 @@ src/
       ui/           #     セグメント
       index.ts      #     Public API
   shared/           # shared レイヤー（スライスなし）
-    ui/             #   セグメント（Button、SCSS パーシャル）
+    ui/             #   セグメント（共通 UI 部品、SCSS パーシャル）
       index.ts      #     Public API
 ```
 

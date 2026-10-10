@@ -1,15 +1,9 @@
-@use "breakpoints" as bp;
-
 .root {
   display: flex;
   flex-direction: column;
   gap: 16px;
   align-items: flex-start;
-  padding: 16px;
-
-  @include bp.md {
-    padding: 32px;
-  }
+  padding: 32px;
 }
 
 .title {
