@@ -14,6 +14,10 @@ src/
       ui/           #     セグメント
       index.ts      #     Public API
   shared/           # shared レイヤー（スライスなし）
+    api/            #   セグメント（データ取得、API レスポンスの型）
+      index.ts      #     Public API
+    model/          #   セグメント（複数ページで共有する状態。Context など）
+      index.ts      #     Public API
     ui/             #   セグメント（共通 UI 部品、SCSS パーシャル）
       index.ts      #     Public API
 ```

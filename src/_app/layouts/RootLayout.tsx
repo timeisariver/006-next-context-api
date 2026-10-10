@@ -5,6 +5,7 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import s from "./RootLayout.module.scss";
 import clsx from "clsx";
+import { ProjectsProvider } from "@/shared/model";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,13 +19,15 @@ export function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ja">
       <body className={clsx(s.root, inter.className)}>
-        <Header />
-        <div className={s.content}>
-          <div className={s.sidebar}>
-            <Sidebar />
+        <ProjectsProvider>
+          <Header />
+          <div className={s.content}>
+            <div className={s.sidebar}>
+              <Sidebar />
+            </div>
+            <main className={s.main}>{children}</main>
           </div>
-          <main className={s.main}>{children}</main>
-        </div>
+        </ProjectsProvider>
       </body>
     </html>
   );
