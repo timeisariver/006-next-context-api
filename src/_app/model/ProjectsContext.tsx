@@ -46,10 +46,18 @@ export function ProjectsProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getProjects()
-      .then((data) => setProjects(data))
-      .catch(() => setError("読み込みに失敗しました"))
-      .finally(() => setIsLoading(false));
+    async function init() {
+      try {
+        const data = await getProjects();
+        setProjects(data);
+      } catch {
+        setError("読み込みに失敗しました");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    init();
   }, []);
 
   return (

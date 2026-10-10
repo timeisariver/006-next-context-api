@@ -1,7 +1,6 @@
 import axios from "axios";
 
-export function getProjects() {
-  return axios.get("/api/v1/users/projects").then((res) => {
-    return res.data.data;
-  });
+export async function getProjects() {
+  const { data } = await axios.get("/api/v1/users/projects");
+  return data.data;
 }
