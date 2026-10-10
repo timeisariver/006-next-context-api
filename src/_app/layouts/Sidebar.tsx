@@ -26,34 +26,34 @@ export function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <nav className={s.Sidebar}>
-      <div className={s.Sidebar__toggle}>
+    <nav className={s.root}>
+      <div className={s.toggle}>
         <ChevronLeft size={24} />
       </div>
-      <ul className={s.Sidebar__menu}>
+      <ul className={s.menu}>
         {MENU_ITEMS.map(({ href, label, Icon }) => {
           const isActive = isActivePath(pathname, href);
           return (
-            <li key={href} className={s.Sidebar__menuItem}>
+            <li key={href} className={s.menuItem}>
               <Link
                 href={href}
-                className={clsx(s.Sidebar__menuItemLink, {
+                className={clsx(s.menuItemLink, {
                   [s._active]: isActive,
                 })}
                 aria-current={isActive ? "page" : undefined}
               >
                 <Icon size={16} />
-                <span className={s.Sidebar__menuItemText}>{label}</span>
+                <span className={s.menuItemText}>{label}</span>
               </Link>
             </li>
           );
         })}
       </ul>
-      <ul className={s.Sidebar__category}>
-        <li className={s.Sidebar__categoryItem}>
-          <Link href="#" className={s.Sidebar__categoryItemLink}>
-            <span className={s.Sidebar__categoryItemText}>プログラミング</span>
-            <time className={s.Sidebar__categoryItemTime}>2026/10/20</time>
+      <ul className={s.category}>
+        <li className={s.categoryItem}>
+          <Link href="#" className={s.categoryItemLink}>
+            <span className={s.categoryItemText}>プログラミング</span>
+            <time className={s.categoryItemTime}>2026/10/20</time>
           </Link>
         </li>
       </ul>

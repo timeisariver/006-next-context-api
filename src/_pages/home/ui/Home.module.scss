@@ -1,32 +1,32 @@
-.Home {
+.root {
   display: flex;
   flex-direction: column;
   gap: 24px;
   align-items: flex-start;
+}
 
-  &__title {
-    color: #1f2f2a;
-    font-size: 18px;
-    font-weight: 700;
-  }
+.title {
+  color: #1f2f2a;
+  font-size: 18px;
+  font-weight: 700;
+}
 
-  &__content {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-areas: "project summary" "table table";
-    width: 100%;
-    gap: 32px;
-  }
+.content {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-areas: "project summary" "table table";
+  width: 100%;
+  gap: 32px;
+}
 
-  &__project {
-    grid-area: project;
-  }
+.project {
+  grid-area: project;
+}
 
-  &__summary {
-    grid-area: summary;
-  }
+.summary {
+  grid-area: summary;
+}
 
-  &__table {
-    grid-area: table;
-  }
+.table {
+  grid-area: table;
 }

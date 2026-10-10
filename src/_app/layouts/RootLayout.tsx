@@ -17,13 +17,13 @@ export const metadata: Metadata = {
 export function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="ja">
-      <body className={clsx(s.RootLayout, inter.className)}>
+      <body className={clsx(s.root, inter.className)}>
         <Header />
-        <div className={s.RootLayout__content}>
-          <div className={s.RootLayout__sidebar}>
+        <div className={s.content}>
+          <div className={s.sidebar}>
             <Sidebar />
           </div>
-          <main className={s.RootLayout__main}>{children}</main>
+          <main className={s.main}>{children}</main>
         </div>
       </body>
     </html>

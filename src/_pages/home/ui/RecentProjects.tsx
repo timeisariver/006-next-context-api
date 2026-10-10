@@ -12,45 +12,45 @@ import { MoreLink } from "@/shared/ui/MoreLink/MoreLink";
 
 export function RecentProjects() {
   return (
-    <section className={s.RecentProjects}>
-      <div className={s.RecentProjects__head}>
+    <section className={s.root}>
+      <div className={s.head}>
         <DashboardHead text="最近のプロジェクト" />
-        <div className={s.RecentProjects__headPlus}>
+        <div className={s.plus}>
           <Plus size={18} />
         </div>
       </div>
-      <div className={s.RecentProjects__content}>
-        <ul className={s.RecentProjects__list}>
-          <li className={s.RecentProjects__item}>
-            <Link href="#" className={s.RecentProjects__itemLink}>
-              <div className={s.RecentProjects__itemInfo}>
-                <p className={s.RecentProjects__itemCategory}>プログラミング</p>
-                <p className={s.RecentProjects__itemDate}>
+      <div className={s.content}>
+        <ul className={s.list}>
+          <li className={s.item}>
+            <Link href="#" className={s.link}>
+              <div className={s.info}>
+                <p className={s.category}>プログラミング</p>
+                <p className={s.date}>
                   <Calendar size={10} />
                   <time>2026/10/11</time>
                 </p>
               </div>
-              <p className={s.RecentProjects__itemTitle}>
+              <p className={s.title}>
                 期限日までにフロントエンドエンジニアとして就職する。
               </p>
-              <p className={s.RecentProjects__itemText}>
+              <p className={s.text}>
                 エンジニアとしての学習習慣を身につけて生活する。
               </p>
-              <div className={s.RecentProjects__itemStats}>
-                <div className={s.RecentProjects__itemStat}>
+              <div className={s.stats}>
+                <div className={s.stat}>
                   <GitCommitHorizontal size={12} />
-                  <span className={s.RecentProjects__itemStatCount}>4</span>
+                  <span className={s.statCount}>4</span>
                 </div>
-                <div className={s.RecentProjects__itemStat}>
+                <div className={s.stat}>
                   <FileText size={12} />
-                  <span className={s.RecentProjects__itemStatCount}>4</span>
+                  <span className={s.statCount}>4</span>
                 </div>
               </div>
             </Link>
           </li>
         </ul>
       </div>
-      <div className={s.RecentProjects__links}>
+      <div className={s.links}>
         <MoreLink text="すべてのプロジェクトをみる" href="#" />
       </div>
     </section>

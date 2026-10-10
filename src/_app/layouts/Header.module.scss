@@ -1,4 +1,4 @@
-.Header {
+.root {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -7,68 +7,67 @@
   border-bottom: 1px solid #edf1ef;
   background-color: #fff;
   flex-shrink: 0;
+}
 
-  &__left {
-    display: flex;
-    align-items: center;
-    gap: 48px;
+.left {
+  display: flex;
+  align-items: center;
+  gap: 48px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.search {
+  position: relative;
+
+  svg {
+    position: absolute;
+    top: 50%;
+    left: 14px;
+    transform: translateY(-50%);
+    width: 18px;
+    height: 18px;
+    color: #94ae9f;
+  }
+}
+
+.searchInput {
+  border: 1px solid #dfe7e3;
+  border-radius: 12px;
+  padding: 10px 14px 10px 38px;
+  font-size: 14px;
+  min-width: 520px;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  svg {
+    color: rgb(49, 68, 59);
   }
 
-  &__search {
-    position: relative;
+  &:last-of-type {
+    margin-left: 16px;
+    background-color: #dcfce7;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
 
     svg {
-      position: absolute;
-      top: 50%;
-      left: 14px;
-      transform: translateY(-50%);
-      width: 18px;
-      height: 18px;
-      color: #94ae9f;
-    }
-  }
-
-  &__searchInput {
-    border: 1px solid #dfe7e3;
-    border-radius: 12px;
-    padding: 10px 14px 10px 38px;
-    font-size: 14px;
-    min-width: 520px;
-  }
-
-  &__logo {
-    font-size: 20px;
-    font-weight: 800;
-  }
-
-  &__icons {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-  }
-
-  &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-
-    svg {
-      color: rgb(49, 68, 59);
-    }
-
-    &:last-of-type {
-      margin-left: 16px;
-      background-color: #dcfce7;
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-
-
-      svg {
-        width: 20px;
-        height: 20px;
-      }
+      width: 20px;
+      height: 20px;
     }
   }
 }

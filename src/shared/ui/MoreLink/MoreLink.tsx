@@ -12,9 +12,9 @@ type Props = {
 export function MoreLink({ text, href, className }: Props) {
   return (
     <div>
-      <Link href={href} className={clsx(s.MoreLink, className)}>
-        <span className={s.MoreLink__text}>{text}</span>
-        <MoveRight size={10} />
+      <Link href={href} className={clsx(s.root, className)}>
+        <span className={s.text}>{text}</span>
+        <MoveRight size={10} className={s.icon} />
       </Link>
     </div>
   );

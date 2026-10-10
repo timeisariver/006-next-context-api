@@ -7,5 +7,5 @@ type Props = {
 };
 
 export function DashboardHead({ text, className }: Props) {
-  return <h2 className={clsx(s.DashboardHead, className)}>{text}</h2>;
+  return <h2 className={clsx(s.root, className)}>{text}</h2>;
 }

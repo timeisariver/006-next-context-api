@@ -1,25 +1,25 @@
-.RootLayout {
+.root {
   display: flex;
   flex-direction: column;
   height: 100dvh;
   overflow: hidden;
+}
 
-  &__content {
-    display: flex;
-    flex: 1;
-    min-height: 0;
-  }
+.content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
 
-  &__sidebar {
-    flex-shrink: 0;
-    overflow-y: auto;
-    border-right: 1px solid #edf1ef;
-  }
+.sidebar {
+  flex-shrink: 0;
+  overflow-y: auto;
+  border-right: 1px solid #edf1ef;
+}
 
-  &__main {
-    flex: 1;
-    min-width: 0;
-    overflow-y: auto;
-    padding: 32px;
-  }
+.main {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  padding: 32px;
 }

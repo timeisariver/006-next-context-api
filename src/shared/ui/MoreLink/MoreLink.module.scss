@@ -1,15 +1,17 @@
-.MoreLink {
+.root {
   display: flex;
   align-items: center;
   gap: 4px;
+}
 
-  &__text {
-    font-size: 12px;
-    font-weight: 700;
-    color: #42b883;
-  }
+.text {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
 
+.icon {
   svg {
-    color: #42b883;
+    color: var(--color-primary);
   }
 }

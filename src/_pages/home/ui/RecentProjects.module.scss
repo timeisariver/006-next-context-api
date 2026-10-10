@@ -1,95 +1,92 @@
-.RecentProjects {
+.root {
   padding: 28px;
   width: 100%;
   border: 1px solid #e4e9e6;
   border-radius: 8px;
+}
 
-  &__head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.plus {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+  color: rgb(148, 174, 159);
 
-    &Plus {
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      cursor: pointer;
-      color: rgb(148, 174, 159);
-
-      &:hover {
-        background: #eef9f3;
-        color: #42b883;
-      }
-    }
+  &:hover {
+    background: #eef9f3;
+    color: #42b883;
   }
+}
 
-  &__list {
-    display: grid;
-    gap: 32px;
-    margin-top: 20px;
-  }
+.list {
+  display: grid;
+  gap: 32px;
+  margin-top: 20px;
+}
 
-  &__item {
-    &Link {
-      display: inline-block;
-      border-radius: 8px;
-      border-left: 5px solid rgba(0, 0, 140, 0.6);
-      padding: 16px;
-      box-shadow: rgba(34, 34, 34, 0.063) 1px 1px 3px 1px;
-      width: 100%;
-    }
+.link {
+  display: inline-block;
+  border-radius: 8px;
+  border-left: 5px solid rgba(0, 0, 140, 0.6);
+  padding: 16px;
+  box-shadow: rgba(34, 34, 34, 0.063) 1px 1px 3px 1px;
+  width: 100%;
+}
 
-    &Info {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
 
-    &Category,
-    &Date {
-      font-size: 10px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: #55655c;
-    }
+.category,
+.date {
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #55655c;
+}
 
-    &Title {
-      font-size: 20px;
-      font-weight: 700;
-      color: #55655c;
-      margin-top: 16px;
-    }
+.title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #55655c;
+  margin-top: 16px;
+}
 
-    &Text {
-      font-size: 14px;
-      margin-top: 8px;
-    }
+.text {
+  font-size: 14px;
+  margin-top: 8px;
+}
 
-    &Stats {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      gap: 8px;
-    }
+.stats {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+}
 
-    &Stat {
-      display: flex;
-      align-items: center;
-      gap: 4px;
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
 
-      &Count {
-        font-size: 12px;
-      }
-    }
-  }
+.statCount {
+  font-size: 12px;
+}
 
-  &__links {
-    margin-top: 36px;
-  }
+.links {
+  margin-top: 36px;
 }

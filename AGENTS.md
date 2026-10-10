@@ -23,12 +23,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、コンポーネントの隣（各スライスの `ui/`）に置く。
 - 共通の SCSS パーシャルは `src/shared/ui/` に置く。`sassOptions.loadPaths` を設定済みのため `@use "breakpoints" as bp;` のように相対パスなしで読み込める。
 
-## CSS 命名規則（変形 BEM）
+## CSS 命名規則
 
-詳細は `docs/css-naming.md` を参照。要点:
+詳細は `docs/css-naming.md` を参照。BEM は使わない。要点:
 
-- Block はコンポーネント名と同じ PascalCase（`.TabPanel`）。1 つの `.module.scss` に Block は 1 つ。
-- Element は `.TabPanel__tab`、Modifier は `._active` のように独立したクラスにし、SCSS では必ず `&._active` とネストして Block / Element と組み合わせる。
-- Element 名・Modifier 名は camelCase にし、ハイフンを使わない。Element のネストは 1 階層まで。
-- クラス名は必ず `styles.xxx` 経由で指定し、結合には `clsx` を使う（`{ [styles._active]: isActive }`）。
-- コンポーネントは `className` props を受け取り、ルート要素で `clsx(styles.Block, className)` と結合する。
+- ルート要素のクラスは `.root`、子要素は役割を表す短い camelCase の名前（`.title`, `.statCount`）にする。ハイフンは使わない。
+- `.ComponentName__element` のような BEM のプレフィックスは付けず、クラスはネストせずフラットに並べる。
+- ネストしてよいのは擬似クラス・擬似要素（`&:hover`）、状態クラス（`&._active`）、メディアクエリのみ。
+- クラス名は必ず `s.xxx` 経由で指定し、結合には `clsx` を使う（`{ [s._active]: isActive }`）。
+- コンポーネントは `className` props を受け取り、ルート要素で `clsx(s.root, className)` と結合する。
