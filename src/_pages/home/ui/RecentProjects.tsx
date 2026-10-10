@@ -1,12 +1,11 @@
 "use client";
 import s from "./RecentProjects.module.scss";
-import { Calendar, Plus, GitCommitHorizontal, FileText } from "lucide-react";
-import Link from "next/link";
+import { Plus } from "lucide-react";
 import { DashboardHead } from "@/shared/ui/DashboardHead/DashboardHead";
 import { MoreLink } from "@/shared/ui/MoreLink/MoreLink";
 import { useContext } from "react";
-import { ProjectsContext } from "@/_app/model";
-import dayjs from "dayjs";
+import { ProjectsContext } from "@/shared/model";
+import { RecentProject } from "./RecentProject";
 
 export function RecentProjects() {
   const { projects, isLoading, error } = useContext(ProjectsContext);
@@ -27,45 +26,7 @@ export function RecentProjects() {
         ) : (
           <ul className={s.list}>
             {projects.slice(0, 3).map((project) => (
-              <li key={project.id} className={s.item}>
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className={s.link}
-                  style={
-                    { "--project-color": project.color } as React.CSSProperties
-                  }
-                >
-                  <div className={s.info}>
-                    <p className={s.category}>
-                      {project.name}
-                    </p>
-                    <p className={s.date}>
-                      <Calendar size={10} />
-                      <time dateTime={project.deadline}>
-                        {dayjs(project.deadline).format("YYYY/MM/DD")}
-                      </time>
-                    </p>
-                  </div>
-                  <p className={s.title}>{project.goal}</p>
-                  <p className={s.text}>
-                    {project.shouldbe}
-                  </p>
-                  <div className={s.stats}>
-                    <div className={s.stat}>
-                      <GitCommitHorizontal size={12} />
-                      <span className={s.statCount}>
-                        {project.stats.kinds.milestone}
-                      </span>
-                    </div>
-                    <div className={s.stat}>
-                      <FileText size={12} />
-                      <span className={s.statCount}>
-                        {project.stats.kinds.task}
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              </li>
+              <RecentProject key={project.id} project={project} />
             ))}
           </ul>
         )}

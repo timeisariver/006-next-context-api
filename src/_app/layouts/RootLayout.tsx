@@ -5,7 +5,7 @@ import { Header } from "./Header";
 import { Sidebar } from "./Sidebar";
 import s from "./RootLayout.module.scss";
 import clsx from "clsx";
-import { ProjectsProvider } from "../model";
+import { ProjectsProvider } from "@/shared/model";
 
 const inter = Inter({
   subsets: ["latin"],
