@@ -1,0 +1,27 @@
+.link {
+  padding: 12px 26px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: 13px;
+  position: relative;
+}
+
+.text {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &::before {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--project-color, red);
+    align-self: center;
+  }
+}
+
+.time {
+  font-size: 10px;
+}
