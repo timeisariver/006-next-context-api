@@ -29,7 +29,6 @@ npm run dev
 ## ドキュメント
 
 - [ディレクトリ構成（Feature-Sliced Design）](docs/architecture.md) — レイヤー・スライス・セグメントの分け方と依存ルール
-- [CSS 命名規則](docs/css-naming.md) — クラス名の付け方と CSS Modules・clsx の使い方
 
 ### 要点
 
