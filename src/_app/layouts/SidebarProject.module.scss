@@ -17,7 +17,7 @@
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background-color: var(--project-color, red);
+    background-color: var(--project-color, var(--color-text-muted));
     align-self: center;
   }
 }

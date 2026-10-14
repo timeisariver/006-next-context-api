@@ -9,13 +9,12 @@
   display: flex;
   flex: 1;
   min-height: 0;
-  background-color: #fbfbfb;
 }
 
 .sidebar {
   flex-shrink: 0;
   overflow-y: auto;
-  border-right: 1px solid #edf1ef;
+  border-right: 1px solid var(--color-border);
 }
 
 .main {

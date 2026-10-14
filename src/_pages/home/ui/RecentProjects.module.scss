@@ -1,7 +1,7 @@
 .root {
   padding: 28px;
   width: 100%;
-  border: 1px solid #e4e9e6;
+  border: 1px solid var(--color-border);
   border-radius: 8px;
 }
 
@@ -19,11 +19,11 @@
   justify-content: center;
   border-radius: 50%;
   cursor: pointer;
-  color: rgb(148, 174, 159);
+  color: var(--color-text-muted);
 
   &:hover {
-    background: #eef9f3;
-    color: #42b883;
+    background: var(--color-primary-bg);
+    color: var(--color-primary);
   }
 }
 

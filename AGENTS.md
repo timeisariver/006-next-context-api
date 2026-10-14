@@ -34,6 +34,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## スタイル（SCSS）
 
 - グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
+- ライトテーマのみ対応する（ダークモードには対応しない）。
+- 色・影・フォントは `src/_app/styles/globals.scss` の CSS 変数（`var(--color-primary)` など）を使い、16 進数などを直接書かない。足りない色は、既存の変数で代用できないか確認してから globals.scss に追加する。
 - コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、コンポーネントの隣（各スライスの `ui/`）に置く。
 - 共通の SCSS パーシャルは `src/shared/ui/` に置く。`sassOptions.loadPaths` を設定済みのため、`src/shared/ui/_name.scss` は `@use "name";` のように相対パスなしで読み込める。
 
