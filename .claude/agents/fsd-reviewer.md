@@ -36,6 +36,8 @@ tools: Read, Glob, Grep, Bash, Skill
 - クラスは `s.xxx` で指定し、結合に `clsx` を使っているか。
 - コンポーネントは `className` を受け取り、`clsx(s.root, className)` で結合しているか。
 - `*.module.scss` がコンポーネントの隣に置かれているか。使われていないクラスが残っていないか。
+- 色・影を 16 進数などで直接書かず、`globals.scss` の CSS 変数を使っているか。新しい変数を足した場合、既存の変数で代用できなかったか。
+- クリックできる要素は `<button>` か `<Link>` になっているか。アイコンだけのボタンに `aria-label` があるか。
 
 ## 報告の形式
 

@@ -1,11 +1,17 @@
+import clsx from "clsx";
 import s from "./SidebarProject.module.scss";
 import dayjs from "dayjs";
 import Link from "next/link";
 import type { Project } from "@/shared/api";
 
-export function SidebarProject({ project }: { project: Project }) {
+type Props = {
+  project: Project;
+  className?: string;
+};
+
+export function SidebarProject({ project, className }: Props) {
   return (
-    <li className={s.root}>
+    <li className={clsx(s.root, className)}>
       <Link href={`/projects/${project.slug}`} className={s.link}>
         <span
           className={s.text}

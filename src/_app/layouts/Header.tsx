@@ -1,39 +1,54 @@
+import clsx from "clsx";
 import Link from "next/link";
 import s from "./Header.module.scss";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
 
-export function Header() {
+type Props = {
+  className?: string;
+};
+
+// TODO: 各ボタンの動作は未実装
+const ACTIONS = [
+  { label: "タスクを追加", Icon: Plus },
+  { label: "ヘルプ", Icon: Info },
+  { label: "通知", Icon: Bell },
+];
+
+export function Header({ className }: Props) {
   return (
-    <header className={s.root}>
+    <header className={clsx(s.root, className)}>
       <div className={s.left}>
-        <h1 className={s.logo}>
-          <Link href="/">Turvo</Link>
-        </h1>
+        <Link href="/" className={s.logo}>
+          Turvo
+        </Link>
         <div className={s.search}>
-          <Search />
+          <Search className={s.searchIcon} />
           <input
             type="text"
             placeholder="タスクタイトルで検索"
+            aria-label="タスクタイトルで検索"
             className={s.searchInput}
           />
         </div>
       </div>
-      <div className={s.right}>
-        <ul className={s.icons}>
-          <li className={s.icon}>
-            <Plus />
+      <ul className={s.actions}>
+        {ACTIONS.map(({ label, Icon }) => (
+          <li key={label}>
+            <button type="button" className={s.action} aria-label={label}>
+              <Icon />
+            </button>
           </li>
-          <li className={s.icon}>
-            <Info />
-          </li>
-          <li className={s.icon}>
-            <Bell />
-          </li>
-          <li className={s.icon}>
-            <User color="#16a34a" />
-          </li>
-        </ul>
-      </div>
+        ))}
+        <li>
+          <button
+            type="button"
+            className={clsx(s.action, s.avatar)}
+            aria-label="アカウント"
+          >
+            <User />
+          </button>
+        </li>
+      </ul>
     </header>
   );
 }

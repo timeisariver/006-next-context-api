@@ -11,7 +11,7 @@ export function TaskTable({ className }: Props) {
     <div className={clsx(s.root, className)}>
       <div className={s.head}>
         <DashboardHead text="タスク一覧" />
-        <MoreLink text="タスク一覧" href="#" />
+        <MoreLink text="すべてのタスクをみる" href="/tasks" />
       </div>
       <div className={s.content}></div>
     </div>

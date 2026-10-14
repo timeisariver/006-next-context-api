@@ -5,14 +5,13 @@
 }
 
 .toggle {
+  width: 100%;
   padding: 12px 20px;
   cursor: pointer;
   display: flex;
   justify-content: flex-end;
 
-  svg {
-    color: rgb(85, 101, 92);
-  }
+  color: var(--color-text-sub);
 }
 
 .menuItemLink {
@@ -22,20 +21,20 @@
   padding: 16px 26px;
 
   &:hover {
-    background-color: #eef9f3;
+    background-color: var(--color-primary-bg);
   }
 
   svg {
-    color: #8a9690;
+    color: var(--color-text-muted);
   }
 
   &._active {
-    background-color: #ecfdf3;
-    color: #1f8a5b;
+    background-color: var(--color-primary-bg);
+    color: var(--color-primary-strong);
     font-weight: 700;
 
     svg {
-      color: #1f8a5b;
+      color: var(--color-primary-strong);
     }
   }
 }

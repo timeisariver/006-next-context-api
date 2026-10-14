@@ -17,9 +17,14 @@ export function RecentProjects({ className }: Props) {
     <section className={clsx(s.root, className)}>
       <div className={s.head}>
         <DashboardHead text="最近のプロジェクト" />
-        <div className={s.plus}>
+        {/* TODO: プロジェクトの追加は未実装 */}
+        <button
+          type="button"
+          className={s.plus}
+          aria-label="プロジェクトを追加"
+        >
           <Plus size={18} />
-        </div>
+        </button>
       </div>
       <div className={s.content}>
         {isLoading ? (
@@ -35,7 +40,7 @@ export function RecentProjects({ className }: Props) {
         )}
       </div>
       <div className={s.links}>
-        <MoreLink text="すべてのプロジェクトをみる" href="#" />
+        <MoreLink text="すべてのプロジェクトをみる" href="/projects" />
       </div>
     </section>
   );

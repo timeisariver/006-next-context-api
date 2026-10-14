@@ -24,16 +24,25 @@ function isActivePath(pathname: string, href: string) {
   return pathname === href || pathname.startsWith(`${href}/`);
 }
 
-export function Sidebar() {
+type Props = {
+  className?: string;
+};
+
+export function Sidebar({ className }: Props) {
   const pathname = usePathname();
 
   const { projects, isLoading, error } = useProjects();
 
   return (
-    <nav className={s.root}>
-      <div className={s.toggle}>
+    <nav className={clsx(s.root, className)}>
+      {/* TODO: サイドバーの開閉は未実装 */}
+      <button
+        type="button"
+        className={s.toggle}
+        aria-label="サイドバーを閉じる"
+      >
         <ChevronLeft size={24} />
-      </div>
+      </button>
       <ul className={s.menu}>
         {MENU_ITEMS.map(({ href, label, Icon }) => {
           const isActive = isActivePath(pathname, href);
