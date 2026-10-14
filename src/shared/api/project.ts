@@ -1,3 +1,5 @@
+import axios from "axios";
+
 export type ProjectStats = {
   kinds: {
     milestone: number;
@@ -22,3 +24,8 @@ export type Project = {
   slug: string;
   stats: ProjectStats;
 };
+
+export async function getProjects(): Promise<Project[]> {
+  const { data } = await axios.get("/api/v1/users/projects");
+  return data.data;
+}

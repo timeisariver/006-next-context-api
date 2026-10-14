@@ -1,8 +1,7 @@
 "use client";
 
 import { createContext, useEffect, useState } from "react";
-import { getProjects } from "../api/getProjects";
-import type { Project } from "./types";
+import { getProjects, type Project } from "@/shared/api";
 
 type ProjectsValue = {
   projects: Project[];
