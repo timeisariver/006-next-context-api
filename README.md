@@ -26,6 +26,7 @@ npm run dev
 | `npm run typecheck`    | TypeScript の型チェック       |
 | `npm run format`       | Prettier で整形               |
 | `npm run format:check` | Prettier の整形漏れをチェック |
+| `npm run screenshots`  | PR 用のスクリーンショット撮影 |
 
 ## ドキュメント
 
