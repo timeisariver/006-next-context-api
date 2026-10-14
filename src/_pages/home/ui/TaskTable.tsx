@@ -1,10 +1,14 @@
-import { DashboardHead } from "@/shared/ui/DashboardHead/DashboardHead";
+import clsx from "clsx";
+import { DashboardHead, MoreLink } from "@/shared/ui";
 import s from "./TaskTable.module.scss";
-import { MoreLink } from "@/shared/ui/MoreLink/MoreLink";
 
-export function TaskTable() {
+type Props = {
+  className?: string;
+};
+
+export function TaskTable({ className }: Props) {
   return (
-    <div className={s.root}>
+    <div className={clsx(s.root, className)}>
       <div className={s.head}>
         <DashboardHead text="タスク一覧" />
         <MoreLink text="タスク一覧" href="#" />

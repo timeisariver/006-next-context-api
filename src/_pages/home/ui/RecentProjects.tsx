@@ -1,16 +1,20 @@
 "use client";
+import clsx from "clsx";
 import s from "./RecentProjects.module.scss";
 import { Plus } from "lucide-react";
-import { DashboardHead } from "@/shared/ui/DashboardHead/DashboardHead";
-import { MoreLink } from "@/shared/ui/MoreLink/MoreLink";
+import { DashboardHead, MoreLink } from "@/shared/ui";
 import { useProjects } from "@/entities/project";
 import { RecentProject } from "./RecentProject";
 
-export function RecentProjects() {
+type Props = {
+  className?: string;
+};
+
+export function RecentProjects({ className }: Props) {
   const { projects, isLoading, error } = useProjects();
 
   return (
-    <section className={s.root}>
+    <section className={clsx(s.root, className)}>
       <div className={s.head}>
         <DashboardHead text="最近のプロジェクト" />
         <div className={s.plus}>
