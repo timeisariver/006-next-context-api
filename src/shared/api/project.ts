@@ -25,7 +25,11 @@ export type Project = {
   stats: ProjectStats;
 };
 
+type ProjectsResponse = {
+  data: Project[];
+};
+
 export async function getProjects(): Promise<Project[]> {
-  const { data } = await axios.get("/api/v1/users/projects");
+  const { data } = await axios.get<ProjectsResponse>("/api/v1/users/projects");
   return data.data;
 }
