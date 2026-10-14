@@ -16,6 +16,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // 教材として配布された API（改変しない）
     "app/api/**",
+    // Claude Code のサブエージェント用 worktree
+    ".claude/worktrees/**",
   ]),
 ]);
 

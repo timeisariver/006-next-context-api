@@ -16,6 +16,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
 - `npm run screenshots -- [ページ ...]` — PR 用のスクリーンショットを撮る（詳細は `scripts/pr-screenshots.mjs`）。
 
+# 開発の流れ
+
+1. 仕様書を `docs/specs/_template.md` をもとに `docs/specs/<機能名>.md` に書く（人が書く）。
+2. `/implement docs/specs/<機能名>.md` — サブエージェントで並列に実装し、レビューまで行う。
+3. `/pr` — スクリーンショットを撮り、PR を作成する。
+
 # ディレクトリ構成（Feature-Sliced Design）
 
 このプロジェクトは Feature-Sliced Design (FSD) v2.1 で構成する。詳細は `docs/architecture.md` を参照。

@@ -25,6 +25,9 @@
 
 # PR 用スクリーンショット（scripts/pr-screenshots.mjs の出力）
 /.screenshots/
+
+# Claude Code のサブエージェント用 worktree
+/.claude/worktrees/
 *.pem
 
 # debug
