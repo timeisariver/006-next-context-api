@@ -8,11 +8,17 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 <!-- END:nextjs-agent-rules -->
 
+# コマンド
+
+- `npm run dev` — 開発サーバーを起動する。
+- `npm run lint` — ESLint を実行する。
+- `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
+
 # ディレクトリ構成（Feature-Sliced Design）
 
 このプロジェクトは Feature-Sliced Design (FSD) v2.1 で構成する。詳細は `docs/architecture.md` を参照。
 
-- ルートの `app/` は Next.js のルーティング専用。ルートファイルは `src/_pages/` を再エクスポートするだけにする。
+- ルートの `app/` は Next.js のルーティング専用。ルートファイルは `src/_pages/`（レイアウトは `src/_app/`）を再エクスポートするだけにする。
 - FSD のレイヤーは `src/` に置く。Next.js と名前が衝突する `app` / `pages` レイヤーは `src/_app/` / `src/_pages/` とする。
 - import は `@/*`（`src/*`）経由で行う（例: `@/_pages/home`, `@/shared/ui`）。
 - `app/api/` は教材として配布された API のため改変しない（FSD の `api-routes` 構成の対象外）。
@@ -21,11 +27,11 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
 - コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、コンポーネントの隣（各スライスの `ui/`）に置く。
-- 共通の SCSS パーシャルは `src/shared/ui/` に置く。`sassOptions.loadPaths` を設定済みのため `@use "breakpoints" as bp;` のように相対パスなしで読み込める。
+- 共通の SCSS パーシャルは `src/shared/ui/` に置く。`sassOptions.loadPaths` を設定済みのため、`src/shared/ui/_name.scss` は `@use "name";` のように相対パスなしで読み込める。
 
 ## CSS 命名規則
 
-詳細は `docs/css-naming.md` を参照。BEM は使わない。要点:
+BEM は使わない。
 
 - ルート要素のクラスは `.root`、子要素は役割を表す短い camelCase の名前（`.title`, `.statCount`）にする。ハイフンは使わない。
 - `.ComponentName__element` のような BEM のプレフィックスは付けず、クラスはネストせずフラットに並べる。

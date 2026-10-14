@@ -72,7 +72,7 @@ src/shared/ui/        # ○ レイヤー直下のセグメント
 src/shared/task/ui/   # × shared にスライスは作らない
 ```
 
-スライスがないため、Public API はセグメントごとに `index.ts` を置く（例: `@/_app/layouts`、`@/shared/ui`）。ただし SCSS パーシャル（`_breakpoints.scss` など）は TypeScript の `index.ts` から export できないため、`@use "breakpoints" as bp;` のように直接読み込む。
+スライスがないため、Public API はセグメントごとに `index.ts` を置く（例: `@/_app/layouts`、`@/shared/ui`）。ただし SCSS パーシャル（`_name.scss`）は TypeScript の `index.ts` から export できないため、`@use "name";` のように直接読み込む。
 
 ## 依存ルール
 
@@ -103,5 +103,6 @@ _app  →  _pages  →  entities  →  shared
 - ルートの `app/` は Next.js のルーティング専用で、ルートファイルは `src/_pages/` を再エクスポートするだけにする。
 - `app/api/` は教材として配布された API のため改変しない。
 - グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
-- コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は [CSS 命名規則](./css-naming.md) に従う。
-- 共通の SCSS パーシャルは `src/shared/ui/` に置く。`@use "breakpoints" as bp;` のように相対パスなしで読み込める。
+- コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は `AGENTS.md` の「CSS 命名規則」に従う。
+- ルートの `app/layout.tsx` は `src/_app/layouts` を再エクスポートする。
+- 共通の SCSS パーシャルは `src/shared/ui/` に置く。`@use "name";` のように相対パスなしで読み込める。
