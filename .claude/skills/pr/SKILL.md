@@ -1,7 +1,7 @@
 ---
 name: pr
 description: 現在のブランチを push して GitHub に PR を作成する。変更内容の概要を本文にまとめ、画面のスクリーンショットを撮って添付する。
-argument-hint: "[スクショを撮るページ（例: . about）]"
+argument-hint: "[スクショを撮るページ（例: . tasks）]"
 disable-model-invocation: true
 ---
 
@@ -27,7 +27,7 @@ UI に関わる変更（`src/`、`app/` の `.tsx` / `.scss`）がなければ�
    - 変更された `src/_pages/<スライス>` を `@/_pages/<スライス>` で import している `app/**/page.tsx` を探し、そのルートを撮る。
    - `src/_app`・`src/entities`・`src/shared` が変わっていれば、トップページ（`.`）も撮る。
    - 仕様書の「対象ページ」に書かれたページも撮る。
-   - パスは先頭の `/` を省いて書く（例: `about`。トップは `.`）。
+   - パスは先頭の `/` を省いて書く（例: `tasks`。トップは `.`）。
 2. `http://localhost:3000` に接続できなければ、`npm run dev` をバックグラウンドで起動し、応答するまで待つ。
 3. `npm run screenshots -- --no-publish <ページ ...>` で撮影し、`.screenshots/` の画像を Read で確認する。エラー画面や空白になっていたら原因を調べる。
 4. 問題なければ `npm run screenshots -- <ページ ...>` で `screenshots` ブランチに push し、出力された Markdown を本文に使う。

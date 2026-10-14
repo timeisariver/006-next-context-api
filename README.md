@@ -79,7 +79,7 @@ npx playwright install chromium
 
 ```
 /pr              # 撮影するページは変更内容から自動で決める
-/pr . about      # 撮影するページを指定する（先頭の / は省く。トップは .）
+/pr . tasks      # 撮影するページを指定する（先頭の / は省く。トップは .）
 ```
 
 1. 型チェック・lint・整形が通ることを確認する。
@@ -94,8 +94,8 @@ PR をレビューしてマージするのは人が行う。
 
 ```bash
 npm run dev                                       # 別のターミナルで起動しておく
-npm run screenshots -- --no-publish . about       # .screenshots/<ブランチ名>/ に保存するだけ
-npm run screenshots -- . about                    # screenshots ブランチに push して Markdown を出力
+npm run screenshots -- --no-publish . tasks       # .screenshots/<ブランチ名>/ に保存するだけ
+npm run screenshots -- . tasks                    # screenshots ブランチに push して Markdown を出力
 ```
 
 ### 関連ファイル

@@ -4,7 +4,7 @@
 //   node scripts/pr-screenshots.mjs [--base http://localhost:3000] [--key <名前>] [--no-publish] [パス ...]
 //
 // - 事前に `npm run dev`（または `npm run build && npm start`）でサーバーを起動しておく。
-// - パスは先頭の / を省いて書く（例: `about`。トップページは `.`）。Git Bash が `/about` を
+// - パスは先頭の / を省いて書く（例: `tasks`。トップページは `.`）。Git Bash が `/tasks` を
 //   Windows のパスに変換してしまうため。省略するとトップページだけを撮影する。
 // - `--key` は保存先フォルダ名（省略時は現在のブランチ名）。
 // - 画像は `.screenshots/<key>/` に保存される。`--no-publish` なら push せずに終わる。
@@ -44,7 +44,7 @@ function parseArgs(argv) {
     else if (a === "--no-publish") opts.publish = false;
     else if (/^[a-z]:[\\/]/i.test(a))
       throw new Error(
-        `"${a}" は Windows のパスに変換されています（Git Bash の仕様）。先頭の / を省いて指定してください（例: about、トップは .）。`,
+        `"${a}" は Windows のパスに変換されています（Git Bash の仕様）。先頭の / を省いて指定してください（例: tasks、トップは .）。`,
       );
     else opts.paths.push(a === "." ? "/" : `/${a.replace(/^\/+/, "")}`);
   }
