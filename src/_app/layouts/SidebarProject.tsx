@@ -1,7 +1,7 @@
 import s from "./SidebarProject.module.scss";
 import dayjs from "dayjs";
 import Link from "next/link";
-import type { Project } from "@/shared/api";
+import type { Project } from "@/entities/project";
 
 export function SidebarProject({ project }: { project: Project }) {
   return (

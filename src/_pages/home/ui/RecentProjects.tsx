@@ -3,12 +3,11 @@ import s from "./RecentProjects.module.scss";
 import { Plus } from "lucide-react";
 import { DashboardHead } from "@/shared/ui/DashboardHead/DashboardHead";
 import { MoreLink } from "@/shared/ui/MoreLink/MoreLink";
-import { useContext } from "react";
-import { ProjectsContext } from "@/shared/model";
+import { useProjects } from "@/entities/project";
 import { RecentProject } from "./RecentProject";
 
 export function RecentProjects() {
-  const { projects, isLoading, error } = useContext(ProjectsContext);
+  const { projects, isLoading, error } = useProjects();
 
   return (
     <section className={s.root}>

@@ -9,8 +9,7 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import s from "./Sidebar.module.scss";
-import { useContext } from "react";
-import { ProjectsContext } from "@/shared/model";
+import { useProjects } from "@/entities/project";
 import { SidebarProject } from "./SidebarProject";
 
 const MENU_ITEMS = [
@@ -28,7 +27,7 @@ function isActivePath(pathname: string, href: string) {
 export function Sidebar() {
   const pathname = usePathname();
 
-  const { projects, isLoading, error } = useContext(ProjectsContext);
+  const { projects, isLoading, error } = useProjects();
 
   return (
     <nav className={s.root}>

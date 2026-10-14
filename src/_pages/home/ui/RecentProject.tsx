@@ -2,7 +2,7 @@ import s from "./RecentProject.module.scss";
 import { Calendar, GitCommitHorizontal, FileText } from "lucide-react";
 import Link from "next/link";
 import dayjs from "dayjs";
-import type { Project } from "@/shared/api";
+import type { Project } from "@/entities/project";
 
 export function RecentProject({ project }: { project: Project }) {
   return (
