@@ -2,6 +2,8 @@
 
 このアプリは [Feature-Sliced Design (FSD)](https://feature-sliced.design/) を採用している。ただし小規模なため、レイヤーは `_app`・`_pages`・`entities`・`shared` の 4 つだけを使う（`widgets`・`features` は使わない）。
 
+コードの置き場所の判断基準（いつ `entities`・`shared` に切り出すかなど）は、FSD 公式のエージェントスキル [`.claude/skills/feature-sliced-design/`](../.claude/skills/feature-sliced-design/SKILL.md) に従う。このドキュメントとスキルが食い違う場合は、このドキュメントを優先する。
+
 ```
 app/                # Next.js のルーティング専用（src/_pages を再エクスポートするだけ）
 src/
