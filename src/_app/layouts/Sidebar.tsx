@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import s from "./Sidebar.module.scss";
+import { useProjects } from "@/entities/project";
+import { SidebarProject } from "./SidebarProject";
 
 const MENU_ITEMS = [
   { href: "/", label: "ダッシュボード", Icon: LayoutDashboard },
@@ -24,6 +26,8 @@ function isActivePath(pathname: string, href: string) {
 
 export function Sidebar() {
   const pathname = usePathname();
+
+  const { projects, isLoading, error } = useProjects();
 
   return (
     <nav className={s.root}>
@@ -49,14 +53,17 @@ export function Sidebar() {
           );
         })}
       </ul>
-      <ul className={s.category}>
-        <li className={s.categoryItem}>
-          <Link href="#" className={s.categoryItemLink}>
-            <span className={s.categoryItemText}>プログラミング</span>
-            <time className={s.categoryItemTime}>2026/10/20</time>
-          </Link>
-        </li>
-      </ul>
+      {isLoading ? (
+        <p>読み込み中…</p>
+      ) : error ? (
+        <p>{error}</p>
+      ) : (
+        <ul className={s.category}>
+          {projects.map((project) => (
+            <SidebarProject key={project.id} project={project} />
+          ))}
+        </ul>
+      )}
     </nav>
   );
 }

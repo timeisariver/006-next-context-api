@@ -47,31 +47,3 @@
 .category {
   margin-top: 10px;
 }
-
-.categoryItemLink {
-  padding: 12px 26px;
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  font-size: 13px;
-  position: relative;
-}
-
-.categoryItemText {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  &::before {
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: red;
-    align-self: center;
-  }
-}
-
-.categoryItemTime {
-  font-size: 10px;
-}
