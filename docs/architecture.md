@@ -105,6 +105,8 @@ _app  →  _pages  →  entities  →  shared
 - **下のレイヤーから上のレイヤーを import しない。** 例: `shared` から `_pages` や `_app` を import しない。
 - スライスを持たない `_app`・`shared` の中では、セグメント同士の import は自由にしてよい。
 
+これらのルールと Public API 経由の import は、ESLint の `no-restricted-imports`（`eslint.config.mjs`）で検査している。違反すると `npm run lint` がエラーになる。
+
 <img width="2720" height="1840" alt="fsd_app_pages_shared_imports" src="https://github.com/user-attachments/assets/3311e032-7f4d-4993-9cac-718ff1f64b21" />
 
 ## その他のルール
