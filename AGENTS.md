@@ -12,6 +12,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - `npm run dev` — 開発サーバーを起動する。
 - `npm run lint` — ESLint を実行する。
+- `npm run typecheck` — TypeScript の型チェックを実行する。
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
 
 # ディレクトリ構成（Feature-Sliced Design）

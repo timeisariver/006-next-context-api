@@ -23,6 +23,7 @@ npm run dev
 | `npm run dev`          | 開発サーバーを起動            |
 | `npm run build`        | 本番ビルド                    |
 | `npm run lint`         | ESLint でチェック             |
+| `npm run typecheck`    | TypeScript の型チェック       |
 | `npm run format`       | Prettier で整形               |
 | `npm run format:check` | Prettier の整形漏れをチェック |
 
