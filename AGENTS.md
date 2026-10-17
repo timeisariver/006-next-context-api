@@ -48,3 +48,15 @@ BEM は使わない。
 - ネストしてよいのは擬似クラス・擬似要素（`&:hover`）、状態クラス（`&._active`）、メディアクエリのみ。
 - クラス名は必ず `s.xxx` 経由で指定し、結合には `clsx` を使う（`{ [s._active]: isActive }`）。
 - コンポーネントは `className` props を受け取り、ルート要素で `clsx(s.root, className)` と結合する。
+
+# テストと確認
+
+テストフレームワークは導入していない。変更後は `npm run lint`、`npm run typecheck`、`npm run format:check` で確認する。`npm run typecheck` は `next typegen` を先に実行する（`LayoutProps<"/">` などの型を生成するため）。
+
+# アーキテクチャ
+
+- 状態管理は React Context。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` でプロジェクト一覧・`isLoading`・`error` を読む。データ取得はクライアント側で、`ProjectsProvider` のマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。
+- API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml` を参照する。
+- FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ）は `eslint.config.mjs` の `no-restricted-imports` で検査される。ルールを変えるときは `docs/architecture.md` と合わせて更新する。
+- React Compiler が有効（`next.config.ts`）。`useMemo` / `useCallback` を手書きで足さない。
+- `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint の対象外。
