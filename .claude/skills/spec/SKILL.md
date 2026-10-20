@@ -3,7 +3,7 @@ name: spec
 description: 短いアイデアから docs/specs/ の仕様書の下書きと、作業ブランチを作る。
 argument-hint: "<作りたい機能の説明>（Figma があれば「figma: <リンク>」を付ける）"
 disable-model-invocation: true
-allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git switch:*), Bash(git branch:*), Bash(git rev-parse:*)
+allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git switch:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git fetch:*), Bash(git diff:*), Bash(gh pr list:*)
 ---
 
 `$ARGUMENTS` をもとに、仕様書の下書きと作業ブランチを作る。仕様書は人が見直して仕上げる前提で、ここでは下書きまでにする。
@@ -40,7 +40,13 @@ allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git swit
 
 ## 4. ブランチを作る
 
-`git switch -c <ブランチ名>` で作業ブランチを作って切り替える。
+機能ごとに PR を作り、メンターのレビューが終わるまでマージしない運用のため、まだマージされていない機能のコードを使う機能は、その機能のブランチから作る（積み上げ式）。
+
+1. `git fetch origin` し、`gh pr list --state open --json number,title,headRefName` で、レビュー待ちの PR を確認する。
+2. 今回の機能が、レビュー待ちの PR で追加・変更される型・関数・コンポーネントを使うか、`git diff origin/main...origin/<headRefName>` で確かめる。
+   - 使わなければ、切り元は `main` にする。
+   - 使うなら、その PR のブランチを切り元にする。該当する PR が複数あるなら、それらを全部含む（いちばん上に積まれた）ブランチにする。そうなっていない（別々に main から切られている）場合は、推測せずにユーザーに確認する。
+3. `git switch --no-track -c <ブランチ名> origin/<切り元>` で作業ブランチを作って切り替える。
 
 ## 5. 仕様書を書く
 
@@ -56,9 +62,9 @@ allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git swit
 仕様書の全文は貼らず、次の形式で伝える。
 
 ```
-ブランチ: <ブランチ名>
+ブランチ: <ブランチ名>（<切り元> から作成）
 仕様書: docs/specs/<slug>.md
 機能名: <機能名>
 ```
 
-続けて、`要確認` として残した点を箇条書きで伝える。最後に、仕様書を見直したら `/implement docs/specs/<slug>.md` で実装できることを伝える。
+切り元が `main` でない場合は、どの PR のどのコードを使うために積んだのかを 1 行で伝える。続けて、`要確認` として残した点を箇条書きで伝える。最後に、仕様書を見直したら `/implement docs/specs/<slug>.md` で実装できることを伝える。

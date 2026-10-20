@@ -11,7 +11,7 @@ tools: Read, Glob, Grep, Bash, Skill
 
 1. `CLAUDE.md` と `docs/architecture.md` を読む。配置の妥当性を判断するために `feature-sliced-design` スキルも読む（規約と食い違う場合は `CLAUDE.md`・`docs/architecture.md` が優先）。
 2. 依頼文で仕様書が指定されていれば読む。
-3. `git diff main...HEAD` で差分を確認する（依頼文で比較対象が指定されていればそれに従う）。変更されたファイルは全体も読む。
+3. `git diff <比較元>...HEAD` で差分を確認する。比較元は依頼文で指定されたものを使い、指定がなければ `node scripts/base-branch.mjs` で求める（積み上げ式のブランチでは main ではなく前の機能のブランチになる）。変更されたファイルは全体も読む。
 
 ## 確認すること
 

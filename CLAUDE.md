@@ -26,6 +26,8 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 2. `/implement docs/specs/<機能名>.md` — サブエージェントで並列に実装し、レビューまで行う。
 3. `/pr` — スクリーンショットを撮り、PR を作成する。
 
+PR はメンターのレビュー後にマージするため、レビュー待ちの機能のコードを使う機能は、その機能のブランチから作る（積み上げ式）。切り元は `/spec` が決め、`/implement` のレビューと `/pr` の比較先は `node scripts/base-branch.mjs` で求める。積み上げた PR が main に入るまで、PR は「Create a merge commit」でマージする（Squash すると上の PR に下の変更が再び出る）。
+
 # ディレクトリ構成（Feature-Sliced Design）
 
 このプロジェクトは Feature-Sliced Design (FSD) v2.1 で構成する。詳細は `docs/architecture.md` を参照。

@@ -97,6 +97,19 @@ npx playwright install chromium
 
 PR をレビューしてマージするのは人が行う。
 
+### レビュー待ちの機能の上に積む
+
+PR はメンターのレビューが終わるまでマージしないため、レビュー待ちの機能のコードを使う機能は、その機能のブランチから作る。
+
+```
+main ── feature/dashboard (A) ── feature/tasks (B)   ← B は A のタスク取得を使う
+     └─ feature/projects (C)                          ← A・B を使わないので main から
+```
+
+- どこから作るかは `/spec` が判断して伝える。B の PR は比較先が A のブランチになり、B の変更だけが表示される。
+- A をマージするときは「Create a merge commit」を選ぶ。A のブランチが削除されると、GitHub が B の PR の比較先を main に切り替える。
+- A にレビューの修正が入ったら、B で `/pr` をもう一度実行するか「B に A の修正を取り込んで」と頼む。
+
 ### スクリーンショットだけ撮る
 
 ```bash
