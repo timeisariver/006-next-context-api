@@ -31,6 +31,10 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
   // 最後に保存した（または読み込んだ）値
   const [saved, setSaved] = useState(initialTask);
+  // 一覧が未取得の間も、タスクが属するプロジェクトを選択肢に残す
+  const projectOptions = projects.some((p) => p.id === saved.project.id)
+    ? projects
+    : [saved.project, ...projects];
   // 入力中の値
   const [projectId, setProjectId] = useState(initialTask.project.id);
   const [deadline, setDeadline] = useState(toDateString(initialTask.deadline));
@@ -119,12 +123,12 @@ export function TaskDetailForm({ initialTask, className }: Props) {
           <div className={s.selectWrap}>
             <select
               id="task-project"
-              className={s.control}
+              className={clsx(s.control, s.select)}
               value={projectId}
               disabled={isBusy}
               onChange={(e) => setProjectId(e.target.value)}
             >
-              {projects.map((project) => (
+              {projectOptions.map((project) => (
                 <option key={project.id} value={project.id}>
                   {project.name}
                 </option>
@@ -155,7 +159,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
           <div className={s.selectWrap}>
             <select
               id="task-status"
-              className={s.control}
+              className={clsx(s.control, s.select)}
               value={status}
               disabled={isBusy}
               onChange={(e) => setStatus(e.target.value as TaskStatus)}
