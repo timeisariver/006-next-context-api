@@ -52,6 +52,13 @@ npx playwright install chromium
 
 [docs/specs/\_template.md](docs/specs/_template.md) をコピーして `docs/specs/<機能名>.md` を作る。
 
+`/spec` を使うと、短い説明から下書きと作業ブランチ（`feature/<slug>`）を作れる。既存のコードと API 仕様を調べて書き、引数から決められない点は `<!-- 要確認: 〜 -->` として残すので、見直して埋めてから `/implement` に進む。
+
+```
+/spec プロジェクト一覧ページを作る
+/spec プロジェクトのカード, figma: https://www.figma.com/design/...
+```
+
 - **要件**は、画面で確認できる粒度の箇条書きにする。AI はここに書いたことだけを実装し、レビューでも要件ごとに満たしているかを確認する。
 - **対象外**を書いておくと、AI が仕様にないものを作り込むのを防げる。
 - **対象ページ**は、PR に貼るスクリーンショットの撮影対象にもなる。
@@ -102,6 +109,7 @@ npm run screenshots -- . tasks                    # screenshots ブランチに 
 
 | ファイル                                                                               | 内容                                         |
 | -------------------------------------------------------------------------------------- | -------------------------------------------- |
+| [.claude/skills/spec/](.claude/skills/spec/SKILL.md)                                   | `/spec` スキル                               |
 | [.claude/skills/implement/](.claude/skills/implement/SKILL.md)                         | `/implement` スキル                          |
 | [.claude/skills/pr/](.claude/skills/pr/SKILL.md)                                       | `/pr` スキル                                 |
 | [.claude/skills/feature-sliced-design/](.claude/skills/feature-sliced-design/SKILL.md) | FSD 公式スキル（コードの置き場所の判断基準） |

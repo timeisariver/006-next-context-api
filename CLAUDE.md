@@ -22,7 +22,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # 開発の流れ
 
-1. 仕様書を `docs/specs/_template.md` をもとに `docs/specs/<機能名>.md` に書く（人が書く）。
+1. 仕様書を `docs/specs/_template.md` をもとに `docs/specs/<機能名>.md` に書く（人が書く）。`/spec <機能の説明>` で下書きと作業ブランチを作ってから、人が見直してもよい。
 2. `/implement docs/specs/<機能名>.md` — サブエージェントで並列に実装し、レビューまで行う。
 3. `/pr` — スクリーンショットを撮り、PR を作成する。
 
