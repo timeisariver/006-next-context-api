@@ -37,14 +37,14 @@ export function Sidebar({ className }: Props) {
     <nav className={clsx(s.root, { [s._closed]: !isOpen }, className)}>
       <button
         type="button"
-        className={s.toggle}
+        className={clsx(s.toggle, { [s._closed]: !isOpen })}
         aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
         aria-expanded={isOpen}
-        onClick={() => setIsOpen(!isOpen)}
+        onClick={() => setIsOpen((open) => !open)}
       >
         {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
       </button>
-      <div className={s.body} inert={!isOpen}>
+      <div className={clsx(s.body, { [s._closed]: !isOpen })} inert={!isOpen}>
         <SidebarBody />
       </div>
     </nav>
