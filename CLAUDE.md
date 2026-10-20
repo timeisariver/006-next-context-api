@@ -18,6 +18,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - `npm run lint` — ESLint を実行する。
 - `npm run typecheck` — TypeScript の型チェックを実行する。
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
+- `npm run preview` — レビュー待ちの PR をすべてマージした `preview` ブランチを作り直して origin に force push する（確認用の使い捨てで、PR の比較元にはしない）。`/pr` の最後に自動で実行される。
 - `npm run screenshots -- [ページ ...]` — PR 用のスクリーンショットを撮る（詳細は `scripts/pr-screenshots.mjs`）。開発サーバーの起動が前提。ページは先頭の `/` を省いて書く（例: `tasks`、トップは `.`。Git Bash が `/tasks` を Windows のパスに変換するため）。
 
 # 開発の流れ
