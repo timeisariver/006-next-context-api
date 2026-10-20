@@ -1,0 +1,61 @@
+.link {
+  display: block;
+  border-radius: 8px;
+  border-left: 5px solid var(--project-color, var(--color-text-muted));
+  padding: 16px 20px;
+  background: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  width: 100%;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.name {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--project-color, var(--color-text-sub));
+}
+
+.date {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
+
+.goal {
+  margin-top: 16px;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.shouldbe {
+  margin-top: 8px;
+  font-size: 14px;
+  color: var(--color-text-muted);
+}
+
+.stats {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  color: var(--color-text-sub);
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.statCount {
+  font-size: 12px;
+}
