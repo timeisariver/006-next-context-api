@@ -19,10 +19,7 @@ import { chromium } from "playwright";
 const BRANCH = "screenshots";
 const OUT_ROOT = resolve(".screenshots");
 const WORKTREE = join(OUT_ROOT, ".worktree");
-const VIEWPORTS = [
-  { name: "desktop", width: 1440, height: 900 },
-  { name: "mobile", width: 390, height: 844 },
-];
+const VIEWPORTS = [{ name: "desktop", width: 1440, height: 900 }];
 
 const git = (...args) =>
   execFileSync("git", args, {
@@ -149,15 +146,13 @@ function publish({ key, dir }) {
 
 function toMarkdown(shots, urlOf) {
   const paths = [...new Set(shots.map((s) => s.path))];
-  const lines = ["| ページ | Desktop | Mobile |", "| --- | --- | --- |"];
+  const lines = ["| ページ | Desktop |", "| --- | --- |"];
   for (const path of paths) {
     const cell = (vp) => {
       const shot = shots.find((s) => s.path === path && s.viewport === vp);
-      return shot
-        ? `<img src="${urlOf(shot.file)}" width="${vp === "mobile" ? 200 : 480}">`
-        : "";
+      return shot ? `<img src="${urlOf(shot.file)}" width="480">` : "";
     };
-    lines.push(`| \`${path}\` | ${cell("desktop")} | ${cell("mobile")} |`);
+    lines.push(`| \`${path}\` | ${cell("desktop")} |`);
   }
   return lines.join("\n");
 }
