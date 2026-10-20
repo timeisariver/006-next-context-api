@@ -52,6 +52,8 @@ export function TaskCreateModal({ open, onClose }: Props) {
     <dialog
       ref={dialogRef}
       className={s.root}
+      role="dialog"
+      aria-modal="true"
       aria-labelledby="task-create-title"
       onClose={onClose}
       onClick={(e) => {
@@ -76,17 +78,12 @@ export function TaskCreateModal({ open, onClose }: Props) {
 
 function TaskCreateForm({ onClose }: { onClose: () => void }) {
   const { projects } = useProjects();
-  const projectRef = useRef<HTMLSelectElement>(null);
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState(today);
   const [status, setStatus] = useState("scheduled");
   const [errors, setErrors] = useState<Errors>({});
-
-  useEffect(() => {
-    projectRef.current?.focus();
-  }, []);
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -113,7 +110,7 @@ function TaskCreateForm({ onClose }: { onClose: () => void }) {
         <div className={s.selectWrap}>
           <select
             id="task-project"
-            ref={projectRef}
+            autoFocus
             className={clsx(s.control, s.select, { [s._empty]: !projectId })}
             value={projectId}
             onChange={(e) => setProjectId(e.target.value)}
