@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { ChevronDown } from "lucide-react";
 import { LIMITS } from "../lib/params";
 import s from "./LimitSelect.module.scss";
@@ -6,11 +7,12 @@ type Props = {
   id: string;
   value: number;
   onChange: (value: number) => void;
+  className?: string;
 };
 
-export function LimitSelect({ id, value, onChange }: Props) {
+export function LimitSelect({ id, value, onChange, className }: Props) {
   return (
-    <span className={s.root}>
+    <span className={clsx(s.root, className)}>
       <select
         id={id}
         className={s.select}
