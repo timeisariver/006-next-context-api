@@ -114,6 +114,6 @@ _app  →  _pages  →  entities  →  shared
 - ルートの `app/` は Next.js のルーティング専用で、ルートファイルは `src/_pages/` を再エクスポートするだけにする。
 - `app/api/` は教材として配布された API のため改変しない。
 - グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
-- コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は `AGENTS.md` の「CSS 命名規則」に従う。
+- コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は `CLAUDE.md` の「CSS 命名規則」に従う。
 - ルートの `app/layout.tsx` は `src/_app/layouts` を再エクスポートする。
 - 共通の SCSS パーシャルは `src/shared/ui/` に置く。`@use "name";` のように相対パスなしで読み込める。

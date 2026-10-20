@@ -8,9 +8,9 @@ tools: Read, Edit, Write, Glob, Grep, Bash, Skill
 
 ## 始める前に
 
-1. `AGENTS.md` と `docs/architecture.md` を読み、規約に従う。
+1. `CLAUDE.md` と `docs/architecture.md` を読み、規約に従う。
 2. 依頼文にベースのコミット SHA が書かれている場合は、`git log -1 --format=%H` と比べる。違っていて、かつ `git status --short` が空なら `git reset --hard <SHA>` でそろえる。
-3. 新しいファイルをどのレイヤー・スライス・セグメントに置くか迷ったら、`feature-sliced-design` スキルを読んで判断する。原則は「迷ったら `_pages` に置き、今まさに複数箇所で使うまでは `entities`・`shared` に切り出さない」。スキルと `AGENTS.md`・`docs/architecture.md` が食い違う場合は後者に従う。
+3. 新しいファイルをどのレイヤー・スライス・セグメントに置くか迷ったら、`feature-sliced-design` スキルを読んで判断する。原則は「迷ったら `_pages` に置き、今まさに複数箇所で使うまでは `entities`・`shared` に切り出さない」。スキルと `CLAUDE.md`・`docs/architecture.md` が食い違う場合は後者に従う。
 4. Next.js の API（ルーティング、`next/link`、`next/image`、メタデータなど）を使うときは、`node_modules/next/dist/docs/` の該当ガイドを読んでから書く。学習データの Next.js とは違う。
 
 ## 守ること

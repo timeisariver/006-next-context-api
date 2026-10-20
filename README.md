@@ -118,4 +118,4 @@ npm run screenshots -- . tasks                    # screenshots ブランチに 
 
 - ルートの `app/` は Next.js のルーティング専用。画面は `src/_pages/` に作り、`app/` からは再エクスポートするだけにする。
 - `app/api/` は教材として配布された API のため改変しない。
-- クラス名はルートを `.root`、子要素を `.title` のような camelCase にし、BEM は使わない（詳細は [AGENTS.md](AGENTS.md) の「CSS 命名規則」）。JSX では `clsx(s.root, { [s._active]: isActive })` のように指定する。
+- クラス名はルートを `.root`、子要素を `.title` のような camelCase にし、BEM は使わない（詳細は [CLAUDE.md](CLAUDE.md) の「CSS 命名規則」）。JSX では `clsx(s.root, { [s._active]: isActive })` のように指定する。

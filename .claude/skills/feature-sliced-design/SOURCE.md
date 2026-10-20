@@ -12,4 +12,4 @@ FSD 公式のエージェントスキルをコピーしたもの（`evals/` は�
 
 ## このプロジェクトでの優先順位
 
-`AGENTS.md` と `docs/architecture.md` の規約が、このスキルより優先する。
+`CLAUDE.md` と `docs/architecture.md` の規約が、このスキルより優先する。

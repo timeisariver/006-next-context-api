@@ -9,7 +9,7 @@ tools: Read, Glob, Grep, Bash, Skill
 
 ## 手順
 
-1. `AGENTS.md` と `docs/architecture.md` を読む。配置の妥当性を判断するために `feature-sliced-design` スキルも読む（規約と食い違う場合は `AGENTS.md`・`docs/architecture.md` が優先）。
+1. `CLAUDE.md` と `docs/architecture.md` を読む。配置の妥当性を判断するために `feature-sliced-design` スキルも読む（規約と食い違う場合は `CLAUDE.md`・`docs/architecture.md` が優先）。
 2. 依頼文で仕様書が指定されていれば読む。
 3. `git diff main...HEAD` で差分を確認する（依頼文で比較対象が指定されていればそれに従う）。変更されたファイルは全体も読む。
 

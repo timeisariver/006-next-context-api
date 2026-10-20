@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 ## 1. 準備
 
-1. 仕様書、`AGENTS.md`、`docs/architecture.md` を読む。
+1. 仕様書、`CLAUDE.md`、`docs/architecture.md` を読む。
 2. 仕様書に、実装方針が変わるほど曖昧な点や矛盾があれば、**実装を始める前に**ユーザーに質問する。推測で埋めない。
 3. `git status --short` が空であることを確認する。空でなければ止めてユーザーに確認する。
 4. main にいる場合は `feature/<仕様書のファイル名>` ブランチを作って切り替える。
