@@ -44,7 +44,9 @@ export function Sidebar({ className }: Props) {
       >
         {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
       </button>
-      {isOpen && <SidebarBody />}
+      <div className={s.body} inert={!isOpen}>
+        <SidebarBody />
+      </div>
     </nav>
   );
 }

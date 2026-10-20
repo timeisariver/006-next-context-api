@@ -55,3 +55,13 @@
 .category {
   margin-top: 10px;
 }
+
+// 閉じていくときに中身が潰れて見えないよう、幅は固定して外側で切り取る
+.body {
+  width: 238px;
+  transition: visibility 0s 0.3s;
+
+  .root._closed & {
+    visibility: hidden;
+  }
+}
