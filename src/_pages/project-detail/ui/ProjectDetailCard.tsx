@@ -42,7 +42,7 @@ export function ProjectDetailCard({ project, className }: Props) {
       </div>
       <div className={s.row}>
         <span className={s.label}>あるべき姿:</span>
-        <p className={clsx(s.value, s.shouldbe)}>{project.shouldbe}</p>
+        <p className={clsx(s.value, s.shouldBe)}>{project.shouldbe}</p>
       </div>
       <hr className={s.divider} />
       <div className={s.row}>
