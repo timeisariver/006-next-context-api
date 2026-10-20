@@ -1,0 +1,60 @@
+.root {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.value {
+  font-size: 12px;
+  color: var(--color-text);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: var(--color-primary);
+  }
+
+  &:disabled {
+    color: var(--color-text-muted);
+    cursor: default;
+  }
+}
+
+.input {
+  width: 92px;
+  padding: 2px 4px;
+  font-size: 12px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface);
+
+  &:focus {
+    outline: none;
+    border-color: var(--color-primary);
+  }
+}
+
+.picker {
+  display: flex;
+  color: var(--color-text-muted);
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: var(--color-primary);
+  }
+
+  &:disabled {
+    cursor: default;
+  }
+}
+
+.dateInput {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
