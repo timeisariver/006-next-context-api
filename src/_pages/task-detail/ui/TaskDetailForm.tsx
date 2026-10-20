@@ -27,7 +27,7 @@ const STATUS_OPTIONS: { value: TaskStatus; label: string }[] = [
 
 export function TaskDetailForm({ initialTask, className }: Props) {
   const router = useRouter();
-  const { projects } = useProjects();
+  const { projects, refreshProjects } = useProjects();
 
   // 最後に保存した（または読み込んだ）値
   const [saved, setSaved] = useState(initialTask);
@@ -68,6 +68,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
         description,
       });
       applyTask(task);
+      void refreshProjects();
     } catch {
       setError("保存に失敗しました");
     } finally {
@@ -87,6 +88,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
     setError(null);
     try {
       await deleteTask(saved.id);
+      void refreshProjects();
       router.push("/tasks");
     } catch {
       setError("削除に失敗しました");
@@ -147,6 +149,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
             type="date"
             className={s.control}
             value={deadline}
+            required
             disabled={isBusy}
             onChange={(e) => setDeadline(e.target.value)}
           />
