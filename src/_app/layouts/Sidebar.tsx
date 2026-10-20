@@ -44,7 +44,7 @@ export function Sidebar({ className }: Props) {
       >
         {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
       </button>
-      <div className={clsx(s.body, { [s._closed]: !isOpen })} inert={!isOpen}>
+      <div className={clsx(s.body, { [s._closed]: !isOpen })}>
         <SidebarBody />
       </div>
     </nav>

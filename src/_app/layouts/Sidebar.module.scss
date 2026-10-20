@@ -1,10 +1,13 @@
+$width-open: 238px;
+$width-closed: 47px;
+
 .root {
-  width: 238px;
+  width: $width-open;
   overflow: hidden;
   transition: width 0.3s ease;
 
   &._closed {
-    width: 47px;
+    width: $width-closed;
   }
 }
 
@@ -58,7 +61,7 @@
 
 // 中身は幅を固定しておき、開閉中に潰れて見えないようにする
 .body {
-  width: 238px;
+  width: $width-open;
 
   // 高さも潰して、閉じている間に縦スクロールバーが出ないようにする
   &._closed {
