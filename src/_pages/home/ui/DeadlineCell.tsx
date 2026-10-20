@@ -42,6 +42,8 @@ export function DeadlineCell({ deadline, disabled, onSave }: Props) {
   const [isEditing, setIsEditing] = useState(false);
   const [draft, setDraft] = useState("");
   const dateInputRef = useRef<HTMLInputElement>(null);
+  // Enter / Esc で入力欄が外れるときの blur で、確定が二重に走らないようにする
+  const isClosedRef = useRef(false);
 
   function save(date: string | null) {
     if (date && date !== toDateString(deadline)) onSave(date);
@@ -49,10 +51,13 @@ export function DeadlineCell({ deadline, disabled, onSave }: Props) {
 
   function startEditing() {
     setDraft(toDisplay(deadline));
+    isClosedRef.current = false;
     setIsEditing(true);
   }
 
   function commit() {
+    if (isClosedRef.current) return;
+    isClosedRef.current = true;
     setIsEditing(false);
     save(parseInput(draft));
   }
@@ -70,7 +75,10 @@ export function DeadlineCell({ deadline, disabled, onSave }: Props) {
           onBlur={commit}
           onKeyDown={(e) => {
             if (e.key === "Enter") commit();
-            if (e.key === "Escape") setIsEditing(false);
+            if (e.key === "Escape") {
+              isClosedRef.current = true;
+              setIsEditing(false);
+            }
           }}
         />
       ) : (

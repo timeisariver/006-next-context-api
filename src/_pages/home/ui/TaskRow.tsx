@@ -61,6 +61,10 @@ export function TaskRow({ task, onChange }: Props) {
           disabled={savingField === "project"}
           onChange={(e) => save("project", { projectId: e.target.value })}
         >
+          {/* プロジェクト一覧の取得前・失敗時も、今のプロジェクトを選択肢に残す */}
+          {!projects.some((project) => project.id === task.project.id) && (
+            <option value={task.project.id}>{task.project.name}</option>
+          )}
           {projects.map((project) => (
             <option key={project.id} value={project.id}>
               {project.name}
