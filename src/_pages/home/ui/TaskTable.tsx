@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import Link from "next/link";
 import { DashboardHead, MoreLink } from "@/shared/ui";
 import { getTasks, type Task } from "@/shared/api";
 import { TaskRow } from "./TaskRow";
@@ -45,7 +44,7 @@ export function TaskTable({ className }: Props) {
     <div className={clsx(s.root, className)}>
       <div className={s.head}>
         <DashboardHead text="タスク一覧" />
-        <MoreLink text="すべてのタスクをみる" href="/tasks" />
+        <MoreLink text="タスク一覧" href="/tasks" />
       </div>
       <div className={s.content}>
         {isLoading ? (
@@ -58,10 +57,10 @@ export function TaskTable({ className }: Props) {
           <table className={s.table}>
             <thead>
               <tr>
-                <th className={s.th}>タスク</th>
-                <th className={s.th}>プロジェクト</th>
-                <th className={s.th}>ステータス</th>
-                <th className={s.th}>期限日</th>
+                <th className={clsx(s.th, s.thTitle)}>タスク</th>
+                <th className={clsx(s.th, s.thFit)}>プロジェクト</th>
+                <th className={clsx(s.th, s.thFit)}>ステータス</th>
+                <th className={clsx(s.th, s.thFit)}>期限日</th>
                 <th className={s.th}></th>
               </tr>
             </thead>
@@ -75,9 +74,7 @@ export function TaskTable({ className }: Props) {
       </div>
       {remainingPages > 0 && (
         <div className={s.links}>
-          <Link href="/tasks" className={s.pageLink}>
-            あと {remainingPages} ページ
-          </Link>
+          <MoreLink text={`あと ${remainingPages} ページ`} href="/tasks" />
         </div>
       )}
     </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import clsx from "clsx";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
 import { useProjects } from "@/entities/project";
@@ -45,7 +46,7 @@ export function TaskRow({ task, onChange }: Props) {
 
   return (
     <tr className={s.root}>
-      <td className={s.cell}>
+      <td className={clsx(s.cell, s.cellTitle)}>
         <span className={s.title}>{task.title}</span>
         {hasError && (
           <p className={s.error} role="alert">
@@ -102,6 +103,7 @@ export function TaskRow({ task, onChange }: Props) {
           className={s.link}
           aria-label={`${task.title}の詳細をみる`}
         >
+          <span className={s.linkText}>詳細</span>
           <MoveRight size={16} />
         </Link>
       </td>
