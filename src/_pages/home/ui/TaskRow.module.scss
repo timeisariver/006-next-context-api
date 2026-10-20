@@ -1,0 +1,46 @@
+.root {
+  border-top: 1px solid var(--color-border);
+}
+
+.cell {
+  padding: 10px 8px;
+  font-size: 12px;
+  vertical-align: middle;
+}
+
+.title {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.error {
+  margin-top: 4px;
+  font-size: 11px;
+  color: var(--color-text-sub);
+}
+
+.select {
+  max-width: 160px;
+  padding: 4px 6px;
+  font-size: 12px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  background: var(--color-surface);
+  cursor: pointer;
+
+  &:disabled {
+    color: var(--color-text-muted);
+    cursor: default;
+  }
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  color: var(--color-text-muted);
+
+  &:hover {
+    color: var(--color-primary);
+  }
+}
