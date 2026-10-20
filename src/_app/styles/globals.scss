@@ -18,6 +18,10 @@
   --color-background: #fbfbfb; // ページの背景
   --color-surface: #ffffff; // ヘッダーなど、背景より手前の面
   --color-border: #e4e9e6;
+  --color-navy: #1c2f43; // 濃い面（キャンセルボタンなど）
+  --color-danger: #d6336c; // 必須マーク・エラー表示
+  --color-overlay: rgba(0, 0, 0, 0.4); // モーダルの背面
+  --shadow-modal: rgba(0, 0, 0, 0.3) 0 4px 16px;
   --shadow-card: rgba(34, 34, 34, 0.063) 1px 1px 3px 1px;
 
   --font-family-base:

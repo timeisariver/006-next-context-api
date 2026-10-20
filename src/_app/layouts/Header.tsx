@@ -1,20 +1,25 @@
+"use client";
+
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import s from "./Header.module.scss";
+import { TaskCreateModal } from "./TaskCreateModal";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
 
 type Props = {
   className?: string;
 };
 
-// TODO: 各ボタンの動作は未実装
+// TODO: ヘルプ・通知の動作は未実装
 const ACTIONS = [
-  { label: "タスクを追加", Icon: Plus },
   { label: "ヘルプ", Icon: Info },
   { label: "通知", Icon: Bell },
 ];
 
 export function Header({ className }: Props) {
+  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+
   return (
     <header className={clsx(s.root, className)}>
       <div className={s.left}>
@@ -32,6 +37,16 @@ export function Header({ className }: Props) {
         </div>
       </div>
       <ul className={s.actions}>
+        <li>
+          <button
+            type="button"
+            className={s.action}
+            aria-label="タスクを追加"
+            onClick={() => setIsTaskModalOpen(true)}
+          >
+            <Plus />
+          </button>
+        </li>
         {ACTIONS.map(({ label, Icon }) => (
           <li key={label}>
             <button type="button" className={s.action} aria-label={label}>
@@ -49,6 +64,10 @@ export function Header({ className }: Props) {
           </button>
         </li>
       </ul>
+      <TaskCreateModal
+        open={isTaskModalOpen}
+        onClose={() => setIsTaskModalOpen(false)}
+      />
     </header>
   );
 }
