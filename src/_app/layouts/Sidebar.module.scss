@@ -2,6 +2,10 @@
   width: 238px;
   overflow: hidden;
   transition: width 0.3s ease;
+
+  &._closed {
+    width: 47px;
+  }
 }
 
 .toggle {
@@ -12,6 +16,11 @@
   justify-content: flex-end;
 
   color: var(--color-text-sub);
+
+  .root._closed & {
+    padding-inline: 0;
+    justify-content: center;
+  }
 }
 
 .menuItemLink {
