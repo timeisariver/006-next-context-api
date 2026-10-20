@@ -83,9 +83,29 @@ async function capture({ base, key, paths }) {
         await page.addStyleTag({
           content: "nextjs-portal { display: none !important; }",
         });
+        // 画面内の領域（main など）がスクロールする作りのとき、fullPage だけでは上の部分しか
+        // 写らない。はみ出している高さの分だけ viewport を伸ばして、全体を写す。
+        const overflow = await page.evaluate(() =>
+          Math.max(
+            0,
+            ...[...document.querySelectorAll("*")]
+              .filter((el) =>
+                /auto|scroll/.test(getComputedStyle(el).overflowY),
+              )
+              .map((el) => el.scrollHeight - el.clientHeight),
+          ),
+        );
+        if (overflow > 0) {
+          await page.setViewportSize({
+            width: vp.width,
+            height: vp.height + overflow,
+          });
+          await page.waitForLoadState("networkidle");
+        }
         const file = `${slug(path)}-${vp.name}.png`;
         await page.screenshot({ path: join(dir, file), fullPage: true });
         shots.push({ path, viewport: vp.name, file });
+        await page.setViewportSize({ width: vp.width, height: vp.height });
       }
       await page.close();
     }
