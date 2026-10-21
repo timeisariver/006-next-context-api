@@ -63,7 +63,7 @@ BEM は使わない。
 # アーキテクチャ
 
 - 状態管理は React Context。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` でプロジェクト一覧・`isLoading`・`error` を読む。データ取得はクライアント側で、`ProjectsProvider` のマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。
-- API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。
+- API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。ただし swagger.yml の `UpdateTask`（`PATCH /users/tasks/{id}` のリクエスト）は誤っているため、`app/api/v1/users/tasks/[id]/route.js` と `app/api/datastore/models/task.ts` の `assign()` を参照する（`projectId`・`title`・`description`・`status`・`deadline` を受け付ける）。
 - FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ）は `eslint.config.mjs` の `no-restricted-imports` で検査される。ルールを変えるときは `docs/architecture.md` と合わせて更新する。
 - React Compiler が有効（`next.config.ts`）。`useMemo` / `useCallback` を手書きで足さない。
 - `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint の対象外。
