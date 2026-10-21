@@ -1,7 +1,7 @@
 import s from "./Home.module.scss";
 import { RecentProjects } from "./RecentProjects";
 import { Summary } from "./Summary";
-import { TaskTable } from "./TaskTable";
+import { DashboardTasks } from "./DashboardTasks";
 
 export function Home() {
   return (
@@ -15,7 +15,7 @@ export function Home() {
           <Summary />
         </div>
         <div className={s.table}>
-          <TaskTable />
+          <DashboardTasks />
         </div>
       </div>
     </div>
