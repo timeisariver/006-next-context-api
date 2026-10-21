@@ -4,3 +4,103 @@
   border: 1px solid var(--color-border);
   border-radius: 8px;
 }
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.period {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  font-size: 14px;
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.message {
+  margin-top: 20px;
+  color: var(--color-text-sub);
+}
+
+.meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 20px 0 16px;
+  font-size: 13px;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-sub);
+}
+
+.swatch {
+  width: 12px;
+  height: 12px;
+
+  &._completed {
+    background: var(--color-primary);
+  }
+
+  &._todo {
+    background: var(--color-primary-light);
+  }
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--color-text-sub);
+}
+
+.calendar {
+  color: var(--color-text-muted);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.card {
+  padding: 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+
+  &._rate {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.cardLabel {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-text-sub);
+}
+
+.cardValue {
+  margin-top: 8px;
+  font-size: 28px;
+  font-weight: 300;
+}
