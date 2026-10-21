@@ -16,6 +16,8 @@ export type Task = {
   project: Project;
   parent?: Task;
   children: Task[];
+  createdAt: string;
+  updatedAt: string;
 };
 
 export type PageInfo = {
@@ -34,6 +36,7 @@ export type GetTasksParams = {
 
 export type UpdateTaskBody = Partial<{
   projectId: string;
+  description: string;
   status: TaskStatus;
   deadline: string;
 }>;
@@ -54,6 +57,15 @@ export async function getTasks(
     params,
   });
   return { tasks: data.data, pageInfo: data.pageInfo };
+}
+
+export async function getTask(id: string): Promise<Task> {
+  const { data } = await axios.get<TaskResponse>(`/api/v1/users/tasks/${id}`);
+  return data.data;
+}
+
+export async function deleteTask(id: string): Promise<void> {
+  await axios.delete(`/api/v1/users/tasks/${id}`);
 }
 
 export async function updateTask(

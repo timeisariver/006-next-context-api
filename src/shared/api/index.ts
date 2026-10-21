@@ -1,6 +1,6 @@
 export { getProjects } from "./project";
 export type { Project, ProjectStats } from "./project";
-export { getTasks, updateTask } from "./task";
+export { deleteTask, getTask, getTasks, updateTask } from "./task";
 export type {
   GetTasksParams,
   PageInfo,

@@ -1,6 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Calendar } from "lucide-react";
+import { toDateString, toDisplay } from "../lib/date";
 import s from "./DeadlineCell.module.scss";
 
 type Props = {
@@ -8,15 +9,6 @@ type Props = {
   disabled?: boolean;
   onSave: (deadline: string) => void;
 };
-
-// "2026-10-28T12:34:56+09:00" の先頭の年-月-日だけを使う（タイムゾーン変換はしない）
-function toDateString(deadline: string) {
-  return deadline.slice(0, 10);
-}
-
-function toDisplay(deadline: string) {
-  return toDateString(deadline).replaceAll("-", "/");
-}
 
 // "2026/11/04" を "2026-11-04" にする。日付として正しくなければ null
 function parseInput(value: string) {
