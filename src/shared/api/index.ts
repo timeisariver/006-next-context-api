@@ -1,4 +1,4 @@
-export { getProjects } from "./project";
+export { getProjects, getProject } from "./project";
 export type { Project, ProjectStats } from "./project";
 export { deleteTask, getTask, getTasks, updateTask } from "./task";
 export type {

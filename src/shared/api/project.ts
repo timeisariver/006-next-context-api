@@ -33,3 +33,14 @@ export async function getProjects(): Promise<Project[]> {
   const { data } = await axios.get<ProjectsResponse>("/api/v1/users/projects");
   return data.data;
 }
+
+type ProjectResponse = {
+  data: Project;
+};
+
+export async function getProject(slug: string): Promise<Project> {
+  const { data } = await axios.get<ProjectResponse>(
+    `/api/v1/users/projects/${encodeURIComponent(slug)}`,
+  );
+  return data.data;
+}
