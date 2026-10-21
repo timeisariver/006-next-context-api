@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useProjects } from "@/entities/project";
-import { TaskTable as TaskTableView } from "@/entities/task";
+import { TaskTable } from "@/entities/task";
 import { DashboardHead, MoreLink } from "@/shared/ui";
 import { getTasks, type Task } from "@/shared/api";
-import s from "./TaskTable.module.scss";
+import s from "./DashboardTasks.module.scss";
 
 const LIMIT = 20;
 
@@ -13,7 +13,7 @@ type Props = {
   className?: string;
 };
 
-export function TaskTable({ className }: Props) {
+export function DashboardTasks({ className }: Props) {
   const { projects } = useProjects();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [remainingPages, setRemainingPages] = useState(0);
@@ -56,7 +56,7 @@ export function TaskTable({ className }: Props) {
         ) : tasks.length === 0 ? (
           <p>タスクはありません</p>
         ) : (
-          <TaskTableView
+          <TaskTable
             tasks={tasks}
             projects={projects}
             onChange={handleChange}
