@@ -2,12 +2,14 @@
 import clsx from "clsx";
 import {
   ChevronLeft,
+  ChevronRight,
   FolderKanban,
   LayoutDashboard,
   ListTodo,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import s from "./Sidebar.module.scss";
 import { useProjects } from "@/entities/project";
 import { SidebarProject } from "./SidebarProject";
@@ -29,20 +31,32 @@ type Props = {
 };
 
 export function Sidebar({ className }: Props) {
-  const pathname = usePathname();
+  const [isOpen, setIsOpen] = useState(true);
 
+  return (
+    <nav className={clsx(s.root, { [s._closed]: !isOpen }, className)}>
+      <button
+        type="button"
+        className={clsx(s.toggle, { [s._closed]: !isOpen })}
+        aria-label={isOpen ? "サイドバーを閉じる" : "サイドバーを開く"}
+        aria-expanded={isOpen}
+        onClick={() => setIsOpen((open) => !open)}
+      >
+        {isOpen ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
+      </button>
+      <div className={clsx(s.body, { [s._closed]: !isOpen })}>
+        <SidebarBody />
+      </div>
+    </nav>
+  );
+}
+
+function SidebarBody() {
+  const pathname = usePathname();
   const { projects, isLoading, error } = useProjects();
 
   return (
-    <nav className={clsx(s.root, className)}>
-      {/* TODO: サイドバーの開閉は未実装 */}
-      <button
-        type="button"
-        className={s.toggle}
-        aria-label="サイドバーを閉じる"
-      >
-        <ChevronLeft size={24} />
-      </button>
+    <>
       <ul className={s.menu}>
         {MENU_ITEMS.map(({ href, label, Icon }) => {
           const isActive = isActivePath(pathname, href);
@@ -73,6 +87,6 @@ export function Sidebar({ className }: Props) {
           ))}
         </ul>
       )}
-    </nav>
+    </>
   );
 }

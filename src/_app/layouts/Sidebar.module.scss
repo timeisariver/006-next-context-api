@@ -1,7 +1,14 @@
+$width-open: 238px;
+$width-closed: 47px;
+
 .root {
-  width: 238px;
+  width: $width-open;
   overflow: hidden;
   transition: width 0.3s ease;
+
+  &._closed {
+    width: $width-closed;
+  }
 }
 
 .toggle {
@@ -12,6 +19,11 @@
   justify-content: flex-end;
 
   color: var(--color-text-sub);
+
+  &._closed {
+    padding-inline: 0;
+    justify-content: center;
+  }
 }
 
 .menuItemLink {
@@ -45,4 +57,16 @@
 
 .category {
   margin-top: 10px;
+}
+
+// 中身は幅を固定しておき、開閉中に潰れて見えないようにする
+.body {
+  width: $width-open;
+
+  // 高さも潰して、閉じている間に縦スクロールバーが出ないようにする
+  &._closed {
+    height: 0;
+    overflow: hidden;
+    visibility: hidden;
+  }
 }
