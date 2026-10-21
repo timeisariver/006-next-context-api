@@ -9,3 +9,5 @@ export type {
   TaskStatus,
   UpdateTaskBody,
 } from "./task";
+export { getStats } from "./stats";
+export type { Stats, StatsData } from "./stats";
