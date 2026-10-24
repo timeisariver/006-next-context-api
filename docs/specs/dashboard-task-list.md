@@ -79,6 +79,6 @@
 
 ## デザイン・補足
 
-- 表示先は `src/_pages/home/ui/TaskTable.tsx` の空の `.content`。見出し（`DashboardHead`）と「タスク一覧」リンク（`MoreLink`。文言は「すべてのタスクをみる」から変更）を使う。
+- 表示先は `src/_pages/home/ui/DashboardTasks.tsx` の空の `.content`。見出し（`DashboardHead`）と「タスク一覧」リンク（`MoreLink`。文言は「すべてのタスクをみる」から変更）を使う。
 - 読み込み中・エラーの表示は `src/_pages/home/ui/RecentProjects.tsx` に揃える。
 - デザインの指定はない。「最近のプロジェクト」など既存のダッシュボードの見た目（余白・文字の大きさ・色・枠線）に合わせ、色や影は `src/_app/styles/globals.scss` の CSS 変数を使う。

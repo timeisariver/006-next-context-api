@@ -3,9 +3,9 @@ import { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { MoveRight } from "lucide-react";
-import { useProjects } from "@/entities/project";
 import {
   updateTask,
+  type Project,
   type Task,
   type TaskStatus,
   type UpdateTaskBody,
@@ -23,11 +23,11 @@ const STATUS_OPTIONS: { value: TaskStatus; label: string }[] = [
 
 type Props = {
   task: Task;
+  projects: Project[];
   onChange: (task: Task) => void;
 };
 
-export function TaskRow({ task, onChange }: Props) {
-  const { projects } = useProjects();
+export function TaskRow({ task, projects, onChange }: Props) {
   const [savingField, setSavingField] = useState<Field | null>(null);
   const [hasError, setHasError] = useState(false);
 

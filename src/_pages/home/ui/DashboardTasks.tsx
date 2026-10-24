@@ -1,10 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useProjects } from "@/entities/project";
+import { TaskTable } from "@/entities/task";
 import { DashboardHead, MoreLink } from "@/shared/ui";
 import { getTasks, type Task } from "@/shared/api";
-import { TaskRow } from "./TaskRow";
-import s from "./TaskTable.module.scss";
+import s from "./DashboardTasks.module.scss";
 
 const LIMIT = 20;
 
@@ -12,7 +13,8 @@ type Props = {
   className?: string;
 };
 
-export function TaskTable({ className }: Props) {
+export function DashboardTasks({ className }: Props) {
+  const { projects } = useProjects();
   const [tasks, setTasks] = useState<Task[]>([]);
   const [remainingPages, setRemainingPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
@@ -54,22 +56,11 @@ export function TaskTable({ className }: Props) {
         ) : tasks.length === 0 ? (
           <p>タスクはありません</p>
         ) : (
-          <table className={s.table}>
-            <thead>
-              <tr>
-                <th className={clsx(s.th, s.thTitle)}>タスク</th>
-                <th className={clsx(s.th, s.thFit)}>プロジェクト</th>
-                <th className={clsx(s.th, s.thFit)}>ステータス</th>
-                <th className={clsx(s.th, s.thFit)}>期限日</th>
-                <th className={s.th}></th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.map((task) => (
-                <TaskRow key={task.id} task={task} onChange={handleChange} />
-              ))}
-            </tbody>
-          </table>
+          <TaskTable
+            tasks={tasks}
+            projects={projects}
+            onChange={handleChange}
+          />
         )}
       </div>
       {remainingPages > 0 && (
