@@ -10,7 +10,7 @@
 
 import { execFileSync } from "node:child_process";
 
-const IGNORED = new Set(["HEAD", "origin", "screenshots", "preview"]);
+const IGNORED = new Set(["HEAD", "origin", "screenshots"]);
 
 const git = (...args) =>
   execFileSync("git", args, {

@@ -30,12 +30,11 @@ npm run dev
 
 ## プレビュー環境
 
-レビュー待ちの PR をすべてマージした `preview` ブランチを、Netlify で公開している。
+main ブランチを Netlify で公開している。
 
 https://silver-starburst-7b8837.netlify.app/
 
-- `preview` ブランチへ push されるたびに Netlify が自動でビルド・デプロイする（設定は [netlify.toml](netlify.toml)）。
-- `preview` ブランチは `npm run preview` で作り直す（`/pr` の最後にも自動で実行される）。確認用の使い捨てで、PR の比較元にはしない。
+- main ブランチへ push されるたびに Netlify が自動でビルド・デプロイする（設定は [netlify.toml](netlify.toml)）。
 - API のデータはサーバーのメモリ上にあるため、サーバーレス環境では再起動のたびに初期状態へ戻ることがある。
 
 ## Claude Code での開発の流れ
