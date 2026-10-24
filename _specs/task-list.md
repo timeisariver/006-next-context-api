@@ -52,7 +52,7 @@
 - ステータスの絞り込み（「完了」「アーカイブ」のタスクの表示）、並び替え、キーワード検索の UI。このページには「未完了」のタスクだけが表示され、完了・アーカイブしたタスクは再読み込みすると一覧から消える（別の仕様書であとから作る）
 - タスクの追加・削除
 - プロジェクト・ステータス・期限日以外の項目の編集
-- 「タスク詳細ページ」（`/tasks/<タスクの id>`）の作成（`docs/specs/task-detail.md` で別に作る。それまでリンク先は 404 になる）
+- 「タスク詳細ページ」（`/tasks/<タスクの id>`）の作成（`_specs/task-detail.md` で別に作る。それまでリンク先は 404 になる）
 - ダッシュボードの変更
 - モバイル向けのレイアウト
 
@@ -62,7 +62,7 @@
   - クエリ: `limit`（表示件数で選ばれた件数。初期状態は 20）、`page`（1 始まり）、`status`（`scheduled` / `completed` / `archived`。指定しない場合は `scheduled` のみ）
   - レスポンス: `{ data: Task[], pageInfo: PageInfo }`。`pageInfo` は `page` / `limit` / `totalCount` / `hasNext` / `hasPrevious`。全ページ数は `totalCount` と `limit` から求める。
   - 結果は期限（`deadline`）の昇順で返る。
-- `PATCH /api/v1/users/tasks/{id}`（タスクのプロジェクト・ステータス・期限日の変更）。リクエストとレスポンスの形は `docs/specs/dashboard-task-list.md` と同じ。
+- `PATCH /api/v1/users/tasks/{id}`（タスクのプロジェクト・ステータス・期限日の変更）。リクエストとレスポンスの形は `_specs/dashboard-task-list.md` と同じ。
 - 既存の `src/shared/api/task.ts` の `getTasks()` / `updateTask()` と `Task` / `PageInfo` 型は、`feature/dashboard-task-list`（PR #2）で追加されたものを使う。
 - プロジェクトの選択肢には、`useProjects()`（`GET /api/v1/users/projects`）のプロジェクト一覧を使える。
 

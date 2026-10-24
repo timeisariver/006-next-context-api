@@ -1,2 +1,5 @@
+# Prettier（endOfLine: lf）に合わせ、core.autocrlf の設定にかかわらず作業ツリーの改行を LF にする
+* text=auto eol=lf
+
 # export を並べるだけのバレルファイルは、複数の PR が末尾に足しても競合しないよう両方の行を残す
 src/shared/api/index.ts merge=union

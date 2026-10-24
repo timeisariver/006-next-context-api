@@ -15,6 +15,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 # コマンド
 
 - `npm run dev` — 開発サーバーを起動する。
+- `npm run build` — 本番ビルドを行う（main への push で Netlify も同じビルドを実行する）。
 - `npm run lint` — ESLint を実行する。
 - `npm run typecheck` — TypeScript の型チェックを実行する。
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
@@ -22,9 +23,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # 開発の流れ
 
-1. 仕様書を `docs/specs/_template.md` をもとに `docs/specs/<機能名>.md` に書く（人が書く）。`/spec <機能の説明>` で下書きと作業ブランチを作ってから、人が見直してもよい。
-2. `/implement docs/specs/<機能名>.md` — サブエージェントで並列に実装し、レビューまで行う。
-3. `/pr` — スクリーンショットを撮り、PR を作成する。
+1. 仕様書を `_specs/_template.md` をもとに `_specs/<機能名>.md` に書く（人が書く）。`/spec <機能の説明>` で下書きと作業ブランチを作ってから、人が見直してもよい。
+2. `/plan _specs/<機能名>.md` — タスク分割と担当範囲を決めた実装プランを `_plans/<機能名>.md` に書く。人が見直す。
+3. `/implement _plans/<機能名>.md` — プランに沿ってサブエージェントで並列に実装し、レビューまで行う。
+4. `/pr` — スクリーンショットを撮り、PR を作成する。
 
 PR はメンターのレビュー後にマージするため、レビュー待ちの機能のコードを使う機能は、その機能のブランチから作る（積み上げ式）。切り元は `/spec` が決め、`/implement` のレビューと `/pr` の比較先は `node scripts/base-branch.mjs` で求める。積み上げた PR が main に入るまで、PR は「Create a merge commit」でマージする（Squash すると上の PR に下の変更が再び出る）。
 
@@ -61,8 +63,11 @@ BEM は使わない。
 
 # アーキテクチャ
 
-- 状態管理は React Context。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` でプロジェクト一覧・`isLoading`・`error` を読む。データ取得はクライアント側で、`ProjectsProvider` のマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。
-- API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。ただし swagger.yml の `UpdateTask`（`PATCH /users/tasks/{id}` のリクエスト）は誤っているため、`app/api/v1/users/tasks/[id]/route.js` と `app/api/datastore/models/task.ts` の `assign()` を参照する（`projectId`・`title`・`description`・`status`・`deadline` を受け付ける）。
+- 状態管理は React Context で、共有するのはプロジェクト一覧だけ。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` で `projects`・`isLoading`・`error`・`refreshProjects` を読む。`ProjectsProvider` はマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。プロジェクトはタスクの件数などの集計を持つため、タスクを作成・更新・削除したら `refreshProjects()` で取り直す。
+- タスク・統計・プロジェクト詳細・タスク詳細は Context に載せず、`_pages` のクライアントコンポーネントが `shared/api` の関数で直接取得する。
+- API のデータはサーバーのメモリ（`globalThis.__datastore`）にあり、開発サーバーを再起動すると初期データに戻る。Netlify 上でも再起動のたびに戻ることがある。
+- API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。ただし swagger.yml の `UpdateTask`（`PATCH /users/tasks/{id}` のリクエスト）は誤っているため、`app/api/v1/users/tasks/[id]/route.js` と `app/api/datastore/models/task.ts` の `assign()` を参照する（`projectId`・`title`・`description`・`status`・`deadline` を受け付ける）。
 - FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ）は `eslint.config.mjs` の `no-restricted-imports` で検査される。ルールを変えるときは `docs/architecture.md` と合わせて更新する。
 - React Compiler が有効（`next.config.ts`）。`useMemo` / `useCallback` を手書きで足さない。
 - `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint の対象外。
+- `.gitattributes` で改行を LF に固定している。また `src/shared/api/index.ts` は `merge=union` のため、並行するブランチがそれぞれ export を足しても競合せず、両方の行が残る（同じ行を書き換えた場合は両方残って重複するので、マージ後に確認する）。

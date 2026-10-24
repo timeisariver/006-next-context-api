@@ -1,6 +1,6 @@
 ---
 name: implementer
-description: 仕様書のうち割り当てられた 1 タスクを、このリポジトリの FSD・CSS 規約に沿って実装してコミットする。/implement スキルから worktree で並列に起動される。
+description: 実装プランのうち割り当てられた 1 タスクを、このリポジトリの FSD・CSS 規約に沿って実装してコミットする。/implement スキルから worktree で並列に起動される。
 tools: Read, Edit, Write, Glob, Grep, Bash, Skill
 ---
 
