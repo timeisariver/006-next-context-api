@@ -22,9 +22,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 # 開発の流れ
 
-1. 仕様書を `docs/specs/_template.md` をもとに `docs/specs/<機能名>.md` に書く（人が書く）。`/spec <機能の説明>` で下書きと作業ブランチを作ってから、人が見直してもよい。
-2. `/implement docs/specs/<機能名>.md` — サブエージェントで並列に実装し、レビューまで行う。
-3. `/pr` — スクリーンショットを撮り、PR を作成する。
+1. 仕様書を `_specs/_template.md` をもとに `_specs/<機能名>.md` に書く（人が書く）。`/spec <機能の説明>` で下書きと作業ブランチを作ってから、人が見直してもよい。
+2. `/plan _specs/<機能名>.md` — タスク分割と担当範囲を決めた実装プランを `_plans/<機能名>.md` に書く。人が見直す。
+3. `/implement _plans/<機能名>.md` — プランに沿ってサブエージェントで並列に実装し、レビューまで行う。
+4. `/pr` — スクリーンショットを撮り、PR を作成する。
 
 PR はメンターのレビュー後にマージするため、レビュー待ちの機能のコードを使う機能は、その機能のブランチから作る（積み上げ式）。切り元は `/spec` が決め、`/implement` のレビューと `/pr` の比較先は `node scripts/base-branch.mjs` で求める。積み上げた PR が main に入るまで、PR は「Create a merge commit」でマージする（Squash すると上の PR に下の変更が再び出る）。
 

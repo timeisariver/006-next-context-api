@@ -21,7 +21,7 @@ disable-model-invocation: true
 ## 2. 変更内容の把握
 
 - `git log <比較元>..HEAD`、`git diff <比較元>...HEAD --stat`、`git diff <比較元>...HEAD` を読む（比較元は `origin/<比較元>` を使う）。
-- 差分やコミットで `docs/specs/` の仕様書に触れていれば、その仕様書も読む。
+- 差分やコミットで `_specs/` の仕様書や `_plans/` のプランに触れていれば、それらも読む。
 
 ## 3. スクリーンショット
 

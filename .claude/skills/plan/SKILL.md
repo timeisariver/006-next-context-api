@@ -1,0 +1,54 @@
+---
+name: plan
+description: _specs/ の仕様書をもとに、タスク分割と担当範囲を決めた実装プランを _plans/ に書き出す。
+argument-hint: <仕様書のパス>
+disable-model-invocation: true
+allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git switch:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git fetch:*), Bash(git diff:*), Bash(node scripts/base-branch.mjs:*)
+---
+
+仕様書 `$ARGUMENTS` をもとに、実装プランを書く。プランは人が見直してから `/implement` に渡す前提で、ここでは実装しない。
+
+## 1. 準備
+
+1. 仕様書、`CLAUDE.md`、`docs/architecture.md`、`_plans/_template.md` を読む。仕様書が見つからなければ止めてユーザーに伝える。
+2. 仕様書に `<!-- 要確認: 〜 -->` が残っている、または実装方針が変わるほど曖昧な点や矛盾があれば、**プランを書く前に**ユーザーに質問する。推測で埋めない。
+3. `git status --short` を確認する。この仕様書とこれから書くプラン以外の変更があれば、止めてユーザーに確認する。
+4. main にいる場合は `feature/<仕様書のファイル名>` ブランチを作って切り替える。
+5. `node scripts/base-branch.mjs` で切り元のブランチ（以下「比較元」）を求める。
+
+## 2. 調べる
+
+- 仕様書の「対象ページ」に当たる `app/**/page.tsx` と、関係する `src/_pages`・`src/entities`・`src/shared` のコードを読み、流用できるものと変更が要るものを確かめる。
+- データが要る機能なら、`src/shared/api/` の型と `app/api/v1/spec/swagger.yml/swagger.yml` を確かめる（`UpdateTask` の扱いは `CLAUDE.md` を参照）。
+- 新しいコードの置き場所は `feature-sliced-design` スキルの判断基準で決める（迷ったら `_pages` に置き、今まさに複数箇所で使うまでは `entities`・`shared` に切り出さない）。
+
+## 3. タスクに分ける
+
+FSD のスライス単位で、**変更するファイルが重ならないように**タスクを分ける。各タスクは `/implement` が `implementer` サブエージェントに 1 つずつ渡す単位になる。
+
+- 下のレイヤー（`shared`、`entities`）の変更は第 1 段階、それを使う `_pages` のスライスは第 2 段階にする。同じ段階のタスクは並列に実行される。
+- `_app/layouts` など、複数のタスクが触りそうな共有ファイルは 1 つのタスクにまとめる。
+- 変更が 1 スライスで済むなど小さい場合は、無理に分けずに 1 タスクにする。
+- 仕様書の「要件」はどれか 1 つ以上のタスクに割り当て、漏れがないようにする。
+
+## 4. プランを書く
+
+`_plans/_template.md` の見出しと順序をそのまま使い、`_plans/<仕様書のファイル名>.md` に保存する。テンプレートの HTML コメント（`<!-- -->`）は消す。既に同名のプランがあれば、上書きしてよいかユーザーに確認する。
+
+- 各タスクに、目的、担当範囲（ファイル・ディレクトリ）、満たす要件、作る／使う公開 API を書く。公開 API は名前とシグネチャまで書き、後の段階のタスクがそれだけを見て使えるようにする。
+- コードの全文は書かない（それは `/implement` が書く）。
+- 仕様書から一意に決まらず、プランで決めたことは「判断した点」に書く。
+
+コミットはしない（人が見直して直す前提のため。`/implement` が仕様書と一緒にコミットする）。
+
+## 5. 報告
+
+プランの全文は貼らず、次の形式で伝える。
+
+```
+ブランチ: <ブランチ名>（<比較元> から作成）
+プラン: _plans/<slug>.md
+タスク: 第 1 段階 <n> 件、第 2 段階 <n> 件
+```
+
+続けて「判断した点」を箇条書きで伝える。最後に、プランを見直したら `/implement _plans/<slug>.md` で実装できることを伝える。
