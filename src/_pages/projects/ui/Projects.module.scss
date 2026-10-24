@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.message {
+  align-self: center;
+}

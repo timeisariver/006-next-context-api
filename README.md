@@ -28,6 +28,16 @@ npm run dev
 | `npm run format:check` | Prettier の整形漏れをチェック |
 | `npm run screenshots`  | PR 用のスクリーンショット撮影 |
 
+## プレビュー環境
+
+レビュー待ちの PR をすべてマージした `preview` ブランチを、Netlify で公開している。
+
+https://silver-starburst-7b8837.netlify.app/
+
+- `preview` ブランチへ push されるたびに Netlify が自動でビルド・デプロイする（設定は [netlify.toml](netlify.toml)）。
+- `preview` ブランチは `npm run preview` で作り直す（`/pr` の最後にも自動で実行される）。確認用の使い捨てで、PR の比較元にはしない。
+- API のデータはサーバーのメモリ上にあるため、サーバーレス環境では再起動のたびに初期状態へ戻ることがある。
+
 ## Claude Code での開発の流れ
 
 仕様書を書くところまでは人が行い、実装・レビュー・PR 作成を Claude Code に任せる。
