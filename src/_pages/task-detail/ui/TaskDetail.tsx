@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function TaskDetail({ id }: Props) {
-  const { data: task, isLoading, error } = useFetch(id, () => getTask(id));
+  const { data: task, isLoading, error } = useFetch(() => getTask(id));
 
   if (isLoading) return <p>読み込み中…</p>;
   if (error || !task) return <p>{error ?? "読み込みに失敗しました"}</p>;

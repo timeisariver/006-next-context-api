@@ -15,7 +15,7 @@ type Props = {
 
 export function DashboardTasks({ className }: Props) {
   const { projects } = useProjects();
-  const { data, isLoading, error, setData } = useFetch("dashboard-tasks", () =>
+  const { data, isLoading, error, setData } = useFetch(() =>
     getTasks({ limit: LIMIT }),
   );
   const tasks = data?.tasks ?? [];

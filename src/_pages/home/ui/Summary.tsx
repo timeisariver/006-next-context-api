@@ -21,7 +21,7 @@ function sum(values: number[]): number {
 }
 
 export function Summary({ className }: Props) {
-  const { data, isLoading, error } = useFetch("stats", getStats, {
+  const { data, isLoading, error } = useFetch(getStats, {
     errorMessage: "進捗の取得に失敗しました",
   });
   const stats = data ?? [];

@@ -20,7 +20,7 @@ export const ProjectsContext = createContext<ProjectsValue>({
 });
 
 export function ProjectsProvider({ children }: { children: React.ReactNode }) {
-  const { data, isLoading, error } = useFetch("projects", getProjects);
+  const { data, isLoading, error } = useFetch(getProjects);
   // refreshProjects() で取り直した一覧。初回の取得に失敗したあとでも入れる
   const [refreshed, setRefreshed] = useState<Project[] | null>(null);
   const projects = refreshed ?? data ?? [];

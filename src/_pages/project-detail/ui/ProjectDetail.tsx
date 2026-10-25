@@ -8,11 +8,7 @@ type Props = {
 };
 
 export function ProjectDetail({ slug }: Props) {
-  const {
-    data: project,
-    isLoading,
-    error,
-  } = useFetch(slug, () => getProject(slug));
+  const { data: project, isLoading, error } = useFetch(() => getProject(slug));
 
   if (isLoading) return <p>読み込み中…</p>;
   if (error || !project) return <p>{error ?? "読み込みに失敗しました"}</p>;
