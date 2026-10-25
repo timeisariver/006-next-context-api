@@ -2,10 +2,11 @@
 
 import clsx from "clsx";
 import Link from "next/link";
-import { useState } from "react";
 import s from "./Header.module.scss";
-import { TaskCreateModal } from "./TaskCreateModal";
+import { TaskCreateForm } from "./TaskCreateForm";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
+import { useModal } from "@/shared/lib";
+import { Modal } from "@/shared/ui";
 
 type Props = {
   className?: string;
@@ -18,7 +19,7 @@ const ACTIONS = [
 ];
 
 export function Header({ className }: Props) {
-  const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
+  const taskModal = useModal();
 
   return (
     <header className={clsx(s.root, className)}>
@@ -42,7 +43,7 @@ export function Header({ className }: Props) {
             type="button"
             className={s.action}
             aria-label="タスクを追加"
-            onClick={() => setIsTaskModalOpen(true)}
+            onClick={taskModal.open}
           >
             <Plus />
           </button>
@@ -64,10 +65,13 @@ export function Header({ className }: Props) {
           </button>
         </li>
       </ul>
-      <TaskCreateModal
-        open={isTaskModalOpen}
-        onClose={() => setIsTaskModalOpen(false)}
-      />
+      <Modal
+        open={taskModal.isOpen}
+        onClose={taskModal.close}
+        labelledBy="task-create-title"
+      >
+        <TaskCreateForm onClose={taskModal.close} />
+      </Modal>
     </header>
   );
 }

@@ -6,3 +6,4 @@ export {
   toDisplay,
   today,
 } from "./date";
+export { useModal } from "./useModal";

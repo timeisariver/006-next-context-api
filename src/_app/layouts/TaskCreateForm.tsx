@@ -1,14 +1,13 @@
 "use client";
 
 import clsx from "clsx";
-import { ChevronDown, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import s from "./TaskCreateModal.module.scss";
+import { ChevronDown } from "lucide-react";
+import { useState } from "react";
+import s from "./TaskCreateForm.module.scss";
 import { useProjects } from "@/entities/project";
 import { today } from "@/shared/lib";
 
 type Props = {
-  open: boolean;
   onClose: () => void;
 };
 
@@ -20,58 +19,7 @@ const STATUSES = [
 
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
 
-export function TaskCreateModal({ open, onClose }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-
-  useEffect(() => {
-    const dialog = dialogRef.current;
-    if (!dialog) return;
-    if (open && !dialog.open) {
-      dialog.showModal();
-    } else if (!open && dialog.open) {
-      dialog.close();
-    }
-  }, [open]);
-
-  useEffect(() => {
-    if (!open) return;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = prev;
-    };
-  }, [open]);
-
-  return (
-    // 背景のクリックで閉じるのはマウス向けの補助。キーボードでは Esc（dialog 標準）と閉じるボタンで閉じられる。
-    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-    <dialog
-      ref={dialogRef}
-      className={s.root}
-      aria-modal="true"
-      aria-labelledby="task-create-title"
-      onClose={onClose}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) onClose();
-      }}
-    >
-      <div className={s.scroll}>
-        <button
-          type="button"
-          className={s.close}
-          aria-label="閉じる"
-          onClick={onClose}
-        >
-          <X />
-        </button>
-        {/* 開くたびにマウントし直して、入力内容を初期値に戻す */}
-        {open && <TaskCreateForm onClose={onClose} />}
-      </div>
-    </dialog>
-  );
-}
-
-function TaskCreateForm({ onClose }: { onClose: () => void }) {
+export function TaskCreateForm({ onClose }: Props) {
   const { projects } = useProjects();
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
