@@ -10,6 +10,26 @@ export function toDisplay(value: string) {
   return toDateString(value).replaceAll("-", "/");
 }
 
+// "2026/11/04" を "2026-11-04" にする。日付として正しくなければ null
+export function parseSlashDate(value: string) {
+  const match = /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/.exec(value.trim());
+  if (!match) return null;
+  const [year, month, day] = match.slice(1).map(Number);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  if (
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  ) {
+    return null;
+  }
+  return [
+    String(year).padStart(4, "0"),
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0"),
+  ].join("-");
+}
+
 // 進捗サマリーの日付（Stats の date）は数値のため、数値も受け付ける
 export function formatDate(value: string | number, format = "YYYY/MM/DD") {
   return dayjs(value).format(format);
