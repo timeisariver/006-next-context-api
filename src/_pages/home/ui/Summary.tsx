@@ -23,10 +23,17 @@ export function Summary({ className }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getStats()
-      .then(setStats)
-      .catch(() => setError("進捗の取得に失敗しました"))
-      .finally(() => setIsLoading(false));
+    async function init() {
+      try {
+        setStats(await getStats());
+      } catch {
+        setError("進捗の取得に失敗しました");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    init();
   }, []);
 
   const completedSeries = stats.find((item) => item.type === "completed");
