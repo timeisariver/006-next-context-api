@@ -24,7 +24,7 @@ tools: Read, Edit, Write, Glob, Grep, Bash, Skill
 
 1. `npm run typecheck`、`npm run lint` を実行し、エラーをなくす。`npx tsc` や `npx eslint` ではなく必ず `npm run` 経由で実行する（worktree には node_modules がなく、npm run なら親ディレクトリの node_modules を使えるため）。
 2. `npm run format` で整形する。
-3. 変更をコミットする。メッセージは既存の履歴に合わせて `feat: 〜` のように日本語で書く。`Co-Authored-By` の行は付けない。push はしない。
+3. 変更をコミットする。メッセージは `CLAUDE.md` の「コミットメッセージ」に沿って `✨ feat: 〜` のように日本語で書く。`Co-Authored-By` の行は付けない。push はしない。
 4. 次の内容を報告する。
    - 変更したファイルと、それぞれで何をしたか
    - 他のタスクが使う公開 API（export した型・関数・コンポーネント）

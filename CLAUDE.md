@@ -30,6 +30,19 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ブランチは機能ごとに main から作り、PR の比較先も main にする。
 
+## コミットメッセージ
+
+`<絵文字> <種類>: <変更内容>` の形で、変更内容は日本語で書く（例: `✨ feat: タスク一覧にページ送りを追加`）。
+
+| 種類       | 絵文字 | 使う場面                                       |
+| ---------- | ------ | ---------------------------------------------- |
+| `feat`     | ✨     | 機能の追加                                     |
+| `fix`      | 🐛     | バグの修正                                     |
+| `docs`     | 📝     | ドキュメント・仕様書・プランだけの変更         |
+| `style`    | 💄     | 見た目（CSS）だけの変更                        |
+| `refactor` | ♻️     | 動作を変えないコードの整理                     |
+| `chore`    | 🔧     | 設定・ツール・依存パッケージ・スクリプトの変更 |
+
 # ディレクトリ構成（Feature-Sliced Design）
 
 このプロジェクトは Feature-Sliced Design (FSD) v2.1 で構成する。詳細は `docs/architecture.md` を参照。
