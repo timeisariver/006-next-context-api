@@ -1,6 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { getTask, type Task } from "@/shared/api";
+import { getTask } from "@/shared/api";
+import { useFetch } from "@/shared/lib";
 import { TaskDetailForm } from "./TaskDetailForm";
 
 type Props = {
@@ -8,23 +8,7 @@ type Props = {
 };
 
 export function TaskDetail({ id }: Props) {
-  const [task, setTask] = useState<Task | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function init() {
-      try {
-        setTask(await getTask(id));
-      } catch {
-        setError("読み込みに失敗しました");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    init();
-  }, [id]);
+  const { data: task, isLoading, error } = useFetch(id, () => getTask(id));
 
   if (isLoading) return <p>読み込み中…</p>;
   if (error || !task) return <p>{error ?? "読み込みに失敗しました"}</p>;
