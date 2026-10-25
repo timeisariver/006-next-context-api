@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Calendar } from "lucide-react";
-import { toDateString, toDisplay } from "../lib/date";
+import { toDateString, toDisplay } from "@/shared/lib";
 import s from "./DeadlineCell.module.scss";
 
 type Props = {

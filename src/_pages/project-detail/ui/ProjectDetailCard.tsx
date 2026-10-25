@@ -1,22 +1,13 @@
 import clsx from "clsx";
-import dayjs from "dayjs";
 import { Archive, Calendar, Check } from "lucide-react";
 import type { Project } from "@/shared/api";
+import { formatDate, formatRemaining } from "@/shared/lib";
 import s from "./ProjectDetailCard.module.scss";
 
 type Props = {
   project: Project;
   className?: string;
 };
-
-function formatRemaining(deadline: string) {
-  const days = dayjs(deadline)
-    .startOf("day")
-    .diff(dayjs().startOf("day"), "day");
-  if (days > 0) return `あと ${days} 日`;
-  if (days === 0) return "今日まで";
-  return `${-days} 日超過`;
-}
 
 export function ProjectDetailCard({ project, className }: Props) {
   const { scheduled, completed, archived } = project.stats.states;
@@ -33,7 +24,7 @@ export function ProjectDetailCard({ project, className }: Props) {
           <p className={s.deadline}>
             {formatRemaining(project.deadline)} (
             <time dateTime={project.deadline}>
-              {dayjs(project.deadline).format("YYYY/MM/DD")}
+              {formatDate(project.deadline)}
             </time>
             )
           </p>

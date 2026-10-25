@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import s from "./SidebarProject.module.scss";
-import dayjs from "dayjs";
 import Link from "next/link";
 import type { Project } from "@/shared/api";
+import { formatDate } from "@/shared/lib";
 
 type Props = {
   project: Project;
@@ -20,7 +20,7 @@ export function SidebarProject({ project, className }: Props) {
           {project.name}
         </span>
         <time className={s.time} dateTime={project.deadline}>
-          {dayjs(project.deadline).format("YYYY/MM/DD")}
+          {formatDate(project.deadline)}
         </time>
       </Link>
     </li>

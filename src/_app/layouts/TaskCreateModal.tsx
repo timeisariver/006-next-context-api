@@ -5,6 +5,7 @@ import { ChevronDown, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import s from "./TaskCreateModal.module.scss";
 import { useProjects } from "@/entities/project";
+import { today } from "@/shared/lib";
 
 type Props = {
   open: boolean;
@@ -18,13 +19,6 @@ const STATUSES = [
 ];
 
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
-
-function today() {
-  const d = new Date();
-  const mm = String(d.getMonth() + 1).padStart(2, "0");
-  const dd = String(d.getDate()).padStart(2, "0");
-  return `${d.getFullYear()}-${mm}-${dd}`;
-}
 
 export function TaskCreateModal({ open, onClose }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);

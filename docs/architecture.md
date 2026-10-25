@@ -25,6 +25,8 @@ src/
   shared/           # shared レイヤー（スライスなし）
     api/            #   セグメント（API のデータ取得と、レスポンスの型）
       index.ts      #     Public API
+    lib/            #   セグメント（日付の整形など、UI を持たない関数）
+      index.ts      #     Public API
     ui/             #   セグメント（共通 UI 部品、SCSS パーシャル）
       index.ts      #     Public API
 ```
@@ -63,7 +65,7 @@ import { Home } from "@/_pages/home/ui/HomePage";
 | `ui/`      | コンポーネントと、その隣に置く`*.module.scss` |
 | `model/`   | 状態、型、ビジネスロジック（Context など）    |
 | `api/`     | データ取得                                    |
-| `lib/`     | スライス内で使うヘルパー                      |
+| `lib/`     | UI を持たない関数・hooks（ヘルパー）          |
 | `config/`  | 設定値                                        |
 
 必要になったセグメントだけを作る。

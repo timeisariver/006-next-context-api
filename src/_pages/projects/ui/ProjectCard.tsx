@@ -2,8 +2,8 @@ import clsx from "clsx";
 import s from "./ProjectCard.module.scss";
 import { Calendar, GitCommitHorizontal, FileText } from "lucide-react";
 import Link from "next/link";
-import dayjs from "dayjs";
 import type { Project } from "@/shared/api";
+import { formatDate } from "@/shared/lib";
 
 type Props = {
   project: Project;
@@ -23,7 +23,7 @@ export function ProjectCard({ project, className }: Props) {
           <p className={s.date}>
             <Calendar size={12} />
             <time dateTime={project.deadline}>
-              {dayjs(project.deadline).format("YYYY/MM/DD")}
+              {formatDate(project.deadline)}
             </time>
           </p>
         </div>

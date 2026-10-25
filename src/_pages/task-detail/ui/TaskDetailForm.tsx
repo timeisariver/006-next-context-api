@@ -11,7 +11,7 @@ import {
   type Task,
   type TaskStatus,
 } from "@/shared/api";
-import { toDateString, toDisplay } from "@/entities/task";
+import { toDateString, toDisplay } from "@/shared/lib";
 import { useProjects } from "@/entities/project";
 
 type Props = {
