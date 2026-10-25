@@ -148,6 +148,7 @@ npm run screenshots -- . tasks                    # screenshots ブランチに 
 | [.claude/skills/feature-sliced-design/](.claude/skills/feature-sliced-design/SKILL.md) | FSD 公式スキル（コードの置き場所の判断基準） |
 | [.claude/agents/](.claude/agents/)                                                     | 実装・レビュー用のサブエージェント           |
 | [.claude/settings.json](.claude/settings.json)                                         | 確認なしで実行してよいコマンドの許可設定     |
+| [.github/workflows/ci.yml](.github/workflows/ci.yml)                                   | CI（lint・型チェック・整形・ビルド）         |
 | [scripts/pr-screenshots.mjs](scripts/pr-screenshots.mjs)                               | スクリーンショットの撮影・push               |
 | [\_specs/](_specs/)                                                                    | 仕様書                                       |
 | [\_plans/](_plans/)                                                                    | 実装プラン                                   |

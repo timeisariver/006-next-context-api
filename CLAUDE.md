@@ -76,6 +76,8 @@ BEM は使わない。
 
 テストフレームワークは導入していない。変更後は `npm run lint`、`npm run typecheck`、`npm run format:check` で確認する。`npm run typecheck` は `next typegen` を先に実行する（`LayoutProps<"/">` などの型を生成するため）。
 
+PR と main への push では、GitHub Actions（`.github/workflows/ci.yml`）が同じ 3 つと `npm run build` を実行する。Node のバージョンは Netlify（`netlify.toml` の `NODE_VERSION`）に合わせているので、変えるときは両方を更新する。
+
 # アーキテクチャ
 
 - 状態管理は React Context で、共有するのはプロジェクト一覧だけ。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` で `projects`・`isLoading`・`error`・`refreshProjects` を読む。`ProjectsProvider` はマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。プロジェクトはタスクの件数などの集計を持つため、タスクを作成・更新・削除したら `refreshProjects()` で取り直す。
