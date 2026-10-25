@@ -11,8 +11,9 @@
 
 - 取得結果を `{ key, data, error }` の 1 つの state にまとめて持つ。`isLoading` は state に持たず、「結果がない、または結果の `key` が今の `key` と違う」ことから求める（`TasksContent` と同じ考え方）。これで、`key` が変わったときに `useEffect` の中ですぐに `setState` しなくても、読み込み中の表示から始まる。
 - `useEffect` の依存配列は `[key]` にし、cleanup で `ignore = true` にして、前の `key` の取得結果を捨てる。
+- `key` が変わったときは、レンダー中に前の結果を消す（React の「props が変わったときに state を調整する」書き方）。A → B → A と戻ったときに、前の A の結果を読み込み中の代わりに表示しないため。
 - 取得関数は毎回のレンダーで新しく作られるため、`useEffectEvent`（React 19.2）で包んで `useEffect` の依存配列に入れない。
-- 取得したデータをあとから書き換える `setData` を返す。`DashboardTasks` の `handleChange` と、`ProjectsProvider` の `refreshProjects()` で使う。
+- 取得したデータをあとから書き換える `setData` を返す。`DashboardTasks` の `handleChange` で使う。
 
 `shared/lib` に置く理由は仕様書の「デザイン・補足」のとおり。
 
@@ -63,8 +64,8 @@
 - 要件:
   - 「共通の hooks」: 表の `ProjectsContext.tsx` を `useFetch` に置き換える。
   - 「ページごとの動作」: サイドバー・プロジェクト一覧・最近のプロジェクトの出し分けと、`refreshProjects()` の動作。
-    - `useFetch("projects", getProjects)` で取得し、Context には今と同じ `projects`（`data ?? []`）・`isLoading`・`error`・`refreshProjects` を渡す。`ProjectsValue` の型と、`createContext` の初期値は変えない。
-    - `refreshProjects()` は、`getProjects()` の結果を `setData(() => 新しい一覧)` で入れる。失敗したら今と同じく何もしない（読み込み中にせず、今の一覧を残す）。
+    - `useFetch("projects", getProjects)` で取得し、Context には今と同じ `projects`（`refreshProjects()` で取り直した一覧があればそれ、なければ `data ?? []`）・`isLoading`・`error`・`refreshProjects` を渡す。`ProjectsValue` の型と、`createContext` の初期値は変えない。
+    - `refreshProjects()` は、`getProjects()` の結果を `ProjectsProvider` の state（取り直した一覧）に入れる。初回の取得に失敗したあとでも入れる。失敗したら今と同じく何もしない（読み込み中にせず、今の一覧を残す）。
 - コミット: `♻️ refactor: プロジェクト一覧の取得を useFetch に置き換える`
 - 使う公開 API: `useFetch`（`@/shared/lib`）
 
@@ -104,8 +105,8 @@
 - 取得し直すきっかけは、依存配列ではなく `key`（文字列）1 つで渡す。依存配列を引数で受け取ると `useEffect` に変数の配列を渡すことになり、`react-hooks/exhaustive-deps` で検査できなくなるため。今の 5 か所はどれも引数が 0〜1 個で、文字列 1 つで足りる。
 - `isLoading` を state に持たず、結果の `key` と今の `key` を比べて求める。`key` が変わったときに `useEffect` の中で `setIsLoading(true)` を呼ぶと、`react-hooks/set-state-in-effect` に引っかかるため。`TasksContent` と同じ考え方にした。
 - 取得関数は `useEffectEvent` で包む。`useEffect` の依存配列に取得関数を入れると、毎回のレンダーで新しい関数になり、取得が繰り返されるため。React 19.2.8（`useEffectEvent` が安定版）を使っている。
-- `setData` は、取得に成功したあとだけ書き換える。`refreshProjects()` は初回の取得に失敗したあとに呼ばれても、今は `projects` を書き換えるだけで `error` が残り、画面は「読み込みに失敗しました」のまま変わらない。何もしなくても画面の動作は同じで、hooks の動作が単純になる。
-- `ProjectsProvider` の `refreshProjects()` は、`useFetch` に「取り直す」機能を足さず、`setData` で入れる。読み込み中の表示にしない・失敗しても今の一覧を残すという動作が、`ProjectsProvider` だけのものだから。
+- `setData` は、取得に成功したあとだけ書き換える。成功前のデータを書き換える使い方が `DashboardTasks` にないため。
+- `ProjectsProvider` の `refreshProjects()` は `setData` を使わず、取り直した一覧を `ProjectsProvider` の state に持つ（レビューを受けて変更）。`setData` は初回の取得に失敗したあとは何もしないため、`setData` で入れると、初回に失敗してから取り直しに成功したとき、タスク追加モーダルのプロジェクトのプルダウンやタスクの表のプロジェクト名が空のままになり、今の動作と変わってしまう。`useFetch` に「取り直す」機能も足さない。読み込み中の表示にしない・失敗しても今の一覧を残すという動作が、`ProjectsProvider` だけのものだから。
 - `DashboardTasks` は、`getTasks()` の結果（`{ tasks, pageInfo }`）をそのまま `data` として持ち、`remainingPages` はレンダーのたびに求める。`useState` を 2 つ残すより、取得結果を 1 か所にまとめたほうがわかりやすいため。
 - 失敗したときの文言の初期値「読み込みに失敗しました」は `useFetch` の中に持つ。5 か所のうち 4 か所が同じ文言のため。
 - プロジェクト詳細とタスク詳細は、2 つのスライスにまたがるが、どちらも同じ形の小さな書き換えなので 1 タスクにまとめた。
