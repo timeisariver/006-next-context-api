@@ -6,4 +6,5 @@ export {
   toDisplay,
   today,
 } from "./date";
+export { useFetch } from "./useFetch";
 export { useModal } from "./useModal";
