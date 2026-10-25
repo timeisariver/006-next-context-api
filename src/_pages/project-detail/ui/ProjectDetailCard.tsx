@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { Archive, Calendar, Check } from "lucide-react";
+import { projectColorStyle } from "@/entities/project";
 import type { Project } from "@/shared/api";
 import { formatDate, formatRemaining } from "@/shared/lib";
 import s from "./ProjectDetailCard.module.scss";
@@ -15,7 +16,7 @@ export function ProjectDetailCard({ project, className }: Props) {
   return (
     <section
       className={clsx(s.root, className)}
-      style={{ "--project-color": project.color } as React.CSSProperties}
+      style={projectColorStyle(project.color)}
     >
       <h1 className={s.name}>{project.name}</h1>
       <div className={s.row}>
