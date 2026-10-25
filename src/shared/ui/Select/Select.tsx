@@ -77,7 +77,11 @@ export function Select<T extends string | number>({
   useEffect(() => {
     if (!isOpen) return;
     function handleMouseDown(e: MouseEvent) {
-      if (!rootRef.current?.contains(e.target as Node)) {
+      const target = e.target as Node;
+      // 結び付いた <label> のクリックは本体のクリックとして開閉されるので、ここでは閉じない
+      const labels = Array.from(buttonRef.current?.labels ?? []);
+      if (labels.some((label) => label.contains(target))) return;
+      if (!rootRef.current?.contains(target)) {
         setIsOpen(false);
         setActiveIndex(-1);
       }
@@ -86,11 +90,21 @@ export function Select<T extends string | number>({
     return () => document.removeEventListener("mousedown", handleMouseDown);
   }, [isOpen]);
 
-  // 移動中の項目が一覧の中で見えるようにスクロールする
+  // 移動中の項目が一覧の中で見えるようにスクロールする。
+  // scrollIntoView はページやモーダルまでスクロールさせるため、一覧の scrollTop だけを動かす
   useEffect(() => {
-    if (!isOpen || activeIndex < 0) return;
-    const item = listRef.current?.children[activeIndex];
-    item?.scrollIntoView({ block: "nearest" });
+    const list = listRef.current;
+    if (!isOpen || activeIndex < 0 || !list) return;
+    const item = list.children[activeIndex] as HTMLElement | undefined;
+    if (!item) return;
+    if (item.offsetTop < list.scrollTop) {
+      list.scrollTop = item.offsetTop;
+    } else if (
+      item.offsetTop + item.offsetHeight >
+      list.scrollTop + list.clientHeight
+    ) {
+      list.scrollTop = item.offsetTop + item.offsetHeight - list.clientHeight;
+    }
   }, [isOpen, activeIndex]);
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
