@@ -3,7 +3,7 @@ import { useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, ChevronDown, Trash2 } from "lucide-react";
+import { ArrowLeft, Trash2 } from "lucide-react";
 import s from "./TaskDetailForm.module.scss";
 import {
   deleteTask,
@@ -11,19 +11,15 @@ import {
   type Task,
   type TaskStatus,
 } from "@/shared/api";
-import { toDateString, toDisplay } from "@/entities/task";
+import { toDateString, toDisplay } from "@/shared/lib";
+import { Select } from "@/shared/ui";
 import { useProjects } from "@/entities/project";
+import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
 
 type Props = {
   initialTask: Task;
   className?: string;
 };
-
-const STATUS_OPTIONS: { value: TaskStatus; label: string }[] = [
-  { value: "scheduled", label: "未完了" },
-  { value: "completed", label: "完了" },
-  { value: "archived", label: "アーカイブ" },
-];
 
 export function TaskDetailForm({ initialTask, className }: Props) {
   const router = useRouter();
@@ -31,10 +27,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
   // 最後に保存した（または読み込んだ）値
   const [saved, setSaved] = useState(initialTask);
-  // 一覧が未取得の間も、タスクが属するプロジェクトを選択肢に残す
-  const projectOptions = projects.some((p) => p.id === saved.project.id)
-    ? projects
-    : [saved.project, ...projects];
+  const projectOptions = toProjectOptions(projects, saved.project);
   // 入力中の値
   const [projectId, setProjectId] = useState(initialTask.project.id);
   const [deadline, setDeadline] = useState(toDateString(initialTask.deadline));
@@ -119,25 +112,21 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
       <form className={s.form} onSubmit={handleSubmit}>
         <div className={s.field}>
-          <label htmlFor="task-project" className={s.label}>
+          <label
+            id="task-project-label"
+            htmlFor="task-project"
+            className={s.label}
+          >
             プロジェクト<span className={s.required}>*</span>
           </label>
-          <div className={s.selectWrap}>
-            <select
-              id="task-project"
-              className={clsx(s.control, s.select)}
-              value={projectId}
-              disabled={isBusy}
-              onChange={(e) => setProjectId(e.target.value)}
-            >
-              {projectOptions.map((project) => (
-                <option key={project.id} value={project.id}>
-                  {project.name}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={18} className={s.arrow} aria-hidden />
-          </div>
+          <Select
+            id="task-project"
+            aria-labelledby="task-project-label"
+            options={projectOptions}
+            value={projectId}
+            disabled={isBusy}
+            onChange={setProjectId}
+          />
         </div>
 
         <div className={s.field}>
@@ -156,25 +145,21 @@ export function TaskDetailForm({ initialTask, className }: Props) {
         </div>
 
         <div className={s.field}>
-          <label htmlFor="task-status" className={s.label}>
+          <label
+            id="task-status-label"
+            htmlFor="task-status"
+            className={s.label}
+          >
             ステータス
           </label>
-          <div className={s.selectWrap}>
-            <select
-              id="task-status"
-              className={clsx(s.control, s.select)}
-              value={status}
-              disabled={isBusy}
-              onChange={(e) => setStatus(e.target.value as TaskStatus)}
-            >
-              {STATUS_OPTIONS.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-            <ChevronDown size={18} className={s.arrow} aria-hidden />
-          </div>
+          <Select
+            id="task-status"
+            aria-labelledby="task-status-label"
+            options={TASK_STATUS_OPTIONS}
+            value={status}
+            disabled={isBusy}
+            onChange={setStatus}
+          />
         </div>
 
         <div className={s.field}>

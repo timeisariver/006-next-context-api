@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useState } from "react";
 import clsx from "clsx";
-import dayjs from "dayjs";
 import { Calendar, ChevronDown } from "lucide-react";
 import { getStats, type Stats } from "@/shared/api";
+import { formatDate } from "@/shared/lib";
 import { DashboardHead } from "@/shared/ui";
 import { CompletionDonut } from "./CompletionDonut";
 import { SummaryBarChart } from "./SummaryBarChart";
@@ -23,10 +23,17 @@ export function Summary({ className }: Props) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    getStats()
-      .then(setStats)
-      .catch(() => setError("進捗の取得に失敗しました"))
-      .finally(() => setIsLoading(false));
+    async function init() {
+      try {
+        setStats(await getStats());
+      } catch {
+        setError("進捗の取得に失敗しました");
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    init();
   }, []);
 
   const completedSeries = stats.find((item) => item.type === "completed");
@@ -34,7 +41,7 @@ export function Summary({ className }: Props) {
   const dates = (completedSeries ?? todoSeries)?.data ?? [];
   const completed = dates.map((_, i) => completedSeries?.data[i]?.value ?? 0);
   const todo = dates.map((_, i) => todoSeries?.data[i]?.value ?? 0);
-  const labels = dates.map((item) => dayjs(item.date).format("M / DD"));
+  const labels = dates.map((item) => formatDate(item.date, "M / DD"));
 
   const completedTotal = sum(completed);
   const todoTotal = sum(todo);
@@ -72,10 +79,10 @@ export function Summary({ className }: Props) {
             </ul>
             <div className={s.range}>
               <Calendar size={16} className={s.calendar} aria-hidden />
-              {dayjs(dates[0].date).format("YYYY-MM-DD")}
+              {formatDate(dates[0].date, "YYYY-MM-DD")}
               <span>~</span>
               <Calendar size={16} className={s.calendar} aria-hidden />
-              {dayjs(dates[dates.length - 1].date).format("YYYY-MM-DD")}
+              {formatDate(dates[dates.length - 1].date, "YYYY-MM-DD")}
             </div>
           </div>
           <SummaryBarChart labels={labels} completed={completed} todo={todo} />

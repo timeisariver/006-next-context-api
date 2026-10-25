@@ -1,0 +1,48 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+}
+
+.root {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(1160px, 94vw);
+  height: min(820px, 92vh);
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-modal);
+  color: var(--color-text);
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.scroll {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  padding: 48px 24px;
+}
+
+// 見出しと中身を並べる、中央寄せの列
+.body {
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.title {
+  margin-bottom: 40px;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-sub);
+}
+
+.close {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  display: flex;
+  color: var(--color-text-sub);
+}

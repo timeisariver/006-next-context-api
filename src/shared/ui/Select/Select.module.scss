@@ -1,0 +1,101 @@
+// 本体（Radix の Trigger）
+.root {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 12px 40px 12px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-card);
+  font-size: 13px;
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+
+  &[data-placeholder] {
+    color: var(--color-text-muted);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  // エラー中もフォーカスしていることが分かるよう、エラーの枠線より後に書く
+  &:focus-visible {
+    border-color: var(--color-primary);
+    outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &._small {
+    padding: 4px 24px 4px 6px;
+    font-size: 12px;
+  }
+}
+
+.value {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.chevron {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: var(--color-text);
+  pointer-events: none;
+
+  &._small {
+    right: 6px;
+    width: 14px;
+    height: 14px;
+  }
+}
+
+// 開いた一覧（Radix の Content）。body の直下に描画されるので、表のセルやモーダルに隠れない
+.content {
+  min-width: var(--radix-select-trigger-width);
+  max-height: min(240px, var(--radix-select-content-available-height));
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-card);
+}
+
+.viewport {
+  padding: 4px 0;
+}
+
+.option {
+  padding: 10px 12px;
+  font-size: 13px;
+  color: var(--color-text);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+
+  &._small {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+
+  &[data-state="checked"] {
+    color: var(--color-primary);
+  }
+
+  // マウスを乗せた項目とキーボードで移動中の項目
+  &[data-highlighted] {
+    background-color: var(--color-primary-bg);
+  }
+}

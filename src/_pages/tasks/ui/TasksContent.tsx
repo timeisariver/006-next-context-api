@@ -98,9 +98,12 @@ export function TasksContent() {
           {totalPages ?? "-"}
         </span>
         <span className={s.limit}>
-          <label htmlFor="tasks-limit">表示件数：</label>
+          <label id="tasks-limit-label" htmlFor="tasks-limit">
+            表示件数：
+          </label>
           <LimitSelect
             id="tasks-limit"
+            labelId="tasks-limit-label"
             value={limit}
             onChange={(next) => router.push(buildHref(pathname, 1, next))}
           />

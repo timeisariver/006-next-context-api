@@ -1,7 +1,7 @@
 "use client";
 import { useRef, useState } from "react";
 import { Calendar } from "lucide-react";
-import { toDateString, toDisplay } from "../lib/date";
+import { parseSlashDate, toDateString, toDisplay } from "@/shared/lib";
 import s from "./DeadlineCell.module.scss";
 
 type Props = {
@@ -9,26 +9,6 @@ type Props = {
   disabled?: boolean;
   onSave: (deadline: string) => void;
 };
-
-// "2026/11/04" を "2026-11-04" にする。日付として正しくなければ null
-function parseInput(value: string) {
-  const match = /^(\d{4})\/(\d{1,2})\/(\d{1,2})$/.exec(value.trim());
-  if (!match) return null;
-  const [year, month, day] = match.slice(1).map(Number);
-  const date = new Date(Date.UTC(year, month - 1, day));
-  if (
-    date.getUTCFullYear() !== year ||
-    date.getUTCMonth() !== month - 1 ||
-    date.getUTCDate() !== day
-  ) {
-    return null;
-  }
-  return [
-    String(year).padStart(4, "0"),
-    String(month).padStart(2, "0"),
-    String(day).padStart(2, "0"),
-  ].join("-");
-}
 
 export function DeadlineCell({ deadline, disabled, onSave }: Props) {
   const [isEditing, setIsEditing] = useState(false);
@@ -51,7 +31,7 @@ export function DeadlineCell({ deadline, disabled, onSave }: Props) {
     if (isClosedRef.current) return;
     isClosedRef.current = true;
     setIsEditing(false);
-    save(parseInput(draft));
+    save(parseSlashDate(draft));
   }
 
   return (
