@@ -39,9 +39,11 @@ export function useFetch<T>(
     // 取得したデータを書き換える（読み込み中・失敗したときは何もしない）。
     // 例: タスクの表でステータスを変えたときに、その行だけ置き換える
     setData: (update: (prev: T) => T) => {
-      setResult((prev) =>
-        prev?.ok ? { ok: true, data: update(prev.data) } : prev,
-      );
+      setResult((prev) => {
+        // 読み込み中・失敗したときは、書き換えるデータがないのでそのまま
+        if (!prev?.ok) return prev;
+        return { ok: true, data: update(prev.data) };
+      });
     },
   };
 }
