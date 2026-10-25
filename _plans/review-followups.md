@@ -68,13 +68,13 @@
 - 要件: 要件 5 のすべて
 - 公開 API:
   - `@/shared/lib`: `useModal(initialOpen?: boolean): { isOpen: boolean; open: () => void; close: () => void }`
-  - `@/shared/ui`: `Modal(props: { open: boolean; onClose: () => void; children: React.ReactNode; className?: string })` と `ModalTitle(props: { children: React.ReactNode; className?: string })`
+  - `@/shared/ui`: `Modal(props: { open: boolean; onClose: () => void; title: string; children: React.ReactNode; className?: string })`
     - Radix UI の `Dialog` で作る（当初は `<dialog>` で自作したが、レビュー対応の後に置き換えた）。背景クリック・Esc で閉じる、開いている間の背面スクロール禁止、フォーカスの閉じ込めは Radix が受け持つ。右上の閉じるボタン（`aria-label="閉じる"`、`X` アイコン）と内側のスクロール領域は `Modal` が描画する
-    - `ModalTitle` は `Dialog.Title` を包んだ見出しで、モーダルの名前（`aria-labelledby`）になる。Radix は見出しがないと開発中に警告を出すため、中身の見出しはこれで書く。`Modal` の中でだけ使える
+    - `title` は `Modal` が `Dialog.Title` で描画し、モーダルの名前（`aria-labelledby`）にもなる（Radix は見出しがないと開発中に警告を出す）。見出しを `Modal` が持つので、中身のフォームはモーダルの中にいることを知らずに済む
     - `children` は開いている間だけ描画される（Radix が閉じると外す）。開くたびにマウントし直すので、フォームの入力が初期値に戻る
-    - スタイルは `.overlay`（背景）・`.root`・`.scroll`・`.close`
-  - `_app/layouts` 内部: `TaskCreateForm(props: { onClose: () => void })` — 今の `TaskCreateModal.tsx` の `TaskCreateForm` を移す。見出しは `ModalTitle` で書く。スタイルは `.form` 以降を `TaskCreateForm.module.scss` に移す
-- 補足: `Header` は `const taskModal = useModal()` を使い、`<Modal open={taskModal.isOpen} onClose={taskModal.close}><TaskCreateForm onClose={taskModal.close} /></Modal>` のように組み合わせる。
+    - スタイルは `.overlay`（背景）・`.root`・`.scroll`・`.body`（見出しと中身を並べる、幅 640px の中央寄せの列）・`.title`・`.close`
+  - `_app/layouts` 内部: `TaskCreateForm(props: { onClose: () => void })` — 今の `TaskCreateModal.tsx` の `TaskCreateForm` を移す。見出しと `.form` の幅・中央寄せは `Modal` に移し、フォームは見出しを持たない。スタイルは `.field` 以降を `TaskCreateForm.module.scss` に移す
+- 補足: `Header` は `const taskModal = useModal()` を使い、`<Modal open={taskModal.isOpen} onClose={taskModal.close} title="タスクを追加"><TaskCreateForm onClose={taskModal.close} /></Modal>` のように組み合わせる。
 - コミット: `♻️ refactor: タスク追加モーダルを開閉の hooks・枠・フォームに分ける`
 
 ### 第 5 段階
@@ -117,7 +117,7 @@
 - **日付の関数名:** 移すだけの `toDateString`・`toDisplay`・`formatRemaining`・`today` は今の名前のまま。`dayjs` の整形は `formatDate(value, format)` 1 つにまとめ、書式を引数で渡す。`parseInput` は `shared` に出すと何の入力か分からないため、`parseSlashDate` に名前を変える。
 - **モーダルの組み立て:** `TaskCreateModal` は残さず、`Header` で `useModal`・`Modal`・`TaskCreateForm` を組み合わせる。3 つに分けた形がそのまま読めるようにするため。
 - **hooks の名前:** 開閉状態の hooks は、何に使うものか分かりやすい `useModal` にした。中身はモーダル専用ではない（`isOpen`・`open`・`close` を持つだけ）。
-- **Radix UI に置き換えた:** 自作の `Select`・`Modal` は、レビュー対応の後に Radix UI（`radix-ui` パッケージ）の `Select`・`Dialog` に置き換えた。キーボード操作・読み上げ・開く位置・フォーカスの管理など、ブラウザやスクリーンリーダーごとの違いを自作で確かめ続けるより、検証済みのライブラリに任せる方が品質を保ちやすいため。props（公開 API）はほぼ変えず、使う側の変更は `Modal` の見出し（`ModalTitle`）だけにした。
+- **Radix UI に置き換えた:** 自作の `Select`・`Modal` は、レビュー対応の後に Radix UI（`radix-ui` パッケージ）の `Select`・`Dialog` に置き換えた。キーボード操作・読み上げ・開く位置・フォーカスの管理など、ブラウザやスクリーンリーダーごとの違いを自作で確かめ続けるより、検証済みのライブラリに任せる方が品質を保ちやすいため。props（公開 API）はほぼ変えず、使う側の変更は、見出しを `Modal` の `title` で渡すようにしたことだけにした。
 - **ラベルのクリック:** 本体は `<button>` なので `<label htmlFor>` と結び付き、ラベルをクリックすると一覧が開く。仕様書の「ラベルをクリックするとプルダウンにフォーカスが移る」は満たすが、標準の `<select>` とは動きが少し違う。
 - **`autoFocus` の扱い:** `Select` の `autoFocus` は本体の `<button>` に渡す。使う側（`TaskCreateForm`）では今と同じく、`jsx-a11y/no-autofocus` の `eslint-disable-next-line` と理由のコメントを残す。
 - **「小」の大きさ:** 今の表のプルダウン（余白 4px 6px、文字 12px）を基準にした。表示件数（`LimitSelect`）は今は枠線なしだが、「小」に揃えるので枠線・角丸・影が付く。

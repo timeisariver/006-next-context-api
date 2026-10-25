@@ -7,7 +7,7 @@ import { useProjects } from "@/entities/project";
 import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
 import type { TaskStatus } from "@/shared/api";
 import { today } from "@/shared/lib";
-import { ModalTitle, Select } from "@/shared/ui";
+import { Select } from "@/shared/ui";
 
 type Props = {
   onClose: () => void;
@@ -37,9 +37,7 @@ export function TaskCreateForm({ onClose }: Props) {
   }
 
   return (
-    <form className={s.form} onSubmit={handleSubmit} noValidate>
-      <ModalTitle className={s.title}>タスクを追加</ModalTitle>
-
+    <form onSubmit={handleSubmit} noValidate>
       <div className={s.field}>
         <label
           id="task-project-label"

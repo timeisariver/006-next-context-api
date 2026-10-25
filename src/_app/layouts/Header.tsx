@@ -65,7 +65,11 @@ export function Header({ className }: Props) {
           </button>
         </li>
       </ul>
-      <Modal open={taskModal.isOpen} onClose={taskModal.close}>
+      <Modal
+        open={taskModal.isOpen}
+        onClose={taskModal.close}
+        title="タスクを追加"
+      >
         <TaskCreateForm onClose={taskModal.close} />
       </Modal>
     </header>
