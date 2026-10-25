@@ -1,9 +1,5 @@
-// 幅は置かれた場所に合わせる（ブロックの中では親の幅、flex の中では中身の幅）
+// 本体（Radix の Trigger）
 .root {
-  position: relative;
-}
-
-.button {
   position: relative;
   display: block;
   width: 100%;
@@ -15,6 +11,11 @@
   font-size: 13px;
   color: var(--color-text);
   text-align: left;
+  cursor: pointer;
+
+  &[data-placeholder] {
+    color: var(--color-text-muted);
+  }
 
   &[aria-invalid="true"] {
     border-color: var(--color-danger);
@@ -42,10 +43,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  &._placeholder {
-    color: var(--color-text-muted);
-  }
 }
 
 .chevron {
@@ -55,6 +52,7 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
+  color: var(--color-text);
   pointer-events: none;
 
   &._small {
@@ -64,29 +62,19 @@
   }
 }
 
-.listbox {
-  position: absolute;
-  top: calc(100% + 4px);
-  left: 0;
-  z-index: 10;
-  display: none;
-  min-width: 100%;
-  max-height: 240px;
-  overflow-y: auto;
-  padding: 4px 0;
+// 開いた一覧（Radix の Content）。body の直下に描画されるので、表のセルやモーダルに隠れない
+.content {
+  min-width: var(--radix-select-trigger-width);
+  max-height: min(240px, var(--radix-select-content-available-height));
+  overflow: hidden;
   border: 1px solid var(--color-border);
   border-radius: 8px;
   background-color: var(--color-surface);
   box-shadow: var(--shadow-card);
+}
 
-  &._open {
-    display: block;
-  }
-
-  &._above {
-    top: auto;
-    bottom: calc(100% + 4px);
-  }
+.viewport {
+  padding: 4px 0;
 }
 
 .option {
@@ -95,17 +83,19 @@
   color: var(--color-text);
   white-space: nowrap;
   cursor: pointer;
+  outline: none;
 
   &._small {
     padding: 6px 8px;
     font-size: 12px;
   }
 
-  &._selected {
+  &[data-state="checked"] {
     color: var(--color-primary);
   }
 
-  &._active {
+  // マウスを乗せた項目とキーボードで移動中の項目
+  &[data-highlighted] {
     background-color: var(--color-primary-bg);
   }
 }
