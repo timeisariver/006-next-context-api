@@ -3,8 +3,7 @@ import clsx from "clsx";
 import s from "./RecentProjects.module.scss";
 import { Plus } from "lucide-react";
 import { DashboardHead, MoreLink } from "@/shared/ui";
-import { useProjects } from "@/entities/project";
-import { RecentProject } from "./RecentProject";
+import { ProjectCard, useProjects } from "@/entities/project";
 
 type Props = {
   className?: string;
@@ -34,7 +33,7 @@ export function RecentProjects({ className }: Props) {
         ) : (
           <ul className={s.list}>
             {projects.slice(0, 3).map((project) => (
-              <RecentProject key={project.id} project={project} />
+              <ProjectCard key={project.id} project={project} />
             ))}
           </ul>
         )}
