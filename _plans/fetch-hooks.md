@@ -9,9 +9,9 @@
 
 `useFetch` の中身は次のようにする。
 
-- 取得結果を `{ key, data, error }` の 1 つの state にまとめて持つ。`isLoading` は state に持たず、「結果がない、または結果の `key` が今の `key` と違う」ことから求める（`TasksContent` と同じ考え方）。これで、`key` が変わったときに `useEffect` の中ですぐに `setState` しなくても、読み込み中の表示から始まる。
+- 取得結果（成功ならデータ、失敗なら失敗したこと）を 1 つの state にまとめて持つ。`isLoading` は state に持たず、「結果がまだない」ことから求める。エラー文言も state に持たず、返すときに `errorMessage` から作る。
 - `useEffect` の依存配列は `[key]` にし、cleanup で `ignore = true` にして、前の `key` の取得結果を捨てる。
-- `key` が変わったときは、レンダー中に前の結果を消す（React の「props が変わったときに state を調整する」書き方）。A → B → A と戻ったときに、前の A の結果を読み込み中の代わりに表示しないため。
+- `key` が変わったときは、レンダー中に前の結果を消す（React の「props が変わったときに state を調整する」書き方）。これで、`useEffect` の中ですぐに `setState` しなくても、読み込み中の表示から始まる。
 - 取得関数は毎回のレンダーで新しく作られるため、`useEffectEvent`（React 19.2）で包んで `useEffect` の依存配列に入れない。
 - 取得したデータをあとから書き換える `setData` を返す。`DashboardTasks` の `handleChange` で使う。
 
@@ -103,7 +103,7 @@
 
 - hooks の名前は `useFetch` にした。データを取得する hooks であることが名前からわかり、既存の `useModal`・`useProjects` とも書き方が揃う。
 - 取得し直すきっかけは、依存配列ではなく `key`（文字列）1 つで渡す。依存配列を引数で受け取ると `useEffect` に変数の配列を渡すことになり、`react-hooks/exhaustive-deps` で検査できなくなるため。今の 5 か所はどれも引数が 0〜1 個で、文字列 1 つで足りる。
-- `isLoading` を state に持たず、結果の `key` と今の `key` を比べて求める。`key` が変わったときに `useEffect` の中で `setIsLoading(true)` を呼ぶと、`react-hooks/set-state-in-effect` に引っかかるため。`TasksContent` と同じ考え方にした。
+- `key` が変わったときは、`useEffect` の中ではなくレンダー中に前の結果を消す。`useEffect` の中で `setIsLoading(true)` などを呼ぶと `react-hooks/set-state-in-effect` に引っかかり、前の結果も一瞬表示されるため。最初は `TasksContent` と同じく結果に `key` を持たせて今の `key` と比べていたが、A → B → A と戻ったときに前の A の結果が表示されるとレビューで指摘を受けてレンダー中に消す書き方を足し、`key` の比較は重複するため外した（読みやすさのため）。
 - 取得関数は `useEffectEvent` で包む。`useEffect` の依存配列に取得関数を入れると、毎回のレンダーで新しい関数になり、取得が繰り返されるため。React 19.2.8（`useEffectEvent` が安定版）を使っている。
 - `setData` は、取得に成功したあとだけ書き換える。成功前のデータを書き換える使い方が `DashboardTasks` にないため。
 - `ProjectsProvider` の `refreshProjects()` は `setData` を使わず、取り直した一覧を `ProjectsProvider` の state に持つ（レビューを受けて変更）。`setData` は初回の取得に失敗したあとは何もしないため、`setData` で入れると、初回に失敗してから取り直しに成功したとき、タスク追加モーダルのプロジェクトのプルダウンやタスクの表のプロジェクト名が空のままになり、今の動作と変わってしまう。`useFetch` に「取り直す」機能も足さない。読み込み中の表示にしない・失敗しても今の一覧を残すという動作が、`ProjectsProvider` だけのものだから。
