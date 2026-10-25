@@ -16,7 +16,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - `npm run dev` — 開発サーバーを起動する。
 - `npm run build` — 本番ビルドを行う（main への push で Netlify も同じビルドを実行する）。
-- `npm run lint` — ESLint を実行する。
+- `npm run lint` — ESLint と Stylelint を実行する。
 - `npm run typecheck` — TypeScript の型チェックを実行する。
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
 - `npm run screenshots -- [ページ ...]` — PR 用のスクリーンショットを撮る（詳細は `scripts/pr-screenshots.mjs`）。開発サーバーの起動が前提。ページは先頭の `/` を省いて書く（例: `tasks`、トップは `.`。Git Bash が `/tasks` を Windows のパスに変換するため）。
@@ -53,9 +53,11 @@ BEM は使わない。
 
 - ルート要素のクラスは `.root`、子要素は役割を表す短い camelCase の名前（`.title`, `.statCount`）にする。ハイフンは使わない。
 - `.ComponentName__element` のような BEM のプレフィックスは付けず、クラスはネストせずフラットに並べる。
-- ネストしてよいのは擬似クラス・擬似要素（`&:hover`）、状態クラス（`&._active`）、メディアクエリのみ。
+- ネストしてよいのは擬似クラス・擬似要素（`&:hover`）、状態クラス（`&._active`）、属性による状態（`&[aria-invalid="true"]`）、メディアクエリのみ。
 - クラス名は必ず `s.xxx` 経由で指定し、結合には `clsx` を使う（`{ [s._active]: isActive }`）。
 - コンポーネントは `className` props を受け取り、ルート要素で `clsx(s.root, className)` と結合する。
+
+クラス名・ネスト・色の直接指定は `stylelint.config.mjs` で検査され、違反すると `npm run lint` がエラーになる。ルールを変えるときはこの節と合わせて更新する。
 
 # テストと確認
 
@@ -68,6 +70,7 @@ BEM は使わない。
 - API のデータはサーバーのメモリ（`globalThis.__datastore`）にあり、開発サーバーを再起動すると初期データに戻る。Netlify 上でも再起動のたびに戻ることがある。
 - API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。ただし swagger.yml の `UpdateTask`（`PATCH /users/tasks/{id}` のリクエスト）は誤っているため、`app/api/v1/users/tasks/[id]/route.js` と `app/api/datastore/models/task.ts` の `assign()` を参照する（`projectId`・`title`・`description`・`status`・`deadline` を受け付ける）。
 - FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ）は `eslint.config.mjs` の `no-restricted-imports` で検査される。ルールを変えるときは `docs/architecture.md` と合わせて更新する。
+- アクセシビリティは `eslint-plugin-jsx-a11y` の推奨ルールで検査される。正当な理由で外すときは、`eslint-disable-next-line` の上に理由をコメントで書く。
 - React Compiler が有効（`next.config.ts`）。`useMemo` / `useCallback` を手書きで足さない。
 - `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint の対象外。
 - `.gitattributes` で改行を LF に固定している。また `src/shared/api/index.ts` は `merge=union` のため、並行するブランチがそれぞれ export を足しても競合せず、両方の行が残る（同じ行を書き換えた場合は両方残って重複するので、マージ後に確認する）。

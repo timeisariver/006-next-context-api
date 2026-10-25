@@ -7,7 +7,7 @@ Next.js（App Router）で作るタスク管理アプリ。`app/api/` に配布�
 - Next.js 16 / React 19（React Compiler 有効）
 - TypeScript
 - SCSS（CSS Modules）+ [clsx](https://github.com/lukeed/clsx)
-- ESLint / Prettier
+- ESLint（jsx-a11y）/ Stylelint / Prettier
 
 ## はじめかた
 
@@ -18,15 +18,15 @@ npm run dev
 
 [http://localhost:3000](http://localhost:3000) を開く。
 
-| コマンド               | 内容                          |
-| ---------------------- | ----------------------------- |
-| `npm run dev`          | 開発サーバーを起動            |
-| `npm run build`        | 本番ビルド                    |
-| `npm run lint`         | ESLint でチェック             |
-| `npm run typecheck`    | TypeScript の型チェック       |
-| `npm run format`       | Prettier で整形               |
-| `npm run format:check` | Prettier の整形漏れをチェック |
-| `npm run screenshots`  | PR 用のスクリーンショット撮影 |
+| コマンド               | 内容                           |
+| ---------------------- | ------------------------------ |
+| `npm run dev`          | 開発サーバーを起動             |
+| `npm run build`        | 本番ビルド                     |
+| `npm run lint`         | ESLint と Stylelint でチェック |
+| `npm run typecheck`    | TypeScript の型チェック        |
+| `npm run format`       | Prettier で整形                |
+| `npm run format:check` | Prettier の整形漏れをチェック  |
+| `npm run screenshots`  | PR 用のスクリーンショット撮影  |
 
 ## プレビュー環境
 

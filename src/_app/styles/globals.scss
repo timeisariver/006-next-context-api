@@ -15,18 +15,17 @@
   --color-text-sub: #55655c; // 補足テキスト
   --color-text-muted: #94ae9f; // アイコン・プレースホルダーなど控えめな要素
 
-  --color-navy: #1e2a4a; // 濃紺のボタン
   --color-required: #dc2626; // 必須マーク・エラー表示
 
   // 面・線
   --color-background: #fbfbfb; // ページの背景
-  --color-surface: #ffffff; // ヘッダーなど、背景より手前の面
+  --color-surface: #fff; // ヘッダーなど、背景より手前の面
   --color-border: #e4e9e6;
   --color-navy: #1c2f43; // 濃い面（キャンセルボタンなど）
   --color-danger: #d6336c; // 必須マーク・エラー表示
-  --color-overlay: rgba(0, 0, 0, 0.4); // モーダルの背面
-  --shadow-modal: rgba(0, 0, 0, 0.3) 0 4px 16px;
-  --shadow-card: rgba(34, 34, 34, 0.063) 1px 1px 3px 1px;
+  --color-overlay: rgb(0 0 0 / 40%); // モーダルの背面
+  --shadow-modal: rgb(0 0 0 / 30%) 0 4px 16px;
+  --shadow-card: rgb(34 34 34 / 6.3%) 1px 1px 3px 1px;
 
   --font-family-base:
     var(--font-inter), var(--font-noto-sans-jp), system-ui, sans-serif;

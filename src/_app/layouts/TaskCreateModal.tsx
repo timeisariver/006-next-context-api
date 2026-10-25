@@ -49,10 +49,11 @@ export function TaskCreateModal({ open, onClose }: Props) {
   }, [open]);
 
   return (
+    // 背景のクリックで閉じるのはマウス向けの補助。キーボードでは Esc（dialog 標準）と閉じるボタンで閉じられる。
+    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
     <dialog
       ref={dialogRef}
       className={s.root}
-      role="dialog"
       aria-modal="true"
       aria-labelledby="task-create-title"
       onClose={onClose}
@@ -110,6 +111,8 @@ function TaskCreateForm({ onClose }: { onClose: () => void }) {
         <div className={s.selectWrap}>
           <select
             id="task-project"
+            // ユーザーが開いたモーダルなので、最初の入力欄にフォーカスを移す。
+            // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
             className={clsx(s.control, s.select, { [s._empty]: !projectId })}
             value={projectId}

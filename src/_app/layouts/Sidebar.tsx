@@ -69,7 +69,10 @@ function SidebarBody() {
                 })}
                 aria-current={isActive ? "page" : undefined}
               >
-                <Icon size={16} />
+                <Icon
+                  size={16}
+                  className={clsx(s.menuItemIcon, { [s._active]: isActive })}
+                />
                 <span className={s.menuItemText}>{label}</span>
               </Link>
             </li>

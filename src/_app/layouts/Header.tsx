@@ -60,7 +60,7 @@ export function Header({ className }: Props) {
             className={clsx(s.action, s.avatar)}
             aria-label="アカウント"
           >
-            <User />
+            <User className={s.avatarIcon} />
           </button>
         </li>
       </ul>
