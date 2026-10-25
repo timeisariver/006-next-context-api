@@ -80,7 +80,7 @@ PR と main への push では、GitHub Actions（`.github/workflows/ci.yml`）�
 
 # アーキテクチャ
 
-- 状態管理は React Context で、共有するのはプロジェクト一覧だけ。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` で `projects`・`isLoading`・`error`・`refreshProjects` を読む。`ProjectsProvider` はマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。プロジェクトはタスクの件数などの集計を持つため、タスクを作成・更新・削除したら `refreshProjects()` で取り直す。
+- 状態管理は React Context で、共有するのはプロジェクト一覧だけ。`src/_app/layouts/RootLayout.tsx` が `entities/project` の `ProjectsProvider` でアプリ全体を包み、各所は `useProjects()` で `projects`・`isLoading`・`error`・`refreshProjects` を読む。`ProjectsProvider` はマウント時に `shared/api` の `getProjects()`（axios で `/api/v1/users/projects`）を 1 回呼ぶ。プロジェクトはタスクの件数などの集計（`stats`）を持つが、API は初期データの固定値を返し、タスクを作成・更新・削除しても計算し直さない。そのため、タスクを変えたあとに `refreshProjects()` を呼んでも表示は変わらず、新しく呼ぶ箇所を足す必要はない（タスク詳細の更新・削除のあとに呼んでいるのは既存のまま残している）。
 - タスク・統計・プロジェクト詳細・タスク詳細は Context に載せず、`_pages` のクライアントコンポーネントが `shared/api` の関数で直接取得する。
 - API のデータはサーバーのメモリ（`globalThis.__datastore`）にあり、開発サーバーを再起動すると初期データに戻る。Netlify 上でも再起動のたびに戻ることがある。
 - API のレスポンス型（`Project` など）は `src/shared/api/` に手書きしている。`app/api/` は改変禁止のため、API 側の変更を型に反映するときは `app/api/v1/spec/swagger.yml/swagger.yml` を参照する（開発サーバー起動中は `http://localhost:3000/api/v1/spec` でも読める）。ただし swagger.yml の `UpdateTask`（`PATCH /users/tasks/{id}` のリクエスト）は誤っているため、`app/api/v1/users/tasks/[id]/route.js` と `app/api/datastore/models/task.ts` の `assign()` を参照する（`projectId`・`title`・`description`・`status`・`deadline` を受け付ける）。
