@@ -10,7 +10,7 @@ import {
   type UpdateTaskBody,
 } from "@/shared/api";
 import { Select } from "@/shared/ui";
-import { withCurrentProject } from "../lib/projectOptions";
+import { toProjectOptions } from "../lib/projectOptions";
 import { TASK_STATUS_OPTIONS } from "../model/status";
 import { DeadlineCell } from "./DeadlineCell";
 import s from "./TaskRow.module.scss";
@@ -55,9 +55,7 @@ export function TaskRow({ task, projects, onChange }: Props) {
           size="small"
           className={s.select}
           aria-label="プロジェクト"
-          options={withCurrentProject(projects, task.project).map(
-            (project) => ({ value: project.id, label: project.name }),
-          )}
+          options={toProjectOptions(projects, task.project)}
           value={task.project.id}
           disabled={savingField === "project"}
           onChange={(projectId) => save("project", { projectId })}

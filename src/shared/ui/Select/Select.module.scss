@@ -1,7 +1,6 @@
+// 幅は置かれた場所に合わせる（ブロックの中では親の幅、flex の中では中身の幅）
 .root {
   position: relative;
-  display: block;
-  width: 100%;
 }
 
 .button {
@@ -17,13 +16,14 @@
   color: var(--color-text);
   text-align: left;
 
+  &[aria-invalid="true"] {
+    border-color: var(--color-danger);
+  }
+
+  // エラー中もフォーカスしていることが分かるよう、エラーの枠線より後に書く
   &:focus-visible {
     border-color: var(--color-primary);
     outline: none;
-  }
-
-  &[aria-invalid="true"] {
-    border-color: var(--color-danger);
   }
 
   &:disabled {
@@ -81,6 +81,11 @@
 
   &._open {
     display: block;
+  }
+
+  &._above {
+    top: auto;
+    bottom: calc(100% + 4px);
   }
 }
 

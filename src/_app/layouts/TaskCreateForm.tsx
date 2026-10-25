@@ -4,18 +4,20 @@ import clsx from "clsx";
 import { useState } from "react";
 import s from "./TaskCreateForm.module.scss";
 import { useProjects } from "@/entities/project";
-import { TASK_STATUS_OPTIONS } from "@/entities/task";
+import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
 import type { TaskStatus } from "@/shared/api";
 import { today } from "@/shared/lib";
 import { Select } from "@/shared/ui";
 
 type Props = {
+  // 見出しの id。Modal の labelledBy と同じ値を渡し、ダイアログの名前にする
+  titleId: string;
   onClose: () => void;
 };
 
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
 
-export function TaskCreateForm({ onClose }: Props) {
+export function TaskCreateForm({ titleId, onClose }: Props) {
   const { projects } = useProjects();
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
@@ -38,21 +40,26 @@ export function TaskCreateForm({ onClose }: Props) {
 
   return (
     <form className={s.form} onSubmit={handleSubmit} noValidate>
-      <h2 id="task-create-title" className={s.title}>
+      <h2 id={titleId} className={s.title}>
         タスクを追加
       </h2>
 
       <div className={s.field}>
-        <label htmlFor="task-project" className={s.label}>
+        <label
+          id="task-project-label"
+          htmlFor="task-project"
+          className={s.label}
+        >
           プロジェクト<span className={s.required}>*</span>
         </label>
         <Select
           id="task-project"
+          aria-labelledby="task-project-label"
           // ユーザーが開いたモーダルなので、最初の入力欄にフォーカスを移す。
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           placeholder="プロジェクトを選択してください"
-          options={projects.map((p) => ({ value: p.id, label: p.name }))}
+          options={toProjectOptions(projects)}
           value={projectId || null}
           onChange={setProjectId}
           invalid={!!errors.project}
@@ -105,11 +112,12 @@ export function TaskCreateForm({ onClose }: Props) {
       </div>
 
       <div className={s.field}>
-        <label htmlFor="task-status" className={s.label}>
+        <label id="task-status-label" htmlFor="task-status" className={s.label}>
           ステータス
         </label>
         <Select
           id="task-status"
+          aria-labelledby="task-status-label"
           options={TASK_STATUS_OPTIONS}
           value={status}
           onChange={setStatus}

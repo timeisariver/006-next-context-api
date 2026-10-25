@@ -14,7 +14,7 @@ import {
 import { toDateString, toDisplay } from "@/shared/lib";
 import { Select } from "@/shared/ui";
 import { useProjects } from "@/entities/project";
-import { TASK_STATUS_OPTIONS, withCurrentProject } from "@/entities/task";
+import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
 
 type Props = {
   initialTask: Task;
@@ -27,9 +27,7 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
   // 最後に保存した（または読み込んだ）値
   const [saved, setSaved] = useState(initialTask);
-  const projectOptions = withCurrentProject(projects, saved.project).map(
-    (project) => ({ value: project.id, label: project.name }),
-  );
+  const projectOptions = toProjectOptions(projects, saved.project);
   // 入力中の値
   const [projectId, setProjectId] = useState(initialTask.project.id);
   const [deadline, setDeadline] = useState(toDateString(initialTask.deadline));
@@ -114,11 +112,16 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
       <form className={s.form} onSubmit={handleSubmit}>
         <div className={s.field}>
-          <label htmlFor="task-project" className={s.label}>
+          <label
+            id="task-project-label"
+            htmlFor="task-project"
+            className={s.label}
+          >
             プロジェクト<span className={s.required}>*</span>
           </label>
           <Select
             id="task-project"
+            aria-labelledby="task-project-label"
             options={projectOptions}
             value={projectId}
             disabled={isBusy}
@@ -142,11 +145,16 @@ export function TaskDetailForm({ initialTask, className }: Props) {
         </div>
 
         <div className={s.field}>
-          <label htmlFor="task-status" className={s.label}>
+          <label
+            id="task-status-label"
+            htmlFor="task-status"
+            className={s.label}
+          >
             ステータス
           </label>
           <Select
             id="task-status"
+            aria-labelledby="task-status-label"
             options={TASK_STATUS_OPTIONS}
             value={status}
             disabled={isBusy}
