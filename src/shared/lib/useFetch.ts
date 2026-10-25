@@ -22,7 +22,8 @@ export function useFetch<T>(
   useEffect(() => {
     async function load() {
       try {
-        setResult({ ok: true, data: await fetchData() });
+        const data = await fetchData();
+        setResult({ ok: true, data });
       } catch {
         setResult({ ok: false });
       }
