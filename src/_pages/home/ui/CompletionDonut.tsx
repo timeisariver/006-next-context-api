@@ -15,6 +15,8 @@ type Props = {
 
 export function CompletionDonut({ completed, todo, className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const total = completed + todo;
+  const rate = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -27,7 +29,7 @@ export function CompletionDonut({ completed, todo, className }: Props) {
         datasets: [
           {
             // 合計 0 のときも地の灰色の輪を描く
-            data: completed + todo === 0 ? [0, 1] : [completed, todo],
+            data: total === 0 ? [0, 1] : [completed, todo],
             backgroundColor: [
               readCssVar("--color-primary"),
               readCssVar("--color-border"),
@@ -46,11 +48,13 @@ export function CompletionDonut({ completed, todo, className }: Props) {
     });
 
     return () => chart.destroy();
-  }, [completed, todo]);
+  }, [completed, todo, total]);
 
   return (
     <div className={clsx(s.root, className)}>
-      <canvas ref={canvasRef} />
+      {/* 完了率は中央の文字で読み上げるため、輪は飾りとして扱う */}
+      <canvas ref={canvasRef} aria-hidden />
+      <span className={s.rate}>{rate}%</span>
     </div>
   );
 }

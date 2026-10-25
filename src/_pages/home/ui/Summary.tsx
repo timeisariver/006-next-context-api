@@ -7,11 +7,15 @@ import { formatDate } from "@/shared/lib";
 import { DashboardHead } from "@/shared/ui";
 import { CompletionDonut } from "./CompletionDonut";
 import { SummaryBarChart } from "./SummaryBarChart";
+import { WeekOverWeek } from "./WeekOverWeek";
 import s from "./Summary.module.scss";
 
 type Props = {
   className?: string;
 };
+
+// TODO: 前週のデータが API にないため固定値（見た目のみ）
+const WEEK_OVER_WEEK = { completed: 44, todo: 36, rate: 8 };
 
 function sum(values: number[]): number {
   return values.reduce((total, value) => total + value, 0);
@@ -45,8 +49,6 @@ export function Summary({ className }: Props) {
 
   const completedTotal = sum(completed);
   const todoTotal = sum(todo);
-  const total = completedTotal + todoTotal;
-  const rate = total === 0 ? 0 : Math.round((completedTotal / total) * 100);
 
   return (
     <section className={clsx(s.root, className)}>
@@ -89,18 +91,24 @@ export function Summary({ className }: Props) {
           <div className={s.cards}>
             <div className={s.card}>
               <p className={s.cardLabel}>完了タスク</p>
-              <p className={s.cardValue}>{completedTotal}</p>
+              <div className={s.cardBody}>
+                <p className={s.cardValue}>{completedTotal}</p>
+                <WeekOverWeek value={WEEK_OVER_WEEK.completed} />
+              </div>
             </div>
             <div className={s.card}>
               <p className={s.cardLabel}>予定タスク</p>
-              <p className={s.cardValue}>{todoTotal}</p>
-            </div>
-            <div className={clsx(s.card, s._rate)}>
-              <div>
-                <p className={s.cardLabel}>完了率</p>
-                <p className={s.cardValue}>{rate}%</p>
+              <div className={s.cardBody}>
+                <p className={s.cardValue}>{todoTotal}</p>
+                <WeekOverWeek value={WEEK_OVER_WEEK.todo} />
               </div>
-              <CompletionDonut completed={completedTotal} todo={todoTotal} />
+            </div>
+            <div className={s.card}>
+              <p className={s.cardLabel}>完了率</p>
+              <div className={clsx(s.cardBody, s._rate)}>
+                <CompletionDonut completed={completedTotal} todo={todoTotal} />
+                <WeekOverWeek value={WEEK_OVER_WEEK.rate} />
+              </div>
             </div>
           </div>
         </>
