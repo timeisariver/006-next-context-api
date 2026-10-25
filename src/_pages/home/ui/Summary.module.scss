@@ -93,12 +93,14 @@
   color: var(--color-text-sub);
 }
 
-// 数値の行とドーナツの行を同じ高さ（ドーナツの直径）にそろえる
+// 数値の行とドーナツの行を同じ高さ（ドーナツの直径）にそろえる。
+// カードが狭いときは、前週比を次の行に送る
 .cardBody {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
-  gap: 12px;
-  height: 56px;
+  column-gap: 12px;
+  min-height: 56px;
   margin-top: 8px;
 
   &._rate {
