@@ -1,7 +1,7 @@
 "use client";
 
 import clsx from "clsx";
-import { useState } from "react";
+import { useId, useState } from "react";
 import s from "./TaskCreateForm.module.scss";
 import { useProjects } from "@/entities/project";
 import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
@@ -16,6 +16,7 @@ type Props = {
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
 
 export function TaskCreateForm({ onClose }: Props) {
+  const id = useId();
   const { projects } = useProjects();
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
@@ -40,15 +41,15 @@ export function TaskCreateForm({ onClose }: Props) {
     <form onSubmit={handleSubmit} noValidate>
       <div className={s.field}>
         <label
-          id="task-project-label"
-          htmlFor="task-project"
+          id={`${id}-project-label`}
+          htmlFor={`${id}-project`}
           className={s.label}
         >
           プロジェクト<span className={s.required}>*</span>
         </label>
         <Select
-          id="task-project"
-          aria-labelledby="task-project-label"
+          id={`${id}-project`}
+          aria-labelledby={`${id}-project-label`}
           // ユーザーが開いたモーダルなので、最初の入力欄にフォーカスを移す。
           // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
@@ -62,11 +63,11 @@ export function TaskCreateForm({ onClose }: Props) {
       </div>
 
       <div className={s.field}>
-        <label htmlFor="task-title" className={s.label}>
+        <label htmlFor={`${id}-title`} className={s.label}>
           タスク<span className={s.required}>*</span>
         </label>
         <input
-          id="task-title"
+          id={`${id}-title`}
           type="text"
           className={s.control}
           placeholder="タスクを入力。 例）英会話レッスンの予約、React公式ドキュメントを1ページ読む"
@@ -78,11 +79,11 @@ export function TaskCreateForm({ onClose }: Props) {
       </div>
 
       <div className={s.field}>
-        <label htmlFor="task-description" className={s.label}>
+        <label htmlFor={`${id}-description`} className={s.label}>
           説明・メモ
         </label>
         <textarea
-          id="task-description"
+          id={`${id}-description`}
           className={clsx(s.control, s.textarea)}
           placeholder="タスクの説明・メモ"
           value={description}
@@ -91,11 +92,11 @@ export function TaskCreateForm({ onClose }: Props) {
       </div>
 
       <div className={s.field}>
-        <label htmlFor="task-deadline" className={s.label}>
+        <label htmlFor={`${id}-deadline`} className={s.label}>
           締切日<span className={s.required}>*</span>
         </label>
         <input
-          id="task-deadline"
+          id={`${id}-deadline`}
           type="date"
           className={clsx(s.control, s.date)}
           value={deadline}
@@ -106,12 +107,16 @@ export function TaskCreateForm({ onClose }: Props) {
       </div>
 
       <div className={s.field}>
-        <label id="task-status-label" htmlFor="task-status" className={s.label}>
+        <label
+          id={`${id}-status-label`}
+          htmlFor={`${id}-status`}
+          className={s.label}
+        >
           ステータス
         </label>
         <Select
-          id="task-status"
-          aria-labelledby="task-status-label"
+          id={`${id}-status`}
+          aria-labelledby={`${id}-status-label`}
           options={TASK_STATUS_OPTIONS}
           value={status}
           onChange={setStatus}

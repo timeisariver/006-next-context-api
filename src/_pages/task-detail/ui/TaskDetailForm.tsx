@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useId, useState } from "react";
 import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -24,6 +24,7 @@ type Props = {
 export function TaskDetailForm({ initialTask, className }: Props) {
   const router = useRouter();
   const { projects, refreshProjects } = useProjects();
+  const id = useId();
 
   // 最後に保存した（または読み込んだ）値
   const [saved, setSaved] = useState(initialTask);
@@ -113,15 +114,15 @@ export function TaskDetailForm({ initialTask, className }: Props) {
       <form className={s.form} onSubmit={handleSubmit}>
         <div className={s.field}>
           <label
-            id="task-project-label"
-            htmlFor="task-project"
+            id={`${id}-project-label`}
+            htmlFor={`${id}-project`}
             className={s.label}
           >
             プロジェクト<span className={s.required}>*</span>
           </label>
           <Select
-            id="task-project"
-            aria-labelledby="task-project-label"
+            id={`${id}-project`}
+            aria-labelledby={`${id}-project-label`}
             options={projectOptions}
             value={projectId}
             disabled={isBusy}
@@ -130,11 +131,11 @@ export function TaskDetailForm({ initialTask, className }: Props) {
         </div>
 
         <div className={s.field}>
-          <label htmlFor="task-deadline" className={s.label}>
+          <label htmlFor={`${id}-deadline`} className={s.label}>
             締切日<span className={s.required}>*</span>
           </label>
           <input
-            id="task-deadline"
+            id={`${id}-deadline`}
             type="date"
             className={s.control}
             value={deadline}
@@ -146,15 +147,15 @@ export function TaskDetailForm({ initialTask, className }: Props) {
 
         <div className={s.field}>
           <label
-            id="task-status-label"
-            htmlFor="task-status"
+            id={`${id}-status-label`}
+            htmlFor={`${id}-status`}
             className={s.label}
           >
             ステータス
           </label>
           <Select
-            id="task-status"
-            aria-labelledby="task-status-label"
+            id={`${id}-status`}
+            aria-labelledby={`${id}-status-label`}
             options={TASK_STATUS_OPTIONS}
             value={status}
             disabled={isBusy}
@@ -163,11 +164,11 @@ export function TaskDetailForm({ initialTask, className }: Props) {
         </div>
 
         <div className={s.field}>
-          <label htmlFor="task-description" className={s.label}>
+          <label htmlFor={`${id}-description`} className={s.label}>
             説明・メモ
           </label>
           <textarea
-            id="task-description"
+            id={`${id}-description`}
             className={clsx(s.control, s.textarea)}
             value={description}
             placeholder="タスクの説明・メモ"
