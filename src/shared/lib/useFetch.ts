@@ -16,6 +16,13 @@ export function useFetch<T>(
   // 最後に取得した結果。key が今の key と違うあいだは読み込み中として扱う
   const [result, setResult] = useState<Result<T> | null>(null);
 
+  // key が変わったら前の結果を捨てる。A → B → A と戻ったときに、前の A の結果を表示しないため
+  const [prevKey, setPrevKey] = useState(key);
+  if (key !== prevKey) {
+    setPrevKey(key);
+    setResult(null);
+  }
+
   // 取得関数と文言は毎回のレンダーで新しく作られるため、useEffect の依存配列に入れない
   const fetchData = useEffectEvent(() => fetcher());
   const getErrorMessage = useEffectEvent(() => errorMessage);
