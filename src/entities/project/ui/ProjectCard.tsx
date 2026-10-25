@@ -1,3 +1,7 @@
+// RootLayout（Server Component）が @/entities/project を import するため、ここで境界を切る。
+// 付けないと @/shared/lib 経由で useFetch（useEffectEvent）が Server Component 側に入る
+"use client";
+
 import clsx from "clsx";
 import s from "./ProjectCard.module.scss";
 import { Calendar, GitCommitHorizontal, FileText } from "lucide-react";
