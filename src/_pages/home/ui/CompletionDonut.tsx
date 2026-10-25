@@ -15,6 +15,8 @@ type Props = {
 
 export function CompletionDonut({ completed, todo, className }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const total = completed + todo;
+  const rate = total === 0 ? 0 : Math.round((completed / total) * 100);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -51,6 +53,7 @@ export function CompletionDonut({ completed, todo, className }: Props) {
   return (
     <div className={clsx(s.root, className)}>
       <canvas ref={canvasRef} />
+      <span className={s.rate}>{rate}%</span>
     </div>
   );
 }

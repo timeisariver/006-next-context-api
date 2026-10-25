@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.rate {
+  font-size: 14px;
+  font-weight: 700;
+
+  &._up {
+    color: var(--color-primary);
+  }
+
+  &._down {
+    color: var(--color-danger);
+  }
+
+  &._flat {
+    color: var(--color-text-sub);
+  }
+}
+
+.label {
+  font-size: 12px;
+  color: var(--color-text-sub);
+}
