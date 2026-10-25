@@ -10,7 +10,6 @@
       "Bash(git log:*)",
       "Bash(git rev-parse:*)",
       "Bash(gh auth status)",
-      "Bash(node scripts/base-branch.mjs)",
       "Bash(git fetch:*)",
       "Bash(gh pr list:*)",
       "Bash(gh pr view:*)"

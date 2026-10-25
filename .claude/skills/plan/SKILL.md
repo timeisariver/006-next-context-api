@@ -3,7 +3,7 @@ name: plan
 description: _specs/ の仕様書をもとに、タスク分割と担当範囲を決めた実装プランを _plans/ に書き出す。
 argument-hint: <仕様書のパス>
 disable-model-invocation: true
-allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git switch:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git fetch:*), Bash(git diff:*), Bash(node scripts/base-branch.mjs:*)
+allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git switch:*), Bash(git branch:*), Bash(git rev-parse:*), Bash(git fetch:*), Bash(git diff:*)
 ---
 
 仕様書 `$ARGUMENTS` をもとに、実装プランを書く。プランは人が見直してから `/implement` に渡す前提で、ここでは実装しない。
@@ -14,7 +14,6 @@ allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git swit
 2. 仕様書に `<!-- 要確認: 〜 -->` が残っている、または実装方針が変わるほど曖昧な点や矛盾があれば、**プランを書く前に**ユーザーに質問する。推測で埋めない。
 3. `git status --short` を確認する。この仕様書とこれから書くプラン以外の変更があれば、止めてユーザーに確認する。
 4. main にいる場合は `feature/<仕様書のファイル名>` ブランチを作って切り替える。
-5. `node scripts/base-branch.mjs` で切り元のブランチ（以下「比較元」）を求める。
 
 ## 2. 調べる
 
@@ -46,7 +45,7 @@ FSD のスライス単位で、**変更するファイルが重ならないよ�
 プランの全文は貼らず、次の形式で伝える。
 
 ```
-ブランチ: <ブランチ名>（<比較元> から作成）
+ブランチ: <ブランチ名>
 プラン: _plans/<slug>.md
 タスク: 第 1 段階 <n> 件、第 2 段階 <n> 件
 ```
