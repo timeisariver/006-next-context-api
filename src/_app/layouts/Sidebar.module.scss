@@ -36,18 +36,18 @@ $width-closed: 47px;
     background-color: var(--color-primary-bg);
   }
 
-  svg {
-    color: var(--color-text-muted);
-  }
-
   &._active {
     background-color: var(--color-primary-bg);
     color: var(--color-primary-strong);
     font-weight: 700;
+  }
+}
 
-    svg {
-      color: var(--color-primary-strong);
-    }
+.menuItemIcon {
+  color: var(--color-text-muted);
+
+  &._active {
+    color: var(--color-primary-strong);
   }
 }
 

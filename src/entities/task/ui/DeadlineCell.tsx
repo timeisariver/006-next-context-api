@@ -62,6 +62,8 @@ export function DeadlineCell({ deadline, disabled, onSave }: Props) {
           className={s.input}
           aria-label="期限日"
           value={draft}
+          // ユーザーが編集を始めたときだけ表示する入力欄なので、そこへフォーカスを移す。
+          // eslint-disable-next-line jsx-a11y/no-autofocus
           autoFocus
           onChange={(e) => setDraft(e.target.value)}
           onBlur={commit}

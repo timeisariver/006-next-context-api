@@ -2,6 +2,7 @@ import { defineConfig, globalIgnores } from "eslint/config";
 import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import prettier from "eslint-config-prettier/flat";
+import jsxA11y from "eslint-plugin-jsx-a11y";
 
 // FSD の import ルール（docs/architecture.md）。
 // 同じルールを複数の設定で指定すると後のもので上書きされるため、レイヤーごとに全パターンを渡す。
@@ -25,6 +26,12 @@ const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
   prettier,
+  // アクセシビリティ。eslint-config-next は一部のルールしか有効にしないため、推奨ルールをすべて有効にする。
+  // プラグインは eslint-config-next が登録済みなので、ルールだけを足す。
+  {
+    files: ["**/*.{js,jsx,mjs,ts,tsx}"],
+    rules: jsxA11y.flatConfigs.recommended.rules,
+  },
   {
     files: ["app/**", "src/_app/**"],
     rules: fsdImports(),
