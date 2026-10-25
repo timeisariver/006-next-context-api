@@ -2,7 +2,7 @@
 
 import clsx from "clsx";
 import { X } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import s from "./Modal.module.scss";
 
 type Props = {
@@ -21,8 +21,12 @@ export function Modal({
   className,
 }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
+  // showModal() の後に中身をマウントするためのフラグ。
+  // 閉じた <dialog> の中では autoFocus が効かず、showModal() がフォーカスを別の要素に移すため
+  const [isShown, setIsShown] = useState(false);
 
-  useEffect(() => {
+  // 描画前に開閉し、中身のマウントを 1 フレーム遅らせない
+  useLayoutEffect(() => {
     const dialog = dialogRef.current;
     if (!dialog) return;
     if (open && !dialog.open) {
@@ -30,6 +34,7 @@ export function Modal({
     } else if (!open && dialog.open) {
       dialog.close();
     }
+    setIsShown(open);
   }, [open]);
 
   useEffect(() => {
@@ -64,7 +69,7 @@ export function Modal({
           <X />
         </button>
         {/* 開くたびにマウントし直して、中身の状態を初期値に戻す */}
-        {open && children}
+        {open && isShown && children}
       </div>
     </dialog>
   );
