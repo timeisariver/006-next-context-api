@@ -16,10 +16,10 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 - `npm run dev` — 開発サーバーを起動する。
 - `npm run build` — 本番ビルドを行う（main への push で Netlify も同じビルドを実行する）。
-- `npm run lint` — ESLint と Stylelint を実行する。
+- `npm run lint` — ESLint と Stylelint を実行する。1 ファイルだけ確認するときは `npx eslint <ファイル>` / `npx stylelint <ファイル>`（`/implement` の worktree には node_modules がないため、そこでは `npm run lint` を使う）。
 - `npm run typecheck` — TypeScript の型チェックを実行する。
 - `npm run format` / `npm run format:check` — Prettier で整形する / 整形済みか確認する。
-- `npm run screenshots -- [ページ ...]` — PR 用のスクリーンショットを撮る（詳細は `scripts/pr-screenshots.mjs`）。開発サーバーの起動が前提。ページは先頭の `/` を省いて書く（例: `tasks`、トップは `.`。Git Bash が `/tasks` を Windows のパスに変換するため）。
+- `npm run screenshots -- [ページ ...]` — PR 用のスクリーンショットを撮る（詳細は `scripts/pr-screenshots.mjs`）。開発サーバーの起動が前提。ページは先頭の `/` を省いて書く（例: `tasks`、トップは `.`。Git Bash が `/tasks` を Windows のパスに変換するため）。画像は orphan ブランチ `screenshots` に push され、PR 本文から参照される。このブランチはマージも削除もしない。
 
 # 開発の流れ
 
@@ -72,5 +72,5 @@ BEM は使わない。
 - FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ）は `eslint.config.mjs` の `no-restricted-imports` で検査される。ルールを変えるときは `docs/architecture.md` と合わせて更新する。
 - アクセシビリティは `eslint-plugin-jsx-a11y` の推奨ルールで検査される。正当な理由で外すときは、`eslint-disable-next-line` の上に理由をコメントで書く。
 - React Compiler が有効（`next.config.ts`）。`useMemo` / `useCallback` を手書きで足さない。
-- `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint の対象外。
+- `.claude/worktrees/` は `/implement` のサブエージェントが使う worktree で、ESLint・Stylelint・Prettier の対象外。
 - `.gitattributes` で改行を LF に固定している。また `src/shared/api/index.ts` は `merge=union` のため、並行するブランチがそれぞれ export を足しても競合せず、両方の行が残る（同じ行を書き換えた場合は両方残って重複するので、マージ後に確認する）。
