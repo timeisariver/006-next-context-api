@@ -9,7 +9,7 @@ const projects = [
     slug: "programming",
     goal: "期限日までにフロントエンドエンジニアとして就職する。",
     shouldbe: "エンジニアとしての学習習慣を身につけて生活する。",
-    color: "#00008c60",
+    color: "#00008c99",
     stats: {
       kinds: {
         milestone: 4,
