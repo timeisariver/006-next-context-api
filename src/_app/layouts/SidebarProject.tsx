@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import s from "./SidebarProject.module.scss";
 import Link from "next/link";
+import { projectColorStyle } from "@/entities/project";
 import type { Project } from "@/shared/api";
 import { formatDate } from "@/shared/lib";
 
@@ -13,10 +14,7 @@ export function SidebarProject({ project, className }: Props) {
   return (
     <li className={clsx(s.root, className)}>
       <Link href={`/projects/${project.slug}`} className={s.link}>
-        <span
-          className={s.text}
-          style={{ "--project-color": project.color } as React.CSSProperties}
-        >
+        <span className={s.text} style={projectColorStyle(project.color)}>
           {project.name}
         </span>
         <time className={s.time} dateTime={project.deadline}>

@@ -9,18 +9,15 @@
   display: flex;
   align-items: center;
   color: var(--color-text-sub);
-  cursor: pointer;
 
-  &:disabled {
+  &._disabled {
     color: var(--color-text-muted);
     opacity: 0.5;
-    cursor: default;
   }
 }
 
 .number {
   color: var(--color-text-sub);
-  cursor: pointer;
 
   &._current {
     color: var(--color-primary);

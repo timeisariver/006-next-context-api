@@ -1,10 +1,10 @@
 "use client";
 import clsx from "clsx";
-import { useSearchParams } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import s from "./ProjectList.module.scss";
-import { useProjects } from "@/entities/project";
-import { ProjectCard } from "./ProjectCard";
-import { Pagination } from "./Pagination";
+import { ProjectCard, useProjects } from "@/entities/project";
+import { parsePage } from "@/shared/lib";
+import { Pagination } from "@/shared/ui";
 
 const PAGE_SIZE = 10;
 
@@ -14,6 +14,7 @@ type Props = {
 
 export function ProjectList({ className }: Props) {
   const { projects, isLoading, error } = useProjects();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
 
   if (isLoading) return <p className={s.message}>読み込み中…</p>;
@@ -23,9 +24,8 @@ export function ProjectList({ className }: Props) {
   }
 
   const totalPages = Math.ceil(projects.length / PAGE_SIZE);
-  const param = searchParams.get("page");
-  const parsed = param !== null && /^\d+$/.test(param) ? Number(param) : 1;
-  const page = parsed >= 1 && parsed <= totalPages ? parsed : 1;
+  const parsed = parsePage(searchParams.get("page"));
+  const page = parsed <= totalPages ? parsed : 1;
   const start = (page - 1) * PAGE_SIZE;
 
   return (
@@ -41,6 +41,7 @@ export function ProjectList({ className }: Props) {
       <Pagination
         page={page}
         totalPages={totalPages}
+        getHref={(n) => (n === 1 ? pathname : `${pathname}?page=${n}`)}
         className={s.pagination}
       />
     </div>

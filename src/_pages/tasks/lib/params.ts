@@ -7,12 +7,6 @@ export function parseLimit(value: string | null): number {
   return LIMITS.includes(limit) ? limit : DEFAULT_LIMIT;
 }
 
-export function parsePage(value: string | null): number {
-  if (value === null || !/^\d+$/.test(value)) return 1;
-  const page = Number(value);
-  return page >= 1 ? page : 1;
-}
-
 // 初期値（20 件・1 ページ目）はクエリに含めない
 export function buildHref(pathname: string, page: number, limit: number) {
   const params = new URLSearchParams();

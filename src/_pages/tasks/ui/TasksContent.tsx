@@ -4,9 +4,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useProjects } from "@/entities/project";
 import { TaskTable } from "@/entities/task";
 import { getTasks, type Task } from "@/shared/api";
-import { buildHref, parseLimit, parsePage } from "../lib/params";
+import { parsePage } from "@/shared/lib";
+import { Pagination } from "@/shared/ui";
+import { buildHref, parseLimit } from "../lib/params";
 import { LimitSelect } from "./LimitSelect";
-import { Pagination } from "./Pagination";
 import s from "./TasksContent.module.scss";
 
 type Result = {
@@ -130,7 +131,7 @@ export function TasksContent() {
           className={s.pagination}
           page={Math.min(page, totalPages)}
           totalPages={totalPages}
-          onSelect={(next) => router.push(buildHref(pathname, next, limit))}
+          getHref={(next) => buildHref(pathname, next, limit)}
         />
       )}
     </div>

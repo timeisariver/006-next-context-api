@@ -1,11 +1,13 @@
 import clsx from "clsx";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 import s from "./Pagination.module.scss";
 
 type Props = {
   page: number;
   totalPages: number;
-  onSelect: (page: number) => void;
+  // ページ番号から移り先の URL を作る
+  getHref: (page: number) => string;
   className?: string;
 };
 
@@ -27,46 +29,56 @@ function getItems(page: number, totalPages: number): (number | "…")[] {
   return items;
 }
 
-export function Pagination({ page, totalPages, onSelect, className }: Props) {
+export function Pagination({ page, totalPages, getHref, className }: Props) {
+  if (totalPages <= 1) return null;
+
   const items = getItems(page, totalPages);
 
   return (
     <nav className={clsx(s.root, className)} aria-label="ページ送り">
-      <button
-        type="button"
-        className={s.arrow}
-        aria-label="前のページ"
-        disabled={page <= 1}
-        onClick={() => onSelect(page - 1)}
-      >
-        <ChevronLeft size={16} />
-      </button>
+      {/* 押せない「<」「>」はリンクにせず、読み上げもしない */}
+      {page <= 1 ? (
+        <span className={clsx(s.arrow, s._disabled)} aria-hidden="true">
+          <ChevronLeft size={16} />
+        </span>
+      ) : (
+        <Link
+          href={getHref(page - 1)}
+          className={s.arrow}
+          aria-label="前のページ"
+        >
+          <ChevronLeft size={16} />
+        </Link>
+      )}
       {items.map((item, i) =>
         item === "…" ? (
           <span key={`ellipsis-${i}`} className={s.ellipsis} aria-hidden>
             …
           </span>
         ) : (
-          <button
+          <Link
             key={item}
-            type="button"
+            href={getHref(item)}
             className={clsx(s.number, { [s._current]: item === page })}
             aria-current={item === page ? "page" : undefined}
-            onClick={() => onSelect(item)}
           >
             {item}
-          </button>
+          </Link>
         ),
       )}
-      <button
-        type="button"
-        className={s.arrow}
-        aria-label="次のページ"
-        disabled={page >= totalPages}
-        onClick={() => onSelect(page + 1)}
-      >
-        <ChevronRight size={16} />
-      </button>
+      {page >= totalPages ? (
+        <span className={clsx(s.arrow, s._disabled)} aria-hidden="true">
+          <ChevronRight size={16} />
+        </span>
+      ) : (
+        <Link
+          href={getHref(page + 1)}
+          className={s.arrow}
+          aria-label="次のページ"
+        >
+          <ChevronRight size={16} />
+        </Link>
+      )}
     </nav>
   );
 }

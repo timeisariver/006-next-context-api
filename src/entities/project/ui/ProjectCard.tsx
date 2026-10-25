@@ -1,9 +1,14 @@
+// RootLayout（Server Component）が @/entities/project を import するため、ここで境界を切る。
+// 付けないと @/shared/lib 経由で useFetch（useEffectEvent）が Server Component 側に入る
+"use client";
+
 import clsx from "clsx";
 import s from "./ProjectCard.module.scss";
 import { Calendar, GitCommitHorizontal, FileText } from "lucide-react";
 import Link from "next/link";
 import type { Project } from "@/shared/api";
 import { formatDate } from "@/shared/lib";
+import { projectColorStyle } from "../lib/projectColor";
 
 type Props = {
   project: Project;
@@ -16,7 +21,7 @@ export function ProjectCard({ project, className }: Props) {
       <Link
         href={`/projects/${project.slug}`}
         className={s.link}
-        style={{ "--project-color": project.color } as React.CSSProperties}
+        style={projectColorStyle(project.color)}
       >
         <div className={s.info}>
           <p className={s.name}>{project.name}</p>
