@@ -37,7 +37,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 | 種類       | 絵文字 | 使う場面                                       |
 | ---------- | ------ | ---------------------------------------------- |
 | `feat`     | ✨     | 機能の追加                                     |
-| `fix`      | 🐛     | バグの修正                                     |
+| `fix`      | 🩹     | バグの修正                                     |
 | `docs`     | 📝     | ドキュメント・仕様書・プランだけの変更         |
 | `style`    | 💄     | 見た目（CSS）だけの変更                        |
 | `refactor` | ♻️     | 動作を変えないコードの整理                     |
