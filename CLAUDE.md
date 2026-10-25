@@ -28,7 +28,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 3. `/implement _plans/<機能名>.md` — プランに沿ってサブエージェントで並列に実装し、レビューまで行う。
 4. `/pr` — スクリーンショットを撮り、PR を作成する。
 
-PR はメンターのレビュー後にマージするため、レビュー待ちの機能のコードを使う機能は、その機能のブランチから作る（積み上げ式）。切り元は `/spec` が決め、`/implement` のレビューと `/pr` の比較先は `node scripts/base-branch.mjs` で求める。積み上げた PR が main に入るまで、PR は「Create a merge commit」でマージする（Squash すると上の PR に下の変更が再び出る）。
+ブランチは機能ごとに main から作り、PR の比較先も main にする。
 
 # ディレクトリ構成（Feature-Sliced Design）
 
