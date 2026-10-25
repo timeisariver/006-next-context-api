@@ -7,19 +7,15 @@ import {
   updateTask,
   type Project,
   type Task,
-  type TaskStatus,
   type UpdateTaskBody,
 } from "@/shared/api";
+import { Select } from "@/shared/ui";
+import { withCurrentProject } from "../lib/projectOptions";
+import { TASK_STATUS_OPTIONS } from "../model/status";
 import { DeadlineCell } from "./DeadlineCell";
 import s from "./TaskRow.module.scss";
 
 type Field = "project" | "status" | "deadline";
-
-const STATUS_OPTIONS: { value: TaskStatus; label: string }[] = [
-  { value: "scheduled", label: "未完了" },
-  { value: "completed", label: "完了" },
-  { value: "archived", label: "アーカイブ" },
-];
 
 type Props = {
   task: Task;
@@ -55,40 +51,28 @@ export function TaskRow({ task, projects, onChange }: Props) {
         )}
       </td>
       <td className={s.cell}>
-        <select
+        <Select
+          size="small"
           className={s.select}
           aria-label="プロジェクト"
+          options={withCurrentProject(projects, task.project).map(
+            (project) => ({ value: project.id, label: project.name }),
+          )}
           value={task.project.id}
           disabled={savingField === "project"}
-          onChange={(e) => save("project", { projectId: e.target.value })}
-        >
-          {/* プロジェクト一覧の取得前・失敗時も、今のプロジェクトを選択肢に残す */}
-          {!projects.some((project) => project.id === task.project.id) && (
-            <option value={task.project.id}>{task.project.name}</option>
-          )}
-          {projects.map((project) => (
-            <option key={project.id} value={project.id}>
-              {project.name}
-            </option>
-          ))}
-        </select>
+          onChange={(projectId) => save("project", { projectId })}
+        />
       </td>
       <td className={s.cell}>
-        <select
+        <Select
+          size="small"
           className={s.select}
           aria-label="ステータス"
+          options={TASK_STATUS_OPTIONS}
           value={task.status}
           disabled={savingField === "status"}
-          onChange={(e) =>
-            save("status", { status: e.target.value as TaskStatus })
-          }
-        >
-          {STATUS_OPTIONS.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </select>
+          onChange={(status) => save("status", { status })}
+        />
       </td>
       <td className={s.cell}>
         <DeadlineCell

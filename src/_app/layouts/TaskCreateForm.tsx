@@ -1,21 +1,17 @@
 "use client";
 
 import clsx from "clsx";
-import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import s from "./TaskCreateForm.module.scss";
 import { useProjects } from "@/entities/project";
+import { TASK_STATUS_OPTIONS } from "@/entities/task";
+import type { TaskStatus } from "@/shared/api";
 import { today } from "@/shared/lib";
+import { Select } from "@/shared/ui";
 
 type Props = {
   onClose: () => void;
 };
-
-const STATUSES = [
-  { value: "scheduled", label: "未完了" },
-  { value: "completed", label: "完了" },
-  { value: "archived", label: "アーカイブ" },
-];
 
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
 
@@ -25,7 +21,7 @@ export function TaskCreateForm({ onClose }: Props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [deadline, setDeadline] = useState(today);
-  const [status, setStatus] = useState("scheduled");
+  const [status, setStatus] = useState<TaskStatus>("scheduled");
   const [errors, setErrors] = useState<Errors>({});
 
   function handleSubmit(e: React.FormEvent) {
@@ -50,28 +46,17 @@ export function TaskCreateForm({ onClose }: Props) {
         <label htmlFor="task-project" className={s.label}>
           プロジェクト<span className={s.required}>*</span>
         </label>
-        <div className={s.selectWrap}>
-          <select
-            id="task-project"
-            // ユーザーが開いたモーダルなので、最初の入力欄にフォーカスを移す。
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-            className={clsx(s.control, s.select, { [s._empty]: !projectId })}
-            value={projectId}
-            onChange={(e) => setProjectId(e.target.value)}
-            aria-invalid={!!errors.project}
-          >
-            <option value="" disabled>
-              プロジェクトを選択してください
-            </option>
-            {projects.map((p) => (
-              <option key={p.id} value={p.id}>
-                {p.name}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className={s.chevron} aria-hidden="true" />
-        </div>
+        <Select
+          id="task-project"
+          // ユーザーが開いたモーダルなので、最初の入力欄にフォーカスを移す。
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus
+          placeholder="プロジェクトを選択してください"
+          options={projects.map((p) => ({ value: p.id, label: p.name }))}
+          value={projectId || null}
+          onChange={setProjectId}
+          invalid={!!errors.project}
+        />
         {errors.project && <p className={s.error}>{errors.project}</p>}
       </div>
 
@@ -123,21 +108,12 @@ export function TaskCreateForm({ onClose }: Props) {
         <label htmlFor="task-status" className={s.label}>
           ステータス
         </label>
-        <div className={s.selectWrap}>
-          <select
-            id="task-status"
-            className={clsx(s.control, s.select)}
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            {STATUSES.map(({ value, label }) => (
-              <option key={value} value={value}>
-                {label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown className={s.chevron} aria-hidden="true" />
-        </div>
+        <Select
+          id="task-status"
+          options={TASK_STATUS_OPTIONS}
+          value={status}
+          onChange={setStatus}
+        />
       </div>
 
       <div className={s.buttons}>

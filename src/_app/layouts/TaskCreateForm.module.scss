@@ -45,29 +45,6 @@
   }
 }
 
-.selectWrap {
-  position: relative;
-}
-
-.select {
-  appearance: none;
-  padding-right: 40px;
-
-  &._empty {
-    color: var(--color-text-muted);
-  }
-}
-
-.chevron {
-  position: absolute;
-  top: 50%;
-  right: 12px;
-  transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  pointer-events: none;
-}
-
 .textarea {
   height: 140px;
   padding: 16px;
