@@ -1,7 +1,8 @@
 "use client";
 
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import { getProjects, type Project } from "@/shared/api";
+import { useFetch } from "@/shared/lib";
 
 type ProjectsValue = {
   projects: Project[];
@@ -19,32 +20,18 @@ export const ProjectsContext = createContext<ProjectsValue>({
 });
 
 export function ProjectsProvider({ children }: { children: React.ReactNode }) {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const { data, isLoading, error } = useFetch(getProjects);
+  // refreshProjects() で取り直した一覧。初回の取得に失敗したあとでも入れる
+  const [refreshed, setRefreshed] = useState<Project[] | null>(null);
+  const projects = refreshed ?? data ?? [];
 
   async function refreshProjects() {
     try {
-      setProjects(await getProjects());
+      setRefreshed(await getProjects());
     } catch {
       // 今の一覧をそのまま使う
     }
   }
-
-  useEffect(() => {
-    async function init() {
-      try {
-        const data = await getProjects();
-        setProjects(data);
-      } catch {
-        setError("読み込みに失敗しました");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    init();
-  }, []);
 
   return (
     <ProjectsContext value={{ projects, isLoading, error, refreshProjects }}>
