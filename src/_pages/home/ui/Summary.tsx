@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { Calendar, ChevronDown } from "lucide-react";
-import { getStats, type Stats } from "@/shared/api";
-import { formatDate } from "@/shared/lib";
+import { getStats } from "@/shared/api";
+import { formatDate, useFetch } from "@/shared/lib";
 import { DashboardHead } from "@/shared/ui";
 import { CompletionDonut } from "./CompletionDonut";
 import { SummaryBarChart } from "./SummaryBarChart";
@@ -22,23 +21,10 @@ function sum(values: number[]): number {
 }
 
 export function Summary({ className }: Props) {
-  const [stats, setStats] = useState<Stats[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function init() {
-      try {
-        setStats(await getStats());
-      } catch {
-        setError("進捗の取得に失敗しました");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    init();
-  }, []);
+  const { data, isLoading, error } = useFetch("stats", getStats, {
+    errorMessage: "進捗の取得に失敗しました",
+  });
+  const stats = data ?? [];
 
   const completedSeries = stats.find((item) => item.type === "completed");
   const todoSeries = stats.find((item) => item.type === "todo");

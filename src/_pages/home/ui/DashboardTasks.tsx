@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
 import clsx from "clsx";
 import { useProjects } from "@/entities/project";
 import { TaskTable } from "@/entities/task";
 import { DashboardHead, MoreLink } from "@/shared/ui";
 import { getTasks, type Task } from "@/shared/api";
+import { useFetch } from "@/shared/lib";
 import s from "./DashboardTasks.module.scss";
 
 const LIMIT = 20;
@@ -15,31 +15,21 @@ type Props = {
 
 export function DashboardTasks({ className }: Props) {
   const { projects } = useProjects();
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [remainingPages, setRemainingPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    async function init() {
-      try {
-        const { tasks, pageInfo } = await getTasks({ limit: LIMIT });
-        setTasks(tasks);
-        setRemainingPages(Math.ceil(pageInfo.totalCount / LIMIT) - 1);
-      } catch {
-        setError("読み込みに失敗しました");
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    init();
-  }, []);
+  const { data, isLoading, error, setData } = useFetch("dashboard-tasks", () =>
+    getTasks({ limit: LIMIT }),
+  );
+  const tasks = data?.tasks ?? [];
+  const remainingPages = data
+    ? Math.ceil(data.pageInfo.totalCount / LIMIT) - 1
+    : 0;
 
   function handleChange(updated: Task) {
-    setTasks((prev) =>
-      prev.map((task) => (task.id === updated.id ? updated : task)),
-    );
+    setData((prev) => ({
+      ...prev,
+      tasks: prev.tasks.map((task) =>
+        task.id === updated.id ? updated : task,
+      ),
+    }));
   }
 
   return (
