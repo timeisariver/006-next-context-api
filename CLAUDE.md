@@ -50,7 +50,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - ルートの `app/` は Next.js のルーティング専用。ルートファイルは `src/_pages/`（レイアウトは `src/_app/`）を再エクスポートするだけにする。
 - FSD のレイヤーは `src/` に置く。Next.js と名前が衝突する `app` / `pages` レイヤーは `src/_app/` / `src/_pages/` とする。
 - import は `@/*`（`src/*`）経由で行う（例: `@/_pages/home`, `@/shared/ui`）。
-- `app/api/` は教材として配布された API のため改変しない（FSD の `api-routes` 構成の対象外）。
+- `app/api/` は教材として配布された API のため改変しない（FSD の `api-routes` 構成の対象外）。例外として、`app/api/datastore/index.ts` のプログラミングプロジェクトの `color` だけは `#00008c99`（= `rgba(0, 0, 140, 0.6)`）に直している。元の `#00008c60` は不透明度 0.38 になる初期データの誤りで、配布元に報告済み。
 
 ## スタイル（SCSS）
 

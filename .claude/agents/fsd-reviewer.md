@@ -28,7 +28,7 @@ FSD の import ルール・CSS のクラス名とネスト・色の直接指定�
 - スライスの外から import するときは `index.ts`（Public API）経由か。`@/shared/ui/Foo/Foo` のような直接参照をしていないか。
 - `shared` と `_app` にスライスを作っていないか。
 - 1 か所でしか使わないコードを `entities`・`shared` に切り出していないか（スキルの extraction rule）。`shared` に業務ロジックを置いていないか。
-- ルートの `app/` のファイルは再エクスポートだけか。`app/api/` を変更していないか。
+- ルートの `app/` のファイルは再エクスポートだけか。`app/api/` を変更していないか（`CLAUDE.md` に書いた例外を除く）。
 
 **CSS・コンポーネント**
 

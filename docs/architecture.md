@@ -117,7 +117,7 @@ _app  →  _pages  →  entities  →  shared
 ## その他のルール
 
 - ルートの `app/` は Next.js のルーティング専用で、ルートファイルは `src/_pages/` を再エクスポートするだけにする。
-- `app/api/` は教材として配布された API のため改変しない。
+- `app/api/` は教材として配布された API のため改変しない。例外として、`app/api/datastore/index.ts` のプログラミングプロジェクトの `color` だけは `#00008c99`（= `rgba(0, 0, 140, 0.6)`）に直している。元の `#00008c60` は不透明度 0.38 になる初期データの誤りで、配布元に報告済み。
 - グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
 - コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は `CLAUDE.md` の「CSS 命名規則」に従う。
 - ルートの `app/layout.tsx` は `src/_app/layouts` を再エクスポートする。
