@@ -5,7 +5,6 @@ import Link from "next/link";
 import s from "./Header.module.scss";
 import { TaskCreateForm } from "./TaskCreateForm";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
-import { useId } from "react";
 import { useModal } from "@/shared/lib";
 import { Modal } from "@/shared/ui";
 
@@ -21,7 +20,6 @@ const ACTIONS = [
 
 export function Header({ className }: Props) {
   const taskModal = useModal();
-  const taskModalTitleId = useId();
 
   return (
     <header className={clsx(s.root, className)}>
@@ -67,12 +65,8 @@ export function Header({ className }: Props) {
           </button>
         </li>
       </ul>
-      <Modal
-        open={taskModal.isOpen}
-        onClose={taskModal.close}
-        labelledBy={taskModalTitleId}
-      >
-        <TaskCreateForm titleId={taskModalTitleId} onClose={taskModal.close} />
+      <Modal open={taskModal.isOpen} onClose={taskModal.close}>
+        <TaskCreateForm onClose={taskModal.close} />
       </Modal>
     </header>
   );

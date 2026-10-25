@@ -7,17 +7,15 @@ import { useProjects } from "@/entities/project";
 import { TASK_STATUS_OPTIONS, toProjectOptions } from "@/entities/task";
 import type { TaskStatus } from "@/shared/api";
 import { today } from "@/shared/lib";
-import { Select } from "@/shared/ui";
+import { ModalTitle, Select } from "@/shared/ui";
 
 type Props = {
-  // 見出しの id。Modal の labelledBy と同じ値を渡し、ダイアログの名前にする
-  titleId: string;
   onClose: () => void;
 };
 
 type Errors = Partial<Record<"project" | "title" | "deadline", string>>;
 
-export function TaskCreateForm({ titleId, onClose }: Props) {
+export function TaskCreateForm({ onClose }: Props) {
   const { projects } = useProjects();
   const [projectId, setProjectId] = useState("");
   const [title, setTitle] = useState("");
@@ -40,9 +38,7 @@ export function TaskCreateForm({ titleId, onClose }: Props) {
 
   return (
     <form className={s.form} onSubmit={handleSubmit} noValidate>
-      <h2 id={titleId} className={s.title}>
-        タスクを追加
-      </h2>
+      <ModalTitle className={s.title}>タスクを追加</ModalTitle>
 
       <div className={s.field}>
         <label

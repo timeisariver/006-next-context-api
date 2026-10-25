@@ -1,17 +1,21 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--color-overlay);
+}
+
 .root {
   position: fixed;
   inset: 0;
   margin: auto;
   width: min(1160px, 94vw);
   height: min(820px, 92vh);
-  padding: 0;
-  border: none;
   background-color: var(--color-surface);
   box-shadow: var(--shadow-modal);
   color: var(--color-text);
 
-  &::backdrop {
-    background-color: var(--color-overlay);
+  &:focus {
+    outline: none;
   }
 }
 
