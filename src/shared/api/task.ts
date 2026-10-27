@@ -41,6 +41,15 @@ export type UpdateTaskBody = Partial<{
   deadline: string;
 }>;
 
+export type CreateTaskBody = {
+  projectId: string;
+  title: string;
+  description: string;
+  deadline: string;
+  status: TaskStatus;
+  kind: TaskKind;
+};
+
 type TasksResponse = {
   data: Task[];
   pageInfo: PageInfo;
@@ -62,6 +71,10 @@ export async function getTasks(
 export async function getTask(id: string): Promise<Task> {
   const { data } = await axios.get<TaskResponse>(`/api/v1/users/tasks/${id}`);
   return data.data;
+}
+
+export async function createTask(body: CreateTaskBody): Promise<void> {
+  await axios.post("/api/v1/users/tasks", body);
 }
 
 export async function deleteTask(id: string): Promise<void> {
