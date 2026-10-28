@@ -13,3 +13,4 @@ export { createTask } from "./task";
 export type { CreateTaskBody } from "./task";
 export { getStats } from "./stats";
 export type { Stats, StatsData } from "./stats";
+export { getAllTasks } from "./task";
