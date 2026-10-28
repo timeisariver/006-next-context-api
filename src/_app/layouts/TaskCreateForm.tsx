@@ -49,9 +49,9 @@ export function TaskCreateForm({ onClose, onCreated, onCreateFailed }: Props) {
     if (!title.trim()) next.title = "タスクを入力してください";
     if (!deadline) next.deadline = "締切日を入力してください";
     setErrors(next);
+    setSubmitError(null);
     if (Object.keys(next).length > 0) return;
 
-    setSubmitError(null);
     setIsSubmitting(true);
     try {
       await createTask({

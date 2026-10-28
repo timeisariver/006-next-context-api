@@ -3,7 +3,7 @@ import { useEffect, useEffectEvent, useState } from "react";
 // 取得した結果。成功したときだけ data を持つ
 type Result<T> = { ok: true; data: T } | { ok: false };
 
-// 画面に出たときに 1 回だけデータを取得して、data・isLoading・error を返す。
+// 画面に出たときにデータを取得して、data・isLoading・error を返す。
 // 例: const { data, isLoading, error } = useFetch(() => getProject(slug));
 // key を渡すと、key が変わるたびに取り直す。取り直しのあいだは前の結果を返す。
 // 例: useFetch(() => getTasks(params), { key: revision });
