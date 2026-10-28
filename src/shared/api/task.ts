@@ -68,6 +68,30 @@ export async function getTasks(
   return { tasks: data.data, pageInfo: data.pageInfo };
 }
 
+const TASK_STATUSES: TaskStatus[] = ["scheduled", "completed", "archived"];
+
+// API は status を 1 つしか受け取れないため、ステータスごとに取得してつなげる
+export async function getAllTasks(): Promise<Task[]> {
+  const results = await Promise.all(
+    TASK_STATUSES.map(async (status) => {
+      const { tasks, pageInfo } = await getTasks({
+        status,
+        limit: 100,
+        page: 1,
+      });
+      if (pageInfo.totalCount <= tasks.length) return tasks;
+      // 1 回目で取り切れなかったときは、全件を 1 ページで取り直す
+      const all = await getTasks({
+        status,
+        limit: pageInfo.totalCount,
+        page: 1,
+      });
+      return all.tasks;
+    }),
+  );
+  return results.flat();
+}
+
 export async function getTask(id: string): Promise<Task> {
   const { data } = await axios.get<TaskResponse>(`/api/v1/users/tasks/${id}`);
   return data.data;

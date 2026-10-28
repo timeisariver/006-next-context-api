@@ -20,28 +20,6 @@
   font-weight: 800;
 }
 
-.search {
-  position: relative;
-}
-
-.searchIcon {
-  position: absolute;
-  top: 50%;
-  left: 14px;
-  transform: translateY(-50%);
-  width: 18px;
-  height: 18px;
-  color: var(--color-text-muted);
-}
-
-.searchInput {
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  padding: 10px 14px 10px 38px;
-  font-size: 14px;
-  min-width: 520px;
-}
-
 .actions {
   display: flex;
   align-items: center;

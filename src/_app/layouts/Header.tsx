@@ -4,9 +4,10 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useState } from "react";
 import s from "./Header.module.scss";
+import { HeaderSearch } from "./HeaderSearch";
 import { TaskCreateForm } from "./TaskCreateForm";
 import { Toast } from "./Toast";
-import { Search, Bell, Info, Plus, User } from "lucide-react";
+import { Bell, Info, Plus, User } from "lucide-react";
 import { useTaskChanges } from "@/entities/task";
 import { useModal } from "@/shared/lib";
 import { Modal } from "@/shared/ui";
@@ -54,15 +55,7 @@ export function Header({ className }: Props) {
           <Link href="/" className={s.logo}>
             Turvo
           </Link>
-          <div className={s.search}>
-            <Search className={s.searchIcon} />
-            <input
-              type="text"
-              placeholder="タスクタイトルで検索"
-              aria-label="タスクタイトルで検索"
-              className={s.searchInput}
-            />
-          </div>
+          <HeaderSearch />
         </div>
         <ul className={s.actions}>
           <li>
