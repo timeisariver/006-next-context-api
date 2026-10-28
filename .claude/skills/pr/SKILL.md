@@ -24,11 +24,13 @@ disable-model-invocation: true
 
 UI に関わる変更（`src/`、`app/` の `.tsx` / `.scss`）がなければこの手順は飛ばす。
 
+撮影には `npm run screenshots -- [ページ ...]` を使う（詳細は `scripts/pr-screenshots.mjs`）。開発サーバーの起動が前提。画像は orphan ブランチ `screenshots` に push され、PR 本文から参照される。このブランチはマージも削除もしない。
+
 1. 撮影するページを決める。引数 `$ARGUMENTS` があればそれを使う。なければ:
    - 変更された `src/_pages/<スライス>` を `@/_pages/<スライス>` で import している `app/**/page.tsx` を探し、そのルートを撮る。
    - `src/_app`・`src/entities`・`src/shared` が変わっていれば、トップページ（`.`）も撮る。
    - 仕様書の「対象ページ」に書かれたページも撮る。
-   - パスは先頭の `/` を省いて書く（例: `tasks`。トップは `.`）。
+   - パスは先頭の `/` を省いて書く（例: `tasks`。トップは `.`）。Git Bash が `/tasks` を Windows のパスに変換するため。
 2. `http://localhost:3000` に接続できなければ、`npm run dev` をバックグラウンドで起動し、応答するまで待つ。
 3. `npm run screenshots -- --no-publish <ページ ...>` で撮影し、`.screenshots/` の画像を Read で確認する。エラー画面や空白になっていたら原因を調べる。
 4. 問題なければ `npm run screenshots -- <ページ ...>` で `screenshots` ブランチに push し、出力された Markdown を本文に使う。

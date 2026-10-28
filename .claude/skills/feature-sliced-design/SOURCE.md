@@ -12,4 +12,4 @@ FSD 公式のエージェントスキルをコピーしたもの（`evals/` は�
 
 ## このプロジェクトでの優先順位
 
-`CLAUDE.md` と `docs/architecture.md` の規約が、このスキルより優先する。
+このプロジェクトの規約（`CLAUDE.md`、`docs/` のドキュメント、`.claude/rules/` のルール）が、このスキルより優先する。FSD の構成と配置の判断基準は `docs/architecture.md` にある。
