@@ -84,7 +84,16 @@ export function HeaderSearch({ className }: Props) {
   }
 
   function handleKeyDown(e: React.KeyboardEvent) {
+    // 日本語入力の変換を Esc で取り消したときは閉じない
+    if (e.nativeEvent.isComposing) return;
     if (e.key === "Escape") closeAndFocusInput();
+  }
+
+  // 押したときに入力欄からフォーカスを外さない。外すと onBlur で一覧が閉じてしまう
+  // （パネルの文言や余白を押したとき。Safari はリンクやボタンを押してもフォーカスを移さないため、
+  // 外さないと一覧が先に閉じ、リンクの click が届かない・× で取得し直してしまう）
+  function keepFocus(e: React.MouseEvent) {
+    e.preventDefault();
   }
 
   // 検索欄と一覧の外へフォーカスが移ったら閉じる（外側のクリック・Tab で出たとき）
@@ -113,12 +122,15 @@ export function HeaderSearch({ className }: Props) {
           className={s.clear}
           aria-label="検索をクリア"
           onClick={handleClear}
+          onMouseDown={keepFocus}
         >
           <X className={s.clearIcon} />
         </button>
       )}
       {isVisible && (
-        <div className={s.panel}>
+        // mousedown は既定の動き（フォーカスの移動）を止めるだけで、この div 自体は操作の対象ではない
+        // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+        <div className={s.panel} onMouseDown={keepFocus}>
           {result === null ? (
             <p className={s.message}>読み込み中…</p>
           ) : !result.ok ? (
@@ -155,9 +167,6 @@ function SearchResults({ tasks, onSelect, onKeyDown }: SearchResultsProps) {
             className={s.item}
             onClick={onSelect}
             onKeyDown={onKeyDown}
-            // 押したときに入力欄からフォーカスを外さない。Safari はリンクを押してもフォーカスを
-            // 移さないため、外さないと onBlur で一覧が閉じ、click が届かずに移動できない
-            onMouseDown={(e) => e.preventDefault()}
           >
             <span className={s.title}>{task.title}</span>
             <span className={s.meta}>
