@@ -123,6 +123,7 @@ export function HeaderSearch({ className }: Props) {
           aria-label="検索をクリア"
           onClick={handleClear}
           onMouseDown={keepFocus}
+          onKeyDown={handleKeyDown}
         >
           <X className={s.clearIcon} />
         </button>
