@@ -1,0 +1,16 @@
+.root {
+  position: fixed;
+  right: 32px;
+  bottom: 32px;
+  z-index: 100; // モーダル（Radix のポータル）より手前に出す
+  padding: 16px 24px;
+  border-radius: 8px;
+  background-color: var(--color-surface);
+  box-shadow: var(--shadow-modal);
+  font-size: 14px;
+  color: var(--color-text);
+
+  &._error {
+    color: var(--color-danger);
+  }
+}

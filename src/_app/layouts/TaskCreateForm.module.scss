@@ -31,6 +31,11 @@
   &[aria-invalid="true"] {
     border-color: var(--color-danger);
   }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .textarea {
@@ -50,10 +55,20 @@
   color: var(--color-danger);
 }
 
+// 送信の失敗とボタンをまとめる
+.footer {
+  margin-top: 48px;
+}
+
+.submitError {
+  margin-bottom: 16px;
+  font-size: 14px;
+  color: var(--color-danger);
+}
+
 .buttons {
   display: flex;
   gap: 16px;
-  margin-top: 48px;
 }
 
 .button {
@@ -68,6 +83,11 @@
 
 .submit {
   background-color: var(--color-primary);
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
 }
 
 .cancel {

@@ -1,7 +1,7 @@
 "use client";
 import clsx from "clsx";
 import { useProjects } from "@/entities/project";
-import { TaskTable } from "@/entities/task";
+import { TaskTable, useTaskChanges } from "@/entities/task";
 import { DashboardHead, MoreLink } from "@/shared/ui";
 import { getTasks, type Task } from "@/shared/api";
 import { useFetch } from "@/shared/lib";
@@ -15,8 +15,11 @@ type Props = {
 
 export function DashboardTasks({ className }: Props) {
   const { projects } = useProjects();
-  const { data, isLoading, error, setData } = useFetch(() =>
-    getTasks({ limit: LIMIT }),
+  // タスクが作成されると revision が増え、今の一覧を表示したまま取り直す
+  const { revision } = useTaskChanges();
+  const { data, isLoading, error, setData } = useFetch(
+    () => getTasks({ limit: LIMIT }),
+    { key: revision },
   );
   const tasks = data?.tasks ?? [];
   const remainingPages = data
