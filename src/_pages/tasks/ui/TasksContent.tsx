@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useProjects } from "@/entities/project";
-import { TaskTable } from "@/entities/task";
+import { TaskTable, useTaskChanges } from "@/entities/task";
 import { getTasks, type Task } from "@/shared/api";
 import { parsePage } from "@/shared/lib";
 import { Pagination } from "@/shared/ui";
@@ -28,6 +28,7 @@ export function TasksContent() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const { projects } = useProjects();
+  const { revision } = useTaskChanges();
 
   const limit = parseLimit(searchParams.get("limit"));
   const page = parsePage(searchParams.get("page"));
@@ -69,7 +70,10 @@ export function TasksContent() {
     return () => {
       cancelled = true;
     };
-  }, [limit, page, pathname, router]);
+    // revision（タスクが作成されると増える）は effect の中では使わないが、作成後に
+    // 今のページ番号・表示件数のまま取り直すために依存に入れる。
+    // result.key は変わらないので、取り直しのあいだも今の一覧を表示したまま
+  }, [limit, page, pathname, router, revision]);
 
   function handleChange(updated: Task) {
     setResult((prev) =>
