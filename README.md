@@ -87,7 +87,7 @@ npx playwright install chromium
 
 既存のコードと API を調べ、変更するファイルが重ならないようにタスクに分けたプランを、[\_plans/\_template.md](_plans/_template.md) の形式で `_plans/<機能名>.md` に保存する。仕様書が曖昧なら、プランを書く前に質問してくる。手順は [SKILL.md](.claude/skills/plan/SKILL.md) を参照。
 
-プランはコミットされないので、見直して直してから `/implement` に進む。担当範囲が適切か、要件の割り当てに漏れがないかを確認する。
+main にいれば `feature/<機能名>` ブランチを作る。プランは `/implement` で仕様書と一緒にコミットされるまでコミットされないので、見直して直してから `/implement` に進む。担当範囲が適切か、要件の割り当てに漏れがないかを確認する。
 
 ### 3. 実装させる（`/implement`）
 

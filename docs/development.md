@@ -35,7 +35,7 @@ Node のバージョンは [`.node-version`](../.node-version) だけに書く�
 | FSD の import ルール（レイヤーの依存方向、スライス間の import 禁止、Public API 経由のみ） | ESLint の `no-restricted-imports`（[`eslint.config.mjs`](../eslint.config.mjs)）。ルールを変えるときは [`docs/architecture.md`](architecture.md) と合わせて更新する         |
 | CSS のクラス名・ネスト・色の直接指定                                                      | Stylelint（[`stylelint.config.mjs`](../stylelint.config.mjs)）。ルールを変えるときは [`.claude/rules/ui-component.md`](../.claude/rules/ui-component.md) と合わせて更新する |
 | アクセシビリティ                                                                          | `eslint-plugin-jsx-a11y` の推奨ルール（[`eslint.config.mjs`](../eslint.config.mjs)）                                                                                        |
-| `useMemo` / `useCallback` を手書きしない（React Compiler が有効なため。`next.config.ts`） | ESLint の `no-restricted-imports` の `paths` と `no-restricted-properties`（[`eslint.config.mjs`](../eslint.config.mjs)）                                                   |
+| `useMemo` / `useCallback` を手書きしない（React Compiler が有効なため。`next.config.ts`） | ESLint の `no-restricted-syntax`（`react` からの名前付き import）と `no-restricted-properties`（`React.useMemo` などの形）（[`eslint.config.mjs`](../eslint.config.mjs)）   |
 | `app/api/` を編集しない                                                                   | [`.claude/settings.json`](../.claude/settings.json) の `permissions.deny`                                                                                                   |
 
 `permissions.deny` は Claude Code の編集ツール（Edit・Write）にだけ効く。`sed -i` などのシェルからの書き換えは防げないため、`CLAUDE.md` にも「改変しない」と書いている。

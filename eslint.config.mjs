@@ -15,21 +15,16 @@ const forbid = (layers, message) => ({
   group: layers.flatMap((layer) => [`@/${layer}`, `@/${layer}/*`]),
   message,
 });
-// React Compiler が有効（next.config.ts）なため、useMemo / useCallback を手書きしない。
-// no-restricted-imports は上書きされないよう、FSD のパターンと同じ設定で渡す。
-const noManualMemoMessage =
-  "React Compiler が有効なため、手書きのメモ化（useMemo / useCallback）は不要です。";
-const noManualMemoImports = {
-  name: "react",
-  importNames: ["useMemo", "useCallback"],
-  message: noManualMemoMessage,
-};
 const fsdImports = (...patterns) => ({
   "no-restricted-imports": [
     "error",
-    { paths: [noManualMemoImports], patterns: [publicApiOnly, ...patterns] },
+    { patterns: [publicApiOnly, ...patterns] },
   ],
 });
+
+// React Compiler が有効（next.config.ts）なため、useMemo / useCallback を手書きしない。
+const noManualMemoMessage =
+  "React Compiler が有効なため、手書きのメモ化（useMemo / useCallback）は不要です。";
 
 const eslintConfig = defineConfig([
   ...nextVitals,
@@ -74,10 +69,20 @@ const eslintConfig = defineConfig([
       ),
     ),
   },
+  // 名前付き import は、FSD の no-restricted-imports を上書きしないよう no-restricted-syntax で検査する
+  // （no-restricted-imports の importNames では `import * as React` まで禁止されるため）。
   // React.useMemo / React.useCallback の形で使うことも禁止する。
   {
     files: ["app/**", "src/**"],
     rules: {
+      "no-restricted-syntax": [
+        "error",
+        {
+          selector:
+            "ImportDeclaration[source.value='react'] > ImportSpecifier[imported.name=/^(useMemo|useCallback)$/]",
+          message: noManualMemoMessage,
+        },
+      ],
       "no-restricted-properties": [
         "error",
         ...["useMemo", "useCallback"].map((property) => ({

@@ -55,4 +55,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - CI・lint・Git の設定を変えるとき、または lint などの仕組みで守らせているルールを確かめるときは、先に [docs/development.md](docs/development.md) を読む。
 - ドキュメントや規約（`CLAUDE.md`・`docs/`・`.claude/rules/`・スキル）を足す・移すときは、先に [docs/development.md](docs/development.md) の「ドキュメントの置き場所」を読む。
 - UI コンポーネント・SCSS の規約は [.claude/rules/ui-component.md](.claude/rules/ui-component.md)、API の型と仕様の確かめ方は [.claude/rules/api-types.md](.claude/rules/api-types.md) にある。対象のファイルを読むと自動で読み込まれるが、新しいファイルを作るだけのときは先に読む。
-- スクリーンショットの撮り方は `/pr` スキル（[.claude/skills/pr/SKILL.md](.claude/skills/pr/SKILL.md)）にある。
+- スクリーンショットを撮るときは、先に `/pr` スキル（[.claude/skills/pr/SKILL.md](.claude/skills/pr/SKILL.md)）の「スクリーンショット」を読む。
