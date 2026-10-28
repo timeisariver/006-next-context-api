@@ -12,24 +12,24 @@
 
 `CLAUDE.md` の各行をどこへ移すかは、次の表で決める。どのタスクもこの表に従い、内容を落とさない（言い回しの整理はよい）。
 
-| `CLAUDE.md` の現在の内容（行）                                                         | 移す先                                                                       |
-| -------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| 「This is NOT the Next.js you know」の節（5〜13）                                     | `CLAUDE.md` にそのまま残す                                                   |
-| コマンド `dev`・`build`・`lint`・`typecheck`・`format`（17〜21）                       | `CLAUDE.md` に残す。1 ファイルだけ lint する方法と worktree の注意は `docs/development.md` |
-| `npm run screenshots` の詳細（22）                                                     | `/pr` スキル                                                                 |
-| 開発の流れ（24〜31）                                                                   | `CLAUDE.md` に 1〜2 行。詳細は `README.md`                                   |
-| コミットメッセージ（33〜44）                                                           | `CLAUDE.md` にそのまま残す                                                   |
-| ディレクトリ構成の要点（46〜52）                                                       | `CLAUDE.md` に数行。命名の理由などは `docs/architecture.md`（既にある）       |
-| `app/api/` の改変禁止と `color` の例外（53）                                           | `CLAUDE.md` に「改変しない」の 1 行。例外は `docs/architecture.md`（既にある）と `permissions.deny` |
-| スタイル（SCSS）・CSS 命名規則（55〜73）                                               | ルール `.claude/rules/ui-component.md`                                       |
-| テストと確認（77）                                                                     | 確認コマンドは `CLAUDE.md`。`next typegen` の理由は `docs/development.md`     |
-| CI と Node のバージョン（79）                                                          | `docs/development.md`（バージョンは `.node-version` に一本化）                |
-| 状態管理とデータの流れ（83〜86）                                                       | `docs/state-management.md`                                                   |
-| API のレスポンス型と `UpdateTask`（87）                                                | ルール `.claude/rules/api-types.md`                                          |
-| FSD の import ルールが ESLint で検査されること（88）                                   | `docs/architecture.md`（既にある）                                           |
-| アクセシビリティの lint と、外すときのコメント（89）                                   | ルール `.claude/rules/ui-component.md`                                       |
-| React Compiler と `useMemo` / `useCallback`（90）                                      | ESLint のルール。`docs/development.md` の「仕組みで守らせているルール」に記載 |
-| `.claude/worktrees/` が lint の対象外（91）、`.gitattributes`（92）                    | `docs/development.md`                                                        |
+| `CLAUDE.md` の現在の内容（行）                                      | 移す先                                                                                              |
+| ------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| 「This is NOT the Next.js you know」の節（5〜13）                   | `CLAUDE.md` にそのまま残す                                                                          |
+| コマンド `dev`・`build`・`lint`・`typecheck`・`format`（17〜21）    | `CLAUDE.md` に残す。1 ファイルだけ lint する方法と worktree の注意は `docs/development.md`          |
+| `npm run screenshots` の詳細（22）                                  | `/pr` スキル                                                                                        |
+| 開発の流れ（24〜31）                                                | `CLAUDE.md` に 1〜2 行。詳細は `README.md`                                                          |
+| コミットメッセージ（33〜44）                                        | `CLAUDE.md` にそのまま残す                                                                          |
+| ディレクトリ構成の要点（46〜52）                                    | `CLAUDE.md` に数行。命名の理由などは `docs/architecture.md`（既にある）                             |
+| `app/api/` の改変禁止と `color` の例外（53）                        | `CLAUDE.md` に「改変しない」の 1 行。例外は `docs/architecture.md`（既にある）と `permissions.deny` |
+| スタイル（SCSS）・CSS 命名規則（55〜73）                            | ルール `.claude/rules/ui-component.md`                                                              |
+| テストと確認（77）                                                  | 確認コマンドは `CLAUDE.md`。`next typegen` の理由は `docs/development.md`                           |
+| CI と Node のバージョン（79）                                       | `docs/development.md`（バージョンは `.node-version` に一本化）                                      |
+| 状態管理とデータの流れ（83〜86）                                    | `docs/state-management.md`                                                                          |
+| API のレスポンス型と `UpdateTask`（87）                             | ルール `.claude/rules/api-types.md`                                                                 |
+| FSD の import ルールが ESLint で検査されること（88）                | `docs/architecture.md`（既にある）                                                                  |
+| アクセシビリティの lint と、外すときのコメント（89）                | ルール `.claude/rules/ui-component.md`                                                              |
+| React Compiler と `useMemo` / `useCallback`（90）                   | ESLint のルール。`docs/development.md` の「仕組みで守らせているルール」に記載                       |
+| `.claude/worktrees/` が lint の対象外（91）、`.gitattributes`（92） | `docs/development.md`                                                                               |
 
 ## タスク
 
