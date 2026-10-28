@@ -1,8 +1,19 @@
+// html の高さを決めて、body の高さを 100% で求められるようにする。
+// 100dvh だと横スクロールバーの分が引かれず、本文の下端がスクロールバーに隠れる。
+.html {
+  height: 100%;
+}
+
+// 幅が 1440px 未満にならないようにする（RootLayout.tsx の viewport の width と合わせる）。
+// body の overflow はページ全体に伝わるため、縦は止めて横だけスクロールさせる。
+// サイドバー・本文は中だけで縦にスクロールする。
 .root {
   display: flex;
   flex-direction: column;
-  height: 100dvh;
-  overflow: hidden;
+  height: 100%;
+  min-height: 0; // リセットの min-height: 100svh を打ち消す
+  min-width: 1440px;
+  overflow: auto hidden; // 横は auto、縦は hidden
 }
 
 .content {
