@@ -8,7 +8,7 @@ tools: Read, Edit, Write, Glob, Grep, Bash, Skill
 
 ## 始める前に
 
-1. `CLAUDE.md` と `docs/architecture.md` を読み、規約に従う。
+1. `CLAUDE.md` と `docs/architecture.md` を読み、規約に従う。担当範囲に UI コンポーネント・SCSS が含まれるときは `.claude/rules/ui-component.md` を、`src/shared/api/` が含まれるときは `.claude/rules/api-types.md` も読む（対象のファイルを読むと自動で読み込まれるが、新しいファイルを作るだけだと読み込まれないことがあるため）。
 2. 依頼文にベースのコミット SHA が書かれている場合は、`git log -1 --format=%H` と比べる。違っていて、かつ `git status --short` が空なら `git reset --hard <SHA>` でそろえる。
 3. 新しいファイルをどのレイヤー・スライス・セグメントに置くか迷ったら、`feature-sliced-design` スキルを読んで判断する。原則は「迷ったら `_pages` に置き、今まさに複数箇所で使うまでは `entities`・`shared` に切り出さない」。スキルと `CLAUDE.md`・`docs/architecture.md` が食い違う場合は後者に従う。
 4. Next.js の API（ルーティング、`next/link`、`next/image`、メタデータなど）を使うときは、`node_modules/next/dist/docs/` の該当ガイドを読んでから書く。学習データの Next.js とは違う。
@@ -16,7 +16,7 @@ tools: Read, Edit, Write, Glob, Grep, Bash, Skill
 ## 守ること
 
 - 担当範囲として指定されたファイル・ディレクトリだけを変更する。範囲外の変更が必要になったら、変更せずに報告する（他のエージェントが並列で作業しているため）。
-- `app/api/` は変更しない（`CLAUDE.md` に書いた例外を除く）。
+- `app/api/` は変更しない（`docs/architecture.md` の「その他のルール」に書いた例外を除く）。Edit・Write での編集は `.claude/settings.json` の `permissions.deny` でも拒否される。シェルからの書き換えは防げないので、`sed -i` などでも書き換えない。
 - 仕様書にないことは作り込まない。仕様が曖昧なら、無難な最小限の実装にして、その判断を報告に書く。
 - 既存コードの書き方（命名、import の順序、コメントの量）に合わせる。
 

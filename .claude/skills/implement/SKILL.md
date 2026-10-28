@@ -28,6 +28,7 @@ disable-model-invocation: true
 
 - `subagent_type: "implementer"`、`isolation: "worktree"` を指定する。
 - サブエージェントは会話の文脈を持たないので、依頼文だけで作業できるように書く: 仕様書とプランのパス、担当タスクの番号・内容と担当範囲、満たすべき要件、使ってよい公開 API、ベースのコミット SHA（`git rev-parse HEAD`）。
+- 担当範囲に応じて、先に読むルールも依頼文に書く。UI コンポーネント・SCSS を含むなら `.claude/rules/ui-component.md`、`src/shared/api/` を含むなら `.claude/rules/api-types.md`。新しいファイルを作るだけだと、ルールが自動で読み込まれないことがあるため。
 
 全員の完了を待ち、段階ごとに統合（次の 4.）してから次の段階を起動する。
 

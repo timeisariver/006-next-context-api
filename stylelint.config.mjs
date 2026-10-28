@@ -1,4 +1,4 @@
-// CSS の規約（CLAUDE.md の「スタイル（SCSS）」「CSS 命名規則」）。
+// CSS の規約（.claude/rules/ui-component.md）。ルールを変えるときは、そのファイルと合わせて更新する。
 /** @type {import("stylelint").Config} */
 const config = {
   extends: ["stylelint-config-standard-scss"],

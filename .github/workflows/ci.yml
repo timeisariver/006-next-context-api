@@ -25,8 +25,8 @@ jobs:
 
       - uses: actions/setup-node@v7
         with:
-          # Netlify（netlify.toml の NODE_VERSION）に合わせる。
-          node-version: 22
+          # .node-version は Netlify も読むため、Node のバージョンはこのファイルだけで決める。
+          node-version-file: .node-version
           cache: npm
 
       - run: npm ci
