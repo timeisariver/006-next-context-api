@@ -29,6 +29,7 @@ allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git swit
 - `CLAUDE.md`、`docs/architecture.md`、`_specs/_template.md` を読む。
 - 既存のページ（`app/**/page.tsx`）と、関係しそうな `src/_pages`・`src/entities`・`src/shared` のコードを読み、「対象ページ」や流用できる既存コンポーネントを確かめる。
 - データが要る機能なら、`app/api/v1/spec/swagger.yml/swagger.yml` から使うエンドポイントとレスポンスの項目を確かめる。
+- 状態管理（Context）やデータ取得に関わる機能なら、`docs/state-management.md` を読み、どのデータを Context で共有し、どれをページで直接取得しているかを確かめる。
 
 ### Figma のリンクがある場合
 

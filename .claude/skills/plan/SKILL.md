@@ -18,7 +18,8 @@ allowed-tools: Read, Write, Glob, Grep, Skill, Bash(git status:*), Bash(git swit
 ## 2. 調べる
 
 - 仕様書の「対象ページ」に当たる `app/**/page.tsx` と、関係する `src/_pages`・`src/entities`・`src/shared` のコードを読み、流用できるものと変更が要るものを確かめる。
-- データが要る機能なら、`src/shared/api/` の型と `app/api/v1/spec/swagger.yml/swagger.yml` を確かめる（`UpdateTask` の扱いは `CLAUDE.md` を参照）。
+- データが要る機能なら、`src/shared/api/` の型と `app/api/v1/spec/swagger.yml/swagger.yml` を確かめる（swagger.yml の誤り（`UpdateTask`）などの注意は `.claude/rules/api-types.md` を参照）。
+- 状態管理（Context）やデータ取得に関わる機能なら、`docs/state-management.md` を読み、どのデータを Context で共有し、どれをページで直接取得しているかを確かめる。
 - 新しいコードの置き場所は `feature-sliced-design` スキルの判断基準で決める（迷ったら `_pages` に置き、今まさに複数箇所で使うまでは `entities`・`shared` に切り出さない）。
 
 ## 3. タスクに分ける
