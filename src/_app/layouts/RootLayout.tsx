@@ -6,6 +6,7 @@ import { Sidebar } from "./Sidebar";
 import s from "./RootLayout.module.scss";
 import clsx from "clsx";
 import { ProjectsProvider } from "@/entities/project";
+import { TaskChangesProvider } from "@/entities/task";
 
 // 英字は Inter、日本語は Noto Sans JP で表示する（globals.scss の --font-family-base）
 const inter = Inter({
@@ -28,13 +29,15 @@ export function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="ja" className={clsx(inter.variable, notoSansJp.variable)}>
       <body className={s.root}>
         <ProjectsProvider>
-          <Header />
-          <div className={s.content}>
-            <div className={s.sidebar}>
-              <Sidebar />
+          <TaskChangesProvider>
+            <Header />
+            <div className={s.content}>
+              <div className={s.sidebar}>
+                <Sidebar />
+              </div>
+              <main className={s.main}>{children}</main>
             </div>
-            <main className={s.main}>{children}</main>
-          </div>
+          </TaskChangesProvider>
         </ProjectsProvider>
       </body>
     </html>

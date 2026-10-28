@@ -2,9 +2,12 @@
 
 import clsx from "clsx";
 import Link from "next/link";
+import { useState } from "react";
 import s from "./Header.module.scss";
 import { TaskCreateForm } from "./TaskCreateForm";
+import { Toast } from "./Toast";
 import { Search, Bell, Info, Plus, User } from "lucide-react";
+import { useTaskChanges } from "@/entities/task";
 import { useModal } from "@/shared/lib";
 import { Modal } from "@/shared/ui";
 
@@ -18,8 +21,30 @@ const ACTIONS = [
   { label: "通知", Icon: Bell },
 ];
 
+// 画面の右下に出す知らせ。id は連番で、置き換えたときに 5 秒を数え直すため key に使う
+type ToastState = {
+  id: number;
+  message: string;
+  tone: "success" | "error";
+};
+
 export function Header({ className }: Props) {
   const taskModal = useModal();
+  const { notifyTasksChanged } = useTaskChanges();
+  const [toast, setToast] = useState<ToastState | null>(null);
+
+  function showToast(message: string, tone: ToastState["tone"]) {
+    setToast((prev) => ({ id: (prev?.id ?? 0) + 1, message, tone }));
+  }
+
+  function handleCreated() {
+    notifyTasksChanged();
+    showToast("タスクを作成しました", "success");
+  }
+
+  function handleCreateFailed() {
+    showToast("タスクの作成に失敗しました", "error");
+  }
 
   return (
     <header className={clsx(s.root, className)}>
@@ -70,8 +95,20 @@ export function Header({ className }: Props) {
         onClose={taskModal.close}
         title="タスクを追加"
       >
-        <TaskCreateForm onClose={taskModal.close} />
+        <TaskCreateForm
+          onClose={taskModal.close}
+          onCreated={handleCreated}
+          onCreateFailed={handleCreateFailed}
+        />
       </Modal>
+      {toast && (
+        <Toast
+          key={toast.id}
+          message={toast.message}
+          tone={toast.tone}
+          onDismiss={() => setToast(null)}
+        />
+      )}
     </header>
   );
 }
