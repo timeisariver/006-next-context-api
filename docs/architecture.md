@@ -1,6 +1,6 @@
 # ディレクトリ構成（Feature-Sliced Design）
 
-このアプリは [Feature-Sliced Design (FSD)](https://feature-sliced.design/) を採用している。ただし小規模なため、レイヤーは `_app`・`_pages`・`entities`・`shared` の 4 つだけを使う（`widgets`・`features` は使わない）。
+このアプリは [Feature-Sliced Design (FSD)](https://feature-sliced.design/) v2.1 を採用している。ただし小規模なため、レイヤーは `_app`・`_pages`・`entities`・`shared` の 4 つだけを使う（`widgets`・`features` は使わない）。
 
 コードの置き場所の判断基準（いつ `entities`・`shared` に切り出すかなど）は、FSD 公式のエージェントスキル [`.claude/skills/feature-sliced-design/`](../.claude/skills/feature-sliced-design/SKILL.md) に従う。このドキュメントとスキルが食い違う場合は、このドキュメントを優先する。
 
@@ -110,15 +110,16 @@ _app  →  _pages  →  entities  →  shared
 - **下のレイヤーから上のレイヤーを import しない。** 例: `shared` から `_pages` や `_app` を import しない。
 - スライスを持たない `_app`・`shared` の中では、セグメント同士の import は自由にしてよい。
 
-これらのルールと Public API 経由の import は、ESLint の `no-restricted-imports`（`eslint.config.mjs`）で検査している。違反すると `npm run lint` がエラーになる。
+これらのルールと Public API 経由の import は、ESLint の `no-restricted-imports`（`eslint.config.mjs`）で検査している。違反すると `npm run lint` がエラーになる。ルールを変えるときは、`eslint.config.mjs` とこのドキュメントを合わせて更新する。
 
 <img width="2720" height="1840" alt="fsd_app_pages_shared_imports" src="https://github.com/user-attachments/assets/3311e032-7f4d-4993-9cac-718ff1f64b21" />
 
 ## その他のルール
 
 - ルートの `app/` は Next.js のルーティング専用で、ルートファイルは `src/_pages/` を再エクスポートするだけにする。
-- `app/api/` は教材として配布された API のため改変しない。例外として、`app/api/datastore/index.ts` のプログラミングプロジェクトの `color` だけは `#00008c99`（= `rgba(0, 0, 140, 0.6)`）に直している。元の `#00008c60` は不透明度 0.38 になる初期データの誤りで、配布元に報告済み。
-- グローバルスタイル（リセット、テーマ用 CSS 変数）は `src/_app/styles/` に置く。
-- コンポーネントのスタイルは CSS Modules（`*.module.scss`）とし、各スライスの `ui/` に置く。クラス名は `CLAUDE.md` の「CSS 命名規則」に従う。
+- `app/api/` は教材として配布された API のため改変しない（FSD の `api-routes` 構成の対象外）。Claude Code の編集ツールでは、`.claude/settings.json` の `permissions.deny` で編集が拒否される。例外として、`app/api/datastore/index.ts` のプログラミングプロジェクトの `color` だけは `#00008c99`（= `rgba(0, 0, 140, 0.6)`）に直している。元の `#00008c60` は不透明度 0.38 になる初期データの誤りで、配布元に報告済み。
 - ルートの `app/layout.tsx` は `src/_app/layouts` を再エクスポートする。
-- 共通の SCSS パーシャルは `src/shared/ui/` に置く。`@use "name";` のように相対パスなしで読み込める。
+- スタイルの置き場所は次のとおり。クラス名や色の指定などの書き方の規約は [`.claude/rules/ui-component.md`](../.claude/rules/ui-component.md) に従う。
+  - グローバルスタイル（リセット、テーマ用 CSS 変数）: `src/_app/styles/`
+  - コンポーネントのスタイル（CSS Modules、`*.module.scss`）: 各スライスの `ui/`（コンポーネントの隣）
+  - 共通の SCSS パーシャル: `src/shared/ui/`
