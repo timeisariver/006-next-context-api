@@ -15,10 +15,19 @@ const forbid = (layers, message) => ({
   group: layers.flatMap((layer) => [`@/${layer}`, `@/${layer}/*`]),
   message,
 });
+// React Compiler が有効（next.config.ts）なため、useMemo / useCallback を手書きしない。
+// no-restricted-imports は上書きされないよう、FSD のパターンと同じ設定で渡す。
+const noManualMemoMessage =
+  "React Compiler が有効なため、手書きのメモ化（useMemo / useCallback）は不要です。";
+const noManualMemoImports = {
+  name: "react",
+  importNames: ["useMemo", "useCallback"],
+  message: noManualMemoMessage,
+};
 const fsdImports = (...patterns) => ({
   "no-restricted-imports": [
     "error",
-    { patterns: [publicApiOnly, ...patterns] },
+    { paths: [noManualMemoImports], patterns: [publicApiOnly, ...patterns] },
   ],
 });
 
@@ -64,6 +73,20 @@ const eslintConfig = defineConfig([
         "shared からは他のレイヤーを import できません。",
       ),
     ),
+  },
+  // React.useMemo / React.useCallback の形で使うことも禁止する。
+  {
+    files: ["app/**", "src/**"],
+    rules: {
+      "no-restricted-properties": [
+        "error",
+        ...["useMemo", "useCallback"].map((property) => ({
+          object: "React",
+          property,
+          message: noManualMemoMessage,
+        })),
+      ],
+    },
   },
   // Override default ignores of eslint-config-next.
   globalIgnores([

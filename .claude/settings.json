@@ -13,6 +13,12 @@
       "Bash(git fetch:*)",
       "Bash(gh pr list:*)",
       "Bash(gh pr view:*)"
+    ],
+    "deny": [
+      "Edit(/app/api/**)",
+      "Write(/app/api/**)",
+      "Edit(/.claude/worktrees/*/app/api/**)",
+      "Write(/.claude/worktrees/*/app/api/**)"
     ]
   }
 }
