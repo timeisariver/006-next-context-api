@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter, Noto_Sans_JP } from "next/font/google";
 import "../styles/globals.scss";
 import { Header } from "./Header";
@@ -24,9 +24,19 @@ export const metadata: Metadata = {
   title: "Turvo",
 };
 
+// デスクトップ向けのレイアウトしかないため、表示幅を 1440px に固定する（RootLayout.module.scss の .root の min-width と合わせる）。
+// 既定の initial-scale=1 が残ると縮小して表示されないため、undefined で消す。
+export const viewport: Viewport = {
+  width: 1440,
+  initialScale: undefined,
+};
+
 export function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="ja" className={clsx(inter.variable, notoSansJp.variable)}>
+    <html
+      lang="ja"
+      className={clsx(s.html, inter.variable, notoSansJp.variable)}
+    >
       <body className={s.root}>
         <ProjectsProvider>
           <TaskChangesProvider>
