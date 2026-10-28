@@ -85,13 +85,7 @@ npx playwright install chromium
 /plan _specs/<機能名>.md
 ```
 
-次の順に進み、[\_plans/\_template.md](_plans/_template.md) の形式で `_plans/<機能名>.md` に保存する。
-
-1. 仕様書が曖昧なら、プランを書く前に質問してくる。
-2. main にいれば `feature/<機能名>` ブランチを作る。
-3. 既存のコードと API を調べ、新しいコードをどのレイヤー・スライスに置くかを決める。
-4. FSD のスライス単位で、変更するファイルが重ならないようにタスクに分ける。下のレイヤー（`shared`・`entities`）を第 1 段階、それを使う `_pages` を第 2 段階にする。
-5. 各タスクの担当範囲、満たす要件、後の段階が使う公開 API と、仕様書から決めきれずに判断した点を書く。
+既存のコードと API を調べ、変更するファイルが重ならないようにタスクに分けたプランを、[\_plans/\_template.md](_plans/_template.md) の形式で `_plans/<機能名>.md` に保存する。仕様書が曖昧なら、プランを書く前に質問してくる。手順は [SKILL.md](.claude/skills/plan/SKILL.md) を参照。
 
 プランはコミットされないので、見直して直してから `/implement` に進む。担当範囲が適切か、要件の割り当てに漏れがないかを確認する。
 
@@ -101,18 +95,9 @@ npx playwright install chromium
 /implement _plans/<機能名>.md
 ```
 
-次の順に進む。
+プランのタスクごとに [implementer](.claude/agents/implementer.md) サブエージェントが別の worktree で並列に実装し、統合したあと [fsd-reviewer](.claude/agents/fsd-reviewer.md)（要件と FSD・CSS の規約）と組み込みの `/code-review`（バグ）でレビューして、確実な指摘を直す。プランや仕様書が曖昧なら、実装の前に質問してくる。手順は [SKILL.md](.claude/skills/implement/SKILL.md) を参照。
 
-1. プランや仕様書が曖昧なら、実装の前に質問してくる。
-2. 仕様書とプランをコミットする。
-3. プランのタスクごとに、[implementer](.claude/agents/implementer.md) サブエージェントがそれぞれ別の worktree で並列に実装する。段階ごとに、前の段階の統合を待ってから次へ進む。
-4. 各 worktree の変更をブランチに統合し、型チェック・lint・整形を通す。
-5. 2 種類のレビューを並列に行い、確実な指摘は直す。
-   - [fsd-reviewer](.claude/agents/fsd-reviewer.md): 仕様の要件を満たしているか、FSD・CSS の規約を守っているか
-   - 組み込みの `/code-review`: バグ
-6. 実装内容と、直さずに残した指摘、プランから外れたことを報告する。
-
-終わったら、`npm run dev` で画面を、差分でコードを確認する。AI のレビューは見た目の良し悪しまでは判断せず、判断が分かれる指摘も直さずに残すため、ここは人が見る。
+最後に、実装内容と、直さずに残した指摘、プランから外れたことが報告される。終わったら、`npm run dev` で画面を、差分でコードを確認する。AI のレビューは見た目の良し悪しまでは判断せず、判断が分かれる指摘も直さずに残すため、ここは人が見る。
 
 ### 4. PR を作らせる（`/pr`）
 
@@ -121,9 +106,7 @@ npx playwright install chromium
 /pr . tasks      # 撮影するページを指定する（先頭の / は省く。トップは .）
 ```
 
-1. 型チェック・lint・整形が通ることを確認する。
-2. 変更したページのスクリーンショットを PC 幅（1440px）で撮る（開発サーバーが動いていなければ起動する）。
-3. ブランチを push し、[PR テンプレート](.github/pull_request_template.md)に沿って本文を書いて PR を作成する。
+型チェック・lint・整形が通ることを確かめ、変更したページのスクリーンショットを PC 幅（1440px）で撮り、[PR テンプレート](.github/pull_request_template.md)に沿って PR を作成する。手順は [SKILL.md](.claude/skills/pr/SKILL.md) を参照。
 
 スクリーンショットはコードとは別の `screenshots` ブランチに置き、PR 本文からはその画像を参照する。公開リポジトリのため、個人情報などが映る画面は撮らないこと。
 
@@ -139,26 +122,27 @@ npm run screenshots -- . tasks                    # screenshots ブランチに 
 
 ### 関連ファイル
 
-| ファイル                                                                               | 内容                                         |
-| -------------------------------------------------------------------------------------- | -------------------------------------------- |
-| [.claude/skills/spec/](.claude/skills/spec/SKILL.md)                                   | `/spec` スキル                               |
-| [.claude/skills/plan/](.claude/skills/plan/SKILL.md)                                   | `/plan` スキル                               |
-| [.claude/skills/implement/](.claude/skills/implement/SKILL.md)                         | `/implement` スキル                          |
-| [.claude/skills/pr/](.claude/skills/pr/SKILL.md)                                       | `/pr` スキル                                 |
-| [.claude/skills/feature-sliced-design/](.claude/skills/feature-sliced-design/SKILL.md) | FSD 公式スキル（コードの置き場所の判断基準） |
-| [.claude/agents/](.claude/agents/)                                                     | 実装・レビュー用のサブエージェント           |
-| [.claude/settings.json](.claude/settings.json)                                         | 確認なしで実行してよいコマンドの許可設定     |
-| [.github/workflows/ci.yml](.github/workflows/ci.yml)                                   | CI（lint・型チェック・整形・ビルド）         |
-| [scripts/pr-screenshots.mjs](scripts/pr-screenshots.mjs)                               | スクリーンショットの撮影・push               |
-| [\_specs/](_specs/)                                                                    | 仕様書                                       |
-| [\_plans/](_plans/)                                                                    | 実装プラン                                   |
+| ファイル                                                                               | 内容                                           |
+| -------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| [.claude/skills/spec/](.claude/skills/spec/SKILL.md)                                   | `/spec` スキル                                 |
+| [.claude/skills/plan/](.claude/skills/plan/SKILL.md)                                   | `/plan` スキル                                 |
+| [.claude/skills/implement/](.claude/skills/implement/SKILL.md)                         | `/implement` スキル                            |
+| [.claude/skills/pr/](.claude/skills/pr/SKILL.md)                                       | `/pr` スキル                                   |
+| [.claude/skills/feature-sliced-design/](.claude/skills/feature-sliced-design/SKILL.md) | FSD 公式スキル（コードの置き場所の判断基準）   |
+| [.claude/agents/](.claude/agents/)                                                     | 実装・レビュー用のサブエージェント             |
+| [.claude/rules/](.claude/rules/)                                                       | 対象のファイルを読んだときだけ読み込まれる規約 |
+| [.claude/settings.json](.claude/settings.json)                                         | コマンドの許可と、`app/api/` の編集の拒否      |
+| [.github/workflows/ci.yml](.github/workflows/ci.yml)                                   | CI（lint・型チェック・整形・ビルド）           |
+| [.node-version](.node-version)                                                         | Node のバージョン（CI と Netlify が読む）      |
+| [scripts/pr-screenshots.mjs](scripts/pr-screenshots.mjs)                               | スクリーンショットの撮影・push                 |
+| [\_specs/](_specs/)                                                                    | 仕様書                                         |
+| [\_plans/](_plans/)                                                                    | 実装プラン                                     |
 
 ## ドキュメント
 
+- [CLAUDE.md](CLAUDE.md) — Claude Code が毎回読み込む指示（コマンド、コミットメッセージ、構成の要点）
 - [ディレクトリ構成（Feature-Sliced Design）](docs/architecture.md) — レイヤー・スライス・セグメントの分け方と依存ルール
+- [状態管理とデータの流れ](docs/state-management.md) — Context で共有するデータと、Context に載せないデータの取得
+- [開発環境と CI](docs/development.md) — CI、Node のバージョン、仕組みで守らせているルール、ドキュメントの置き場所
 
-### 要点
-
-- ルートの `app/` は Next.js のルーティング専用。画面は `src/_pages/` に作り、`app/` からは再エクスポートするだけにする。
-- `app/api/` は教材として配布された API のため改変しない。
-- クラス名はルートを `.root`、子要素を `.title` のような camelCase にし、BEM は使わない（詳細は [CLAUDE.md](CLAUDE.md) の「CSS 命名規則」）。JSX では `clsx(s.root, { [s._active]: isActive })` のように指定する。
+UI コンポーネント・SCSS の規約は [.claude/rules/ui-component.md](.claude/rules/ui-component.md)、API の型と仕様の確かめ方は [.claude/rules/api-types.md](.claude/rules/api-types.md) にある。
