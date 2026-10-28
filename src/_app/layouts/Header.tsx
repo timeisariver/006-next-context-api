@@ -46,61 +46,64 @@ export function Header({ className }: Props) {
     showToast("タスクの作成に失敗しました", "error");
   }
 
+  // トーストは画面全体への知らせなので、<header>（banner ランドマーク）の外に置く
   return (
-    <header className={clsx(s.root, className)}>
-      <div className={s.left}>
-        <Link href="/" className={s.logo}>
-          Turvo
-        </Link>
-        <div className={s.search}>
-          <Search className={s.searchIcon} />
-          <input
-            type="text"
-            placeholder="タスクタイトルで検索"
-            aria-label="タスクタイトルで検索"
-            className={s.searchInput}
-          />
+    <>
+      <header className={clsx(s.root, className)}>
+        <div className={s.left}>
+          <Link href="/" className={s.logo}>
+            Turvo
+          </Link>
+          <div className={s.search}>
+            <Search className={s.searchIcon} />
+            <input
+              type="text"
+              placeholder="タスクタイトルで検索"
+              aria-label="タスクタイトルで検索"
+              className={s.searchInput}
+            />
+          </div>
         </div>
-      </div>
-      <ul className={s.actions}>
-        <li>
-          <button
-            type="button"
-            className={s.action}
-            aria-label="タスクを追加"
-            onClick={taskModal.open}
-          >
-            <Plus />
-          </button>
-        </li>
-        {ACTIONS.map(({ label, Icon }) => (
-          <li key={label}>
-            <button type="button" className={s.action} aria-label={label}>
-              <Icon />
+        <ul className={s.actions}>
+          <li>
+            <button
+              type="button"
+              className={s.action}
+              aria-label="タスクを追加"
+              onClick={taskModal.open}
+            >
+              <Plus />
             </button>
           </li>
-        ))}
-        <li>
-          <button
-            type="button"
-            className={clsx(s.action, s.avatar)}
-            aria-label="アカウント"
-          >
-            <User className={s.avatarIcon} />
-          </button>
-        </li>
-      </ul>
-      <Modal
-        open={taskModal.isOpen}
-        onClose={taskModal.close}
-        title="タスクを追加"
-      >
-        <TaskCreateForm
+          {ACTIONS.map(({ label, Icon }) => (
+            <li key={label}>
+              <button type="button" className={s.action} aria-label={label}>
+                <Icon />
+              </button>
+            </li>
+          ))}
+          <li>
+            <button
+              type="button"
+              className={clsx(s.action, s.avatar)}
+              aria-label="アカウント"
+            >
+              <User className={s.avatarIcon} />
+            </button>
+          </li>
+        </ul>
+        <Modal
+          open={taskModal.isOpen}
           onClose={taskModal.close}
-          onCreated={handleCreated}
-          onCreateFailed={handleCreateFailed}
-        />
-      </Modal>
+          title="タスクを追加"
+        >
+          <TaskCreateForm
+            onClose={taskModal.close}
+            onCreated={handleCreated}
+            onCreateFailed={handleCreateFailed}
+          />
+        </Modal>
+      </header>
       {toast && (
         <Toast
           key={toast.id}
@@ -109,6 +112,6 @@ export function Header({ className }: Props) {
           onDismiss={() => setToast(null)}
         />
       )}
-    </header>
+    </>
   );
 }
